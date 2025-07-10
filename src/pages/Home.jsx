@@ -1,0 +1,557 @@
+import React, { useState } from "react";
+import Header from "../components/Header";
+import "../assets/css/style.css";
+import {
+  Button,
+  Col,
+  Container,
+  Row,
+  Accordion,
+  Card,
+  Form,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { accordionItems, partners, vaults } from "../constant/Data";
+import {
+  client1Img,
+  client2Img,
+  client3Img,
+  client4Img,
+  starIcon,
+  test1,
+  test2,
+  test3,
+  vaultbg,
+  videoImg,
+  work1,
+  work2,
+  work3,
+  work4,
+  work5,
+} from "../constant/Index";
+import Footer from "../components/Footer";
+const Home = () => {
+  const [activeKey, setActiveKey] = useState(null);
+
+  const toggleAccordion = (key) => {
+    setActiveKey(activeKey === key ? null : key);
+  };
+  const settings = {
+    dots: false,
+    infinite: true, // Ensures looping with duplicates
+    centerMode: true, // Helps with smooth transitions
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1, // ✅ Updated to 1
+    autoplay: true,
+    autoplaySpeed: 2000,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 1024, // Below 1024px
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1, // ✅ Ensuring slidesToScroll is 1
+          infinite: true,
+          centerMode: true,
+        },
+      },
+      {
+        breakpoint: 768, // Below 768px
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          centerMode: true,
+        },
+      },
+      {
+        breakpoint: 480, // Below 480px
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          centerMode: true,
+        },
+      },
+    ],
+  };
+  return (
+    <>
+      <Header />
+      {/* banner starts here */}
+      <section className="banner-sec">
+        <Container>
+          <Row>
+            <Col lg="2" />
+            <Col lg="8">
+              <div className="banner-content-wrapper">
+                <div className="banner-heading-wrapper">
+                  <h2 className="text-center heading-txt">
+                    Unlock the Vaults. Be Sovereign. Live Adifrntway
+                  </h2>
+                  <p className="text-center">
+                    We build a decentralized Vault for spiritually-aligned
+                    creators to share sacred content, accessed through alignment
+                    and symbolic tokens (A17C and ObiSky), not paywalls.
+                  </p>
+                </div>
+                <div className="banner-btn-wrapper text-center">
+                  {/* <Button>Enter a Vault</Button> */}
+                  <a href="#" className="vault-button">
+                    Enter a Vault
+                  </a>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* banner ends here */}
+      {/* Partners starts here */}
+      <section className="partners-sec">
+        <Container>
+          <Row className="align-items-center">
+            <Col lg={12}>
+              <div className="partner-heading-wrapper text-center">
+                <h4 className="mb-0 heading-txt">
+                  Trusted by Industry Leaders
+                </h4>
+              </div>
+            </Col>
+            <Col lg={12} className="mt-lg-5 mt-5">
+              <Slider {...settings}>
+                {partners?.map((logo, i) => {
+                  return (
+                    <div key={i} className="partner-logo-wrapper">
+                      <img src={logo} className="img-fluid" alt="" />
+                    </div>
+                  );
+                })}
+              </Slider>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* Partners ends here */}
+      {/* transform starts here */}
+      <section className="transform-sec">
+        <Container>
+          <Row>
+            <Col lg="2" />
+            <Col lg="8">
+              <div className="transform-text-wrapper">
+                <h3 className="text-center heading-txt">
+                  Transform your business with cutting-edge IT solutions
+                  tailored to your needs. Our expert consultants deliver
+                  innovative strategies that propel your organization into the
+                  digital future.
+                </h3>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* transform ends here */}
+      {/* counter starts here */}
+      <section className="counter-sec">
+        <Container>
+          <Row>
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* counter ends here */}
+      {/* works starts here */}
+      <section className="works-sec">
+        <Container>
+          <Row className="mb-5">
+            <Col lg="12">
+              <div className="works-heading-wrapper text-center">
+                <h3 className="heading-txt">How it Works</h3>
+                <p>Enter portals of resonance. Unlock relics of remembrance.</p>
+              </div>
+            </Col>
+          </Row>
+          <Row className="work-row-card">
+            <Col lg="4" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper">
+                  <h4 className="heading-txt">What is a Vault?</h4>
+                  <p>
+                    A Vault is a sovereign content chamber — a digital temple
+                    where aligned builders share sacred relics: music,
+                    teachings, visuals, and more. Each Vault is sealed until
+                    your resonance (in token form) unlocks the gate.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work1} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+            <Col lg="4" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper">
+                  <h4 className="heading-txt">
+                    No paywalls. No subscriptions. Only alignment.
+                  </h4>
+                  <p>
+                    Vaults are unlocked through symbolic actions — like holding
+                    17+ A17C tokens — rather than status or fiat. Deeper relics
+                    may require more A17C or ObiSky to access.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work2} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+            <Col lg="4" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper">
+                  <h4 className="heading-txt">
+                    Entry-level relics, access to sacred space
+                  </h4>
+                  <p>
+                    Vaults house “relics” — sacred or sovereign content such as
+                    music, teachings, visuals, or meditative tools — that are
+                    tiered, tracked, and optionally monetized via the ObiSky
+                    token.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work3} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="word-row-card-2">
+            <Col lg="6" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper w-75">
+                  <h4 className="heading-txt">How to Unlock a Vault</h4>
+                  <ul>
+                    <li>Connect Your Wallet (XRPL-enabled like XUMM)</li>
+                    <li>Hold 17+ A17C to meet the base access threshold</li>
+                    <li>
+                      Use ObiSky to unlock deeper relics or support builders
+                    </li>
+                    <li>
+                      Experience the Vault — visuals, sound, teachings, and
+                      guidance await
+                    </li>
+                  </ul>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work4} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+            <Col lg="6" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper w-75">
+                  <h4 className="heading-txt">
+                    Entry-level relics, access to sacred space
+                  </h4>
+                  <p>
+                    Vaults house “relics” — sacred or sovereign content such as
+                    music, teachings, visuals, or meditative tools — that are
+                    tiered, tracked, and optionally monetized via the ObiSky
+                    token.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work5} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* works ends here */}
+      {/* video starts here */}
+      <section className="video-sec">
+        <Container>
+          <Row>
+            <Col>
+              <div className="video-card-wrapper position-relative">
+                <div className="video-img-wrapper">
+                  <figure>
+                    <img src={videoImg} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+                <div className="video-content-wrapper position-absolute top-0">
+                  <div className="video-testimonials-wrapper d-flex align-items-center justify-content-end gap-2">
+                    <div className="testimonails-list-img-wrapper">
+                      <ul className="d-flex list-unstyled">
+                        <li>
+                          <img src={test1} className="img-fluid" alt="" />
+                        </li>
+                        <li>
+                          <img src={test2} className="img-fluid" alt="" />
+                        </li>
+                        <li>
+                          <img src={test3} className="img-fluid" alt="" />
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="testionails-txt-wrapper">
+                      <p>32k Happy customers</p>
+                    </div>
+                  </div>
+                  <div className="video-btn-wrapper">
+                    <Button className="video-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </Button>
+                  </div>
+                  <div className="video-down-content-wrapper d-flex justify-content-between">
+                    <h3 className="heading-txt">Relic Access Guide</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur. Elit orci enim
+                      aliquam neque nascetur amet vivamus dictum. Nulla cras
+                      scelerisque placerat et ultrices commodo in vitae.
+                      Tincidunt consequat risus sit suspendisse sed volutpat
+                      etiam. Tortor ullamcorper urna eget feugiat massa sed non.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* video ends here */}
+      {/* vault starts here */}
+      <section className="vault-sec">
+        <Container>
+          <Row>
+            <Col lg="12">
+              <div className="vault-heading-wrapper text-center">
+                <h3 className="heading-txt">Vaults & Access</h3>
+                <p>Enter portals of resonance. Unlock relics of remembrance.</p>
+              </div>
+            </Col>
+          </Row>
+          <Row className="mt-4 vault-row">
+            {vaults?.map((vault, i) => {
+              return (
+                <Col key={i} lg="4" className="p-0">
+                  <div className="vault-card-wrapper">
+                    <div className="vault-heading-wrapper d-flex justify-content-between">
+                      <h4 className="heading-txt">{vault?.name}</h4>
+                      <div className="count-wrapper">
+                        <h6 className="heading-txt">{vault?.id}</h6>
+                      </div>
+                    </div>
+                    <div className="vault-content-wrapper">
+                      <p className="mb-0">{vault?.des}</p>
+                    </div>
+                    <div className="vault-down-img-wrapper">
+                      <figure>
+                        <img src={vaultbg} className="img-fluid" alt="" />
+                      </figure>
+                    </div>
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
+          <Row className="mt-4">
+            <Col lg="1" />
+            <Col lg="10">
+              <div className="vault-last-para-wrapper text-center">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur. Odio nisi et quis
+                  aliquam. Adipiscing viverra lorem ligula id id. Diam semper eu
+                  volutpat nascetur consectetur. Duis venenatis ornare nisl nisl
+                  ornare ultrices suscipit ullamcorper.ng viverra lorem ligula
+                  id ialiquam. Adipiscing viverra lorem ligula id id. Diam sem
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* vault ends here */}
+      {/* client succes starst here */}
+      <section className="client-sec position-relative">
+        <Container>
+          <Row>
+            <Col lg="2">
+              <div className="client-img-wrapper client-img-1">
+                <figure>
+                  <img src={client1Img} className="img-fluid" alt="" />
+                </figure>
+              </div>
+              <div className="client-img-wrapper client-img-3">
+                <figure>
+                  <img src={client3Img} className="img-fluid" alt="" />
+                </figure>
+              </div>
+            </Col>
+            <Col lg="8">
+              <div className="client-card-wrapper text-center">
+                <div className="client-heading-wrapper">
+                  <h3 className="heading-txt">Client Success Stories</h3>
+                </div>
+                <div className="client-content-wrapper">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur. Habitant nibh nisl
+                    duis tincidunt nisl vitae cursus nisl vitae. Rhoncus
+                    ullamcorper molestie volutpat gravida sit tortor nec. Quis
+                    elit enim neque dui fermentum duis. Massa ac id tempus diam
+                    in duis porttitor gravida nunc.
+                  </p>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur. Non commodo sed a
+                    dictum. Egestas eleifend dignissim feugiat gravida. Egestas
+                    aenean sagittis ultrices quisque. Viverra turpis scelerisque
+                    blandit a diam feugiat tempus.
+                  </p>
+                  <h6 className="heading-txt">
+                    Emily Brown, CTO, [Client Company]
+                  </h6>
+                </div>
+                <div className="client-btn-wrapper">
+                  <Button href="#" className="vault-button">
+                    View All Testimonials
+                  </Button>
+                </div>
+              </div>
+            </Col>
+            <Col lg="2">
+              <div className="client-img-wrapper client-img-2">
+                <figure>
+                  <img src={client2Img} className="img-fluid" alt="" />
+                </figure>
+              </div>
+              <div className="client-img-wrapper client-img-4">
+                <figure>
+                  <img src={client4Img} className="img-fluid" alt="" />
+                </figure>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* client succes ends here */}
+      {/* faq starts here */}
+      <section className="faq-sec">
+        <Container>
+          <Row>
+            <Col lg="12">
+              <div className="faq-heading-wrapper text-center">
+                <h3 className="heading-txt">Frequently Asked Questions</h3>
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+              </div>
+            </Col>
+          </Row>
+          <Row className="g-4 mt-4">
+            {[0, 1].map((colIndex) => (
+              <Col md={6} key={colIndex}>
+                {accordionItems
+                  .filter((_, idx) => idx % 2 === colIndex)
+                  .map((item) => (
+                    <Card
+                      key={item.id}
+                      className="bg-dark text-white border border-secondary my-2"
+                    >
+                      <Accordion activeKey={activeKey}>
+                        <Accordion.Item eventKey={item.id.toString()}>
+                          <Accordion.Header
+                            onClick={() => toggleAccordion(item.id.toString())}
+                          >
+                            {item.title}
+                          </Accordion.Header>
+                          <Accordion.Body>{item.content}</Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
+                    </Card>
+                  ))}
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </section>
+      {/* faq ends here */}
+      {/* newsletter starts here */}
+      <section className="newsletter-sec">
+        <Container>
+          <Row>
+            <Col lg="2" />
+            <Col lg="8">
+              <div className="newsletter-row-heading text-center">
+                <div className="newsletter-tag-wrapper d-inline-flex gap-3 justify-content-center align-items-center mb-4">
+                  <h6 className="mb-0">Newsletter</h6>
+                  <img src={starIcon} className="img-fluid" alt="" />
+                </div>
+                <div className="newsletter-heading-wrap">
+                  <h3 className="heading-txt">
+                    Sign Up To Our Daily Newsletter
+                  </h3>
+                  <p>ces tailored to meet the unique needs of your busine</p>
+                </div>
+              </div>
+              <div className="newsletter-fields-wrapper w-75 mx-auto">
+                <Form className="d-flex justify-content-between">
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter your email here"
+                    className="me-2 bg-dark text-white border-secondary"
+                  />
+                  <Button
+                    variant="light"
+                    className="text-dark fw-semibold px-4"
+                  >
+                    Submit
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* newsletter ends here */}
+      <Footer />
+    </>
+  );
+};
+
+export default Home;
