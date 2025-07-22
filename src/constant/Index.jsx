@@ -13,12 +13,24 @@ import videoImg from "../assets/img/video-bg.png";
 import test1 from "../assets/img/test1.png";
 import test2 from "../assets/img/test2.png";
 import test3 from "../assets/img/test3.png";
+import test4 from "../assets/img/testi_icon.png";
 import vaultbg from "../assets/img/vault-bg.png";
 import client1Img from "../assets/img/client1.png";
 import client2Img from "../assets/img/client2.png";
 import client3Img from "../assets/img/client3.png";
 import client4Img from "../assets/img/client4.png";
 import starIcon from "../assets/img/start-icon.png";
+import video from "../assets/video/video.mp4";
+import contactImg from "../assets/img/contact-img.png";
+import relics1 from "../assets/img/relics1.png";
+import relics2 from "../assets/img/relics2.png";
+import relics3 from "../assets/img/relics3.png";
+import vault1 from "../assets/img/vault1.png";
+import vault2 from "../assets/img/vault2.png";
+import token1 from "../assets/img/token1.png";
+import token2 from "../assets/img/token2.png";
+import token3 from "../assets/img/token3.png";
+import functionImg from "../assets/img/function.png";
 
 export {
   WebLogo,
@@ -36,10 +48,22 @@ export {
   test1,
   test2,
   test3,
+  test4,
   vaultbg,
   client1Img,
   client2Img,
   client3Img,
   client4Img,
   starIcon,
+  video,
+  contactImg,
+  relics1,
+  relics2,
+  relics3,
+  vault1,
+  vault2,
+  token1,
+  token2,
+  token3,
+  functionImg,
 };

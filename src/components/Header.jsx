@@ -12,7 +12,7 @@ const Header = () => {
             <Col lg="10">
               <div className="header-wrapper">
                 <nav class="navbar">
-                  <ul class="nav-left">
+                  {/* <ul class="nav-left">
                     <li>
                       <a href="#" class="active">
                         <i class="icon-grid"></i> Home
@@ -27,8 +27,23 @@ const Header = () => {
                     <li>
                       <a href="#">Builders</a>
                     </li>
+                  </ul> */}
+                  <ul class="nav-left">
+                    <li>
+                      <a href="#" class="active">
+                        <i class="icon-grid"></i> Home
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" >About Us</a>
+                    </li>
+                    <li>
+                      <a href="#">Vaults</a>
+                    </li>
+                    <li>
+                      <a href="#">Builders</a>
+                    </li>
                   </ul>
-
                   <div class="logo-container">
                     <img src={WebLogo} alt="Logo" class="center-logo" />
                   </div>
@@ -44,7 +59,7 @@ const Header = () => {
                       <a href="#">Paths</a>
                     </li>
                     <li>
-                      <a href="#">Contact</a>
+                      <a href="#">Contact us</a>
                     </li>
                   </ul>
                 </nav>

@@ -53,11 +53,30 @@
   transform: scale(1.02);
   transition: all 0.3s ease-in-out;
 }
-
+a.gradient-button,
+button.gradient-button {
+  background-image: url("../img/button.png");
+  text-decoration: none;
+  padding: 13px 42px;
+  border-radius: 33px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  color: #fff;
+  backdrop-filter: blur(25px);
+  border: 2px solid #7b799f;
+  font-size: 14px;
+  font-family: "Inter";
+  display: inline-block;
+  background-color: transparent;
+}
 /* button wrapper */
 /* header starts here */
 header#top {
   padding: 60px 0px 30px 0px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
 }
 .header {
   position: relative;
@@ -100,7 +119,33 @@ header#top {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 10px #9b59b6;
 }
-
+.navbar li a.active::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: 999vw;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background: conic-gradient(
+      from var(--angle-1) at 50% 50%,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0) 5% 40%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0) 60% 95%,
+      rgba(0, 0, 0, 0.5)
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: all var(--anim--hover-time) var(--anim--hover-ease),
+    --angle-1 500ms ease;
+  box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+}
 .logo-container {
   position: absolute;
   top: -40px; /* adjust based on logo size */
@@ -122,10 +167,36 @@ header#top {
 /* header ends here */
 /* banner starts here */
 .banner-sec {
-  padding: 100px 0px;
+  /* padding: 100px 0px; */
 }
 .banner-heading-wrapper h2 {
 }
+.background-video-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 200px 0px 150px 0px;
+}
+
+.background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  object-fit: cover;
+  filter: brightness(0.6); /* Optional: darken background */
+}
+
+.banner-content-wrapper {
+  position: relative;
+  z-index: 2;
+  color: white; /* Ensure content is visible over video */
+}
+
 /* banner ends here */
 /* transform starts here */
 .transform-sec {
@@ -264,6 +335,31 @@ header#top {
   border-radius: 50%;
   border: 1px solid #fff;
 }
+.video-testimonials-wrapper .testimonails-list-img-wrapper li.test-icon img {
+  object-fit: contain;
+  width: unset;
+  height: unset;
+  border-color: transparent;
+}
+.video-testimonials-wrapper .testimonails-list-img-wrapper li.test-icon {
+  width: 63px;
+  height: 63px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff29;
+  backdrop-filter: blur(9px);
+}
+.video-sec .testionails-txt-wrapper p {
+  font-size: 18px;
+  text-transform: capitalize;
+}
+.video-sec .testionails-txt-wrapper {
+  width: 100px;
+}
 /* video ends here */
 /* vault starts here */
 .vault-sec .vault-card-wrapper {
@@ -367,7 +463,10 @@ header#top {
 /* faq ends here */
 /* newsletter starts here */
 .newsletter-sec {
-  padding: 0px 0px 100px 0px;
+  padding: 60px 0px 100px 0px;
+  background-image: url("../img/newsletter-bg.png");
+  background-position: center bottom;
+  background-repeat: no-repeat;
 }
 .newsletter-row-heading .newsletter-tag-wrapper {
   border: 1px solid #8e8e8e;
@@ -398,10 +497,14 @@ header#top {
   border: 0px;
   flex: 0 0 70%;
 }
-.newsletter-fields-wrapper input::placeholder {
-  color: #ffffff;
+.newsletter-fields-wrapper input:focus {
+  box-shadow: none;
 }
-.newsletter-fields-wrapper button {
+.newsletter-fields-wrapper input::placeholder {
+  color: #878787;
+  font-size: 14px;
+}
+/* .newsletter-fields-wrapper button {
   background-image: url("../img/button-bg.png");
   background-color: transparent !important;
   color: #fff !important;
@@ -412,7 +515,7 @@ header#top {
   box-shadow: inset 0 0 3000px rgba(255, 255, 255, 0.5);
   filter: blur(10px);
   border: 2px solid #ffffff33;
-}
+} */
 /* newsletter ends here */
 /* footer starts here */
 footer li a {

@@ -24,7 +24,9 @@ import {
   test1,
   test2,
   test3,
+  test4,
   vaultbg,
+  video,
   videoImg,
   work1,
   work2,
@@ -33,6 +35,7 @@ import {
   work5,
 } from "../constant/Index";
 import Footer from "../components/Footer";
+import Newsletter from "../components/Newsletter";
 const Home = () => {
   const [activeKey, setActiveKey] = useState(null);
 
@@ -84,35 +87,42 @@ const Home = () => {
       <Header />
       {/* banner starts here */}
       <section className="banner-sec">
-        <Container>
-          <Row>
-            <Col lg="2" />
-            <Col lg="8">
-              <div className="banner-content-wrapper">
-                <div className="banner-heading-wrapper">
-                  <h2 className="text-center heading-txt">
-                    Unlock the Vaults. Be Sovereign. Live Adifrntway
-                  </h2>
-                  <p className="text-center">
-                    We build a decentralized Vault for spiritually-aligned
-                    creators to share sacred content, accessed through alignment
-                    and symbolic tokens (A17C and ObiSky), not paywalls.
-                  </p>
+        <div className="background-video-wrapper">
+          <video autoPlay loop muted playsInline className="background-video">
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <Container>
+            <Row>
+              <Col lg="2" />
+              <Col lg="8">
+                <div className="banner-content-wrapper">
+                  <div className="banner-heading-wrapper">
+                    <h2 className="text-center heading-txt">
+                      Unlock the Vaults. Be Sovereign. Live Adifrntway
+                    </h2>
+                    <p className="text-center">
+                      We build a decentralized Vault for spiritually-aligned
+                      creators to share sacred content, accessed through
+                      alignment and symbolic tokens (A17C and ObiSky), not
+                      paywalls.
+                    </p>
+                  </div>
+                  <div className="banner-btn-wrapper text-center mt-3">
+                    {/* <Button>Enter a Vault</Button> */}
+                    <a href="#" className="gradient-button">
+                      Enter a Vault
+                    </a>
+                  </div>
                 </div>
-                <div className="banner-btn-wrapper text-center">
-                  {/* <Button>Enter a Vault</Button> */}
-                  <a href="#" className="vault-button">
-                    Enter a Vault
-                  </a>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </section>
       {/* banner ends here */}
       {/* Partners starts here */}
-      <section className="partners-sec">
+      <section className="partners-sec mt-5">
         <Container>
           <Row className="align-items-center">
             <Col lg={12}>
@@ -310,7 +320,7 @@ const Home = () => {
       <section className="video-sec">
         <Container>
           <Row>
-            <Col>
+            <Col lg="12">
               <div className="video-card-wrapper position-relative">
                 <div className="video-img-wrapper">
                   <figure>
@@ -329,6 +339,9 @@ const Home = () => {
                         </li>
                         <li>
                           <img src={test3} className="img-fluid" alt="" />
+                        </li>
+                        <li className="test-icon">
+                          <img src={test4} className="img-fluid" alt="" />
                         </li>
                       </ul>
                     </div>
@@ -450,9 +463,9 @@ const Home = () => {
                   </h6>
                 </div>
                 <div className="client-btn-wrapper">
-                  <Button href="#" className="vault-button">
+                  <button className="gradient-button">
                     View All Testimonials
-                  </Button>
+                  </button>
                 </div>
               </div>
             </Col>
@@ -511,44 +524,7 @@ const Home = () => {
         </Container>
       </section>
       {/* faq ends here */}
-      {/* newsletter starts here */}
-      <section className="newsletter-sec">
-        <Container>
-          <Row>
-            <Col lg="2" />
-            <Col lg="8">
-              <div className="newsletter-row-heading text-center">
-                <div className="newsletter-tag-wrapper d-inline-flex gap-3 justify-content-center align-items-center mb-4">
-                  <h6 className="mb-0">Newsletter</h6>
-                  <img src={starIcon} className="img-fluid" alt="" />
-                </div>
-                <div className="newsletter-heading-wrap">
-                  <h3 className="heading-txt">
-                    Sign Up To Our Daily Newsletter
-                  </h3>
-                  <p>ces tailored to meet the unique needs of your busine</p>
-                </div>
-              </div>
-              <div className="newsletter-fields-wrapper w-75 mx-auto">
-                <Form className="d-flex justify-content-between">
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter your email here"
-                    className="me-2 bg-dark text-white border-secondary"
-                  />
-                  <Button
-                    variant="light"
-                    className="text-dark fw-semibold px-4"
-                  >
-                    Submit
-                  </Button>
-                </Form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      {/* newsletter ends here */}
+      <Newsletter />
       <Footer />
     </>
   );

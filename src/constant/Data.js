@@ -1,4 +1,13 @@
-import { partner1, partner2, partner3, partner4, partner5 } from "./Index";
+import {
+  partner1,
+  partner2,
+  partner3,
+  partner4,
+  partner5,
+  token1,
+  token2,
+  token3,
+} from "./Index";
 
 export const partners = [partner1, partner2, partner3, partner4, partner5];
 
@@ -71,5 +80,44 @@ export const accordionItems = [
     title: "How do I become a Builder?",
     content:
       "Lorem ipsum dolor sit amet consectetur. Odio nisi et quis aliquam. Adipiscing viverra lorem ligula id id. Diam semper eu volutpat nascetur consectetur. Duis venenatis ornare nisl nisl ornare ultrices suscipit ullamcorper.ng viverra lorem ligula id ialiquam. Adipiscing viverra lorem ligula id id. Diam sem",
+  },
+];
+
+export const token = [
+  {
+    id: 1,
+    title: "A17C",
+    des: "Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo blandit maecenas ultrices eget. Tortor tempor sapien purus varius. Pe",
+    image: token1,
+  },
+  {
+    id: 2,
+    title: " ObiSky",
+    des: "Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo blandit maecenas ultrices eget. Tortor tempor sapien purus varius. Pe",
+    image: token2,
+  },
+  {
+    id: 3,
+    title: "Buoyancy",
+    des: "Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo blandit maecenas ultrices eget. Tortor tempor sapien purus varius. Pe",
+    image: token3,
+  },
+  {
+    id: 4,
+    title: "A17C",
+    des: "Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo blandit maecenas ultrices eget. Tortor tempor sapien purus varius. Pe",
+    image: token1,
+  },
+  {
+    id: 5,
+    title: " ObiSky",
+    des: "Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo blandit maecenas ultrices eget. Tortor tempor sapien purus varius. Pe",
+    image: token2,
+  },
+  {
+    id: 6,
+    title: "Buoyancy",
+    des: "Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo blandit maecenas ultrices eget. Tortor tempor sapien purus varius. Pe",
+    image: token3,
   },
 ];
