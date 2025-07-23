@@ -7,6 +7,9 @@ import {
   token1,
   token2,
   token3,
+  vault1,
+  vault2,
+  video2Img,
 } from "./Index";
 
 export const partners = [partner1, partner2, partner3, partner4, partner5];
@@ -119,5 +122,137 @@ export const token = [
     title: "Buoyancy",
     des: "Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo blandit maecenas ultrices eget. Tortor tempor sapien purus varius. Pe",
     image: token3,
+  },
+];
+
+export const videosData = [
+  {
+    id: 1,
+    title: "Vide Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault1,
+    type: "play",
+  },
+  {
+    id: 2,
+    title: "Video Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "play",
+  },
+  {
+    id: 3,
+    title: "Video Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault2,
+    type: "play",
+  },
+  {
+    id: 4,
+    title: "Video Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault1,
+    type: "play",
+  },
+  {
+    id: 5,
+    title: "Video Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "play",
+  },
+  {
+    id: 6,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 7,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 8,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 9,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+];
+
+export const photoData = [
+  {
+    id: 1,
+    title: "Image Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault1,
+    type: "play",
+  },
+  {
+    id: 2,
+    title: "Image Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "play",
+  },
+  {
+    id: 3,
+    title: "Image Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault2,
+    type: "play",
+  },
+  {
+    id: 4,
+    title: "Image Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault1,
+    type: "play",
+  },
+  {
+    id: 5,
+    title: "Image Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "play",
+  },
+  {
+    id: 6,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 7,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 8,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 9,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
   },
 ];

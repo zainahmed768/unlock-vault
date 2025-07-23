@@ -31,6 +31,9 @@ import token1 from "../assets/img/token1.png";
 import token2 from "../assets/img/token2.png";
 import token3 from "../assets/img/token3.png";
 import functionImg from "../assets/img/function.png";
+import playIcon from "../assets/img/play-icon.png";
+import lockIcon from "../assets/img/lock-icon.png";
+import video2Img from "../assets/img/video2.png";
 
 export {
   WebLogo,
@@ -66,4 +69,7 @@ export {
   token2,
   token3,
   functionImg,
+  playIcon,
+  lockIcon,
+  video2Img,
 };

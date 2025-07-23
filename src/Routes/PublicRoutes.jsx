@@ -8,6 +8,7 @@ import Vaults from "../pages/Vaults";
 import Tokens from "../pages/Tokens";
 import Paths from "../pages/Paths";
 import Videos from "../pages/Videos";
+import Photos from "../pages/Photos";
 
 const PublicRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const PublicRoutes = () => {
           <Route path="/token" element={<Tokens />} />
           <Route path="/path" element={<Paths />} />
           <Route path="/video" element={<Videos />} />
+          <Route path="/photos" element={<Photos />} />
         </Routes>
       </HashRouter>
     </>
