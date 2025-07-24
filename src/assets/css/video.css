@@ -1,12 +1,12 @@
-.video-sec {
+.page-video-sec {
   padding: 0px 0px 60px 0px;
   margin-top: -30%;
 }
-.video-sec .video-row {
+.page-video-sec .video-row {
   display: flex;
   flex-wrap: wrap;
 }
-.video-sec .video-row .col-lg-4 {
+.page-video-sec .video-row .col-lg-4 {
   display: flex;
   flex-direction: column;
 }

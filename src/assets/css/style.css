@@ -549,3 +549,43 @@ div#copyright {
   font-size: 17px;
 }
 /* footer ends here */
+/* identity starts here */
+.document-modal .modal-content {
+  background: #000000;
+  border: 4px dashed #fff;
+  border-radius: 37px;
+  padding: 50px 20px 30px 20px;
+  outline: 8px solid #000000;
+}
+.upload-flow-wrapper .step-box .step-number {
+  background: #3e0988;
+  font-size: 26px;
+  height: 48px;
+  width: 48px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.step-title-col .vertical-line {
+  width: 3px;
+  height: 44px;
+  background: #ffffff;
+  margin-left: 17px;
+}
+.upload-txt-wrapper p a {
+  color: #6b00ff;
+  text-decoration: none;
+}
+.upload-txt-wrapper p {
+  font-family: "Inter";
+  font-size: 15px;
+}
+.close-btn-wrapper button.close {
+  background: transparent;
+  border: 0px;
+  padding: 0px;
+  font-size: 20px;
+  color: #fff;
+}
+/* identity ends here */

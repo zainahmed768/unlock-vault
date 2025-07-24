@@ -27,7 +27,7 @@ const Videos = () => {
         ></section>
       </PageHeader>
       {/* video section starts here */}
-      <section className="video-sec">
+      <section className="page-video-sec">
         <Container>
           <Row className="video-row">
             {videosData?.map((video, i) => {

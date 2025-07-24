@@ -20,6 +20,7 @@ import {
   client2Img,
   client3Img,
   client4Img,
+  identityImg,
   starIcon,
   test1,
   test2,
@@ -36,9 +37,10 @@ import {
 } from "../constant/Index";
 import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
+import CustomModal from "../components/CustomModal";
 const Home = () => {
   const [activeKey, setActiveKey] = useState(null);
-
+  const [showModal, setShowModal] = useState(false);
   const toggleAccordion = (key) => {
     setActiveKey(activeKey === key ? null : key);
   };
@@ -82,6 +84,13 @@ const Home = () => {
       },
     ],
   };
+
+  const handleModal = () => {
+    setShowModal(true);
+  };
+  const handleClose = () => {
+    setShowModal(false);
+  };
   return (
     <>
       <Header />
@@ -110,7 +119,11 @@ const Home = () => {
                   </div>
                   <div className="banner-btn-wrapper text-center mt-3">
                     {/* <Button>Enter a Vault</Button> */}
-                    <a href="#" className="gradient-button">
+                    <a
+                      href="#"
+                      onClick={handleModal}
+                      className="gradient-button"
+                    >
                       Enter a Vault
                     </a>
                   </div>
@@ -524,6 +537,88 @@ const Home = () => {
         </Container>
       </section>
       {/* faq ends here */}
+      <CustomModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        // title="My Reusable Modal"
+      >
+        <Container>
+          <div className="upload-modal-wrapper">
+            <div className="upload-heading-wrapper text-center position-relative">
+              <h3 className="heading-txt">Identity Verification</h3>
+              <p>
+                Your identity will be verified using a document issued by a
+                country/authority
+              </p>
+              <div className="close-btn-wrapper position-absolute end-0 top-0">
+                <button className="close" onClick={handleClose}>
+                  X
+                </button>
+              </div>
+            </div>
+            <div className="upload-flow-wrapper">
+              <Row className="align-items-center">
+                <Col
+                  md="4"
+                  className="step-title-col align-items-center text-end d-flex justify-content-end"
+                >
+                  <div className="step-title">
+                    <h4 className="heading-txt mb-0">ID Upload</h4>
+                  </div>
+                  <div className="vertical-line" />
+                </Col>
+
+                <Col md="4">
+                  <div className="step-box d-flex align-items-center gap-3 ">
+                    <div className="step-number">
+                      <h5 className="heading-txt mb-0">1</h5>
+                    </div>
+                    <div>
+                      <div className="step-label">
+                        <h6 className="heading-txt mb-0">Security</h6>
+                      </div>
+                      <div className="step-desc">
+                        <p className="mb-0">Confirm your identity</p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+
+                <Col md="4">
+                  <div className="step-box d-flex align-items-center gap-3">
+                    <div className="step-number">
+                      <h5 className="heading-txt mb-0">2</h5>
+                    </div>
+                    <div>
+                      <div className="step-label">
+                        <h6 className="heading-txt mb-0">Id Upload</h6>
+                      </div>
+                      <div className="step-desc">
+                        <p className="mb-0">Confirm your identity</p>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+            <div className="upload-img-wrapper text-center">
+              <figure>
+                <img src={identityImg} className="img-fluid" alt="" />
+              </figure>
+            </div>
+            <div className="upload-submit-btn-wrapper text-center">
+              <button className="gradient-button">Get Started</button>
+            </div>
+            <div className="upload-txt-wrapper text-center mt-3">
+              <p className="mb-0">
+                By proceeding, you agree to our{" "}
+                <a href="#">Terms & Conditions</a> and{" "}
+                <a href="#">Privacy Policy</a>
+              </p>
+            </div>
+          </div>
+        </Container>
+      </CustomModal>
       <Newsletter />
       <Footer />
     </>

@@ -4,7 +4,13 @@ import { Modal, Button } from "react-bootstrap";
 
 const CustomModal = ({ show, onHide, title, children, footer }) => {
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal
+      show={show}
+      size="lg"
+      className="document-modal"
+      onHide={onHide}
+      centered
+    >
       {title && (
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
