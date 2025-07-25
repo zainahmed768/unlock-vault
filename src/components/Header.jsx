@@ -1,15 +1,18 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { WebLogo } from "../constant/Index";
+import { Link, useLocation } from "react-router-dom";
+import { MdWindow } from "react-icons/md";
 
 const Header = () => {
+  const location = useLocation();
   return (
     <>
       <header id="top">
-        <Container>
+        <Container fluid>
           <Row>
-            <Col lg="1"></Col>
-            <Col lg="10">
+            {/* <Col lg="1"></Col> */}
+            <Col lg="12">
               <div className="header-wrapper">
                 <nav class="navbar">
                   {/* <ul class="nav-left">
@@ -30,36 +33,114 @@ const Header = () => {
                   </ul> */}
                   <ul class="nav-left">
                     <li>
-                      <a href="#" class="active">
-                        <i class="icon-grid"></i> Home
-                      </a>
+                      <Link
+                        to="/"
+                        class={location?.pathname == "/" && "active"}
+                      >
+                        {location?.pathname == "/" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}{" "}
+                        Home
+                      </Link>
                     </li>
                     <li>
-                      <a href="#" >About Us</a>
+                      <Link
+                        to={"/about"}
+                        class={location?.pathname == "/about" && "active"}
+                      >
+                        {location?.pathname == "/about" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        About Us
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">Vaults</a>
+                      <Link
+                        to={"/vaults"}
+                        class={location?.pathname == "/vaults" && "active"}
+                      >
+                        {location?.pathname == "/vaults" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        Vaults
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">Builders</a>
+                      <Link to="#">Builders</Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/relics"}
+                        class={location?.pathname == "/relics" && "active"}
+                      >
+                        {location?.pathname == "/relics" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        Relics
+                      </Link>
                     </li>
                   </ul>
                   <div class="logo-container">
-                    <img src={WebLogo} alt="Logo" class="center-logo" />
+                    <Link to={"/"}>
+                      <img src={WebLogo} alt="Logo" class="center-logo" />
+                    </Link>
                   </div>
 
                   <ul class="nav-right">
                     <li>
-                      <a href="#">Relics</a>
+                      <Link
+                        to={"/token"}
+                        class={location?.pathname == "/token" && "active"}
+                      >
+                        {location?.pathname == "/token" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        Tokens
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">Tokens</a>
+                      <Link
+                        to={"/path"}
+                        class={location?.pathname == "/path" && "active"}
+                      >
+                        {location?.pathname == "/path" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        Paths
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">Paths</a>
+                      <Link
+                        to={"/contact-us"}
+                        class={location?.pathname == "/contact-us" && "active"}
+                      >
+                        {location?.pathname == "/contact-us" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        Contact us
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">Contact us</a>
+                      <Link
+                        to={"/sign-in"}
+                        class={location?.pathname == "/sign-in" && "active"}
+                      >
+                        {location?.pathname == "/sign-in" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        Sign In
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to={"/my-profile"}
+                        class={location?.pathname == "/my-profile" && "active"}
+                      >
+                        {location?.pathname == "/my-profile" && (
+                          <MdWindow size={17} className="me-1" />
+                        )}
+                        Profile
+                      </Link>
                     </li>
                   </ul>
                 </nav>

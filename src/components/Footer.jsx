@@ -24,25 +24,25 @@ const Footer = () => {
                   <div className="footer-links-wrapper">
                     <ul className="d-flex list-unstyled gap-4 mb-0">
                       <li>
-                        <Link to="/">About Us</Link>
+                        <Link to="/about">About Us</Link>
                       </li>
                       <li>
-                        <Link to="/">Vaults</Link>
+                        <Link to="/vaults">Vaults</Link>
                       </li>
                       <li>
                         <Link to="/">Builders</Link>
                       </li>
                       <li>
-                        <Link to="/">Relics</Link>
+                        <Link to="/relics">Relics</Link>
                       </li>
                       <li>
-                        <Link to="/">Tokens</Link>
+                        <Link to="/token">Tokens</Link>
                       </li>
                       <li>
-                        <Link to="/">Paths</Link>
+                        <Link to="/path">Paths</Link>
                       </li>
                       <li>
-                        <Link to="/">Contact</Link>
+                        <Link to="/contact-us">Contact</Link>
                       </li>
                     </ul>
                   </div>

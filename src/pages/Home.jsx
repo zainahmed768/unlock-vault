@@ -21,6 +21,7 @@ import {
   client3Img,
   client4Img,
   identityImg,
+  qrImg,
   starIcon,
   test1,
   test2,
@@ -41,6 +42,7 @@ import CustomModal from "../components/CustomModal";
 const Home = () => {
   const [activeKey, setActiveKey] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [qr, setQr] = useState(false);
   const toggleAccordion = (key) => {
     setActiveKey(activeKey === key ? null : key);
   };
@@ -90,6 +92,9 @@ const Home = () => {
   };
   const handleClose = () => {
     setShowModal(false);
+  };
+  const handleQr = () => {
+    setQr(true);
   };
   return (
     <>
@@ -602,18 +607,31 @@ const Home = () => {
               </Row>
             </div>
             <div className="upload-img-wrapper text-center">
-              <figure>
-                <img src={identityImg} className="img-fluid" alt="" />
-              </figure>
+              {qr ? (
+                <figure className="qr-img mt-4">
+                  <div className="qr-heading-txt-wrapper">
+                    <h6 className="heading-txt">
+                      Please scan QR from your Zam wallet App.
+                    </h6>
+                  </div>
+                  <img src={qrImg} className="img-fluid" alt="" />
+                </figure>
+              ) : (
+                <figure>
+                  <img src={identityImg} className="img-fluid" alt="" />
+                </figure>
+              )}
             </div>
             <div className="upload-submit-btn-wrapper text-center">
-              <button className="gradient-button">Get Started</button>
+              <button onClick={handleQr} className="gradient-button">
+                Get Started
+              </button>
             </div>
             <div className="upload-txt-wrapper text-center mt-3">
               <p className="mb-0">
                 By proceeding, you agree to our{" "}
-                <a href="#">Terms & Conditions</a> and{" "}
-                <a href="#">Privacy Policy</a>
+                <Link to={"/terms-conditions"}>Terms & Conditions</Link> and{" "}
+                <Link to={"/privacy-policy"}>Privacy Policy</Link>
               </p>
             </div>
           </div>

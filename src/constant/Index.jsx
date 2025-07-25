@@ -35,6 +35,7 @@ import playIcon from "../assets/img/play-icon.png";
 import lockIcon from "../assets/img/lock-icon.png";
 import video2Img from "../assets/img/video2.png";
 import identityImg from "../assets/img/identity-img.png";
+import qrImg from "../assets/img/qr-img.png";
 
 export {
   WebLogo,
@@ -74,4 +75,5 @@ export {
   lockIcon,
   video2Img,
   identityImg,
+  qrImg,
 };

@@ -73,7 +73,8 @@ button.gradient-button {
 /* button wrapper */
 /* header starts here */
 header#top {
-  padding: 60px 0px 30px 0px;
+  /* padding: 60px 0px 30px 0px; */
+  padding: 80px 60px 30px 60px;
   position: absolute;
   width: 100%;
   z-index: 10;
@@ -94,7 +95,7 @@ header#top {
   border-radius: 50px;
   backdrop-filter: blur(8px);
   height: 60px;
-  max-width: 1000px;
+  /* max-width: 1000px; */
   margin: 0 auto;
 }
 
@@ -148,7 +149,7 @@ header#top {
 }
 .logo-container {
   position: absolute;
-  top: -40px; /* adjust based on logo size */
+  top: -60px; /* adjust based on logo size */
   left: 50%;
   transform: translateX(-50%);
   background: #0e0a1a;
@@ -158,8 +159,8 @@ header#top {
 }
 
 .center-logo {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: contain;
 }
@@ -587,5 +588,10 @@ div#copyright {
   padding: 0px;
   font-size: 20px;
   color: #fff;
+}
+.upload-img-wrapper figure.qr-img img {
+  filter: invert(1);
+  height: 387px;
+  margin: 30px 0px;
 }
 /* identity ends here */
