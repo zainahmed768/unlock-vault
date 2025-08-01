@@ -164,11 +164,38 @@ header#top {
   border-radius: 50%;
   object-fit: contain;
 }
-
+/* navbar responsive starts here */
+@media (max-width: 1443px) {
+  header#top .navbar {
+    padding: 0 24px;
+  }
+}
+@media (max-width: 1370px) {
+  header#top .navbar ul {
+    gap: 19px;
+  }
+}
+@media (max-width: 1290px) {
+  header#top .center-logo {
+    width: 120px;
+    height: 120px;
+  }
+  header#top .navbar {
+    padding: 0 12px;
+  }
+  header#top .logo-container {
+    top: -43px;
+    left: 50%;
+  }
+  header#top .navbar ul {
+    gap: 11px;
+  }
+}
+/* navbar responsive ends here */
 /* header ends here */
 /* banner starts here */
 .banner-sec {
-  /* padding: 100px 0px; */
+  padding: 100px 0px;
 }
 .banner-heading-wrapper h2 {
 }

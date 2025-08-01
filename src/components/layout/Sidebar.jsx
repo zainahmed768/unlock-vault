@@ -11,7 +11,7 @@ const Sidebar = () => {
         end
         className={({ isActive }) =>
           `level-5-sm d-flex align-items-center justify-content-center reg-font dark-color text-uppercase ${
-            isActive || location.pathname === "/" ? "active" : ""
+            isActive || location.pathname === "/" ? "active-profile" : ""
           }`
         }
       >
@@ -21,7 +21,7 @@ const Sidebar = () => {
         to="/my-subscription"
         className={({ isActive }) =>
           `level-5-sm d-flex align-items-center justify-content-center reg-font dark-color text-uppercase ${
-            isActive ? "active" : ""
+            isActive ? "active-profile" : ""
           }`
         }
       >
@@ -31,7 +31,7 @@ const Sidebar = () => {
         to="/my-tokens"
         className={({ isActive }) =>
           `level-5-sm d-flex align-items-center justify-content-center reg-font dark-color text-uppercase ${
-            isActive ? "active" : ""
+            isActive ? "active-profile" : ""
           }`
         }
       >

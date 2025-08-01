@@ -10,7 +10,7 @@
   background-repeat: no-repeat;
   background-position: center center;
 }
-.active {
+.active-profile {
   /* background-color: #fff; */
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(2px) saturate(180%);
