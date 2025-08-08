@@ -4,18 +4,30 @@ import Footer from "../../components/Footer";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { WebLogo } from "../../constant/Index";
 import CommonInputField from "../../components/CommonInputField/CommonInputField";
+import { useAuthRegisterMutation } from "../../redux/services/AuthServices";
+import { signUpValidation } from "../../helper/HelperValidation";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const [authRegister, response] = useAuthRegisterMutation();
   const [signup, setSignUp] = useState({
     fname: "",
     lname: "",
     email: "",
     phonenumber: "",
     password: "",
+    password_confirm: "",
   });
+  const [formErrors, setFormErrors] = useState(null);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (signUpValidation(signup, setFormErrors)) {
+    }
+  };
+
   return (
     <>
       {/* page header starts here */}
@@ -120,6 +132,22 @@ const SignUp = () => {
                           }
                         />
                       </div>
+                      <div className="form-group mb-4">
+                        <label>
+                          <span className="text-danger">*</span> Confirm
+                          Password
+                        </label>
+                        <CommonInputField
+                          type="password"
+                          className="form-control"
+                          placeholder="Enter the Confirm password"
+                          height="50px"
+                          value={signup?.password}
+                          onChange={(e) =>
+                            setSignUp({ ...signup, password: e.target.value })
+                          }
+                        />
+                      </div>
 
                       <div className="form-group my-4">
                         <Link
@@ -131,7 +159,11 @@ const SignUp = () => {
                       </div>
 
                       <div className="form-group my-3">
-                        <button type="submit" className="gradient-button w-100">
+                        <button
+                          type="submit"
+                          onClick={handleSubmit}
+                          className="gradient-button w-100"
+                        >
                           Sign Up
                         </button>
                       </div>
