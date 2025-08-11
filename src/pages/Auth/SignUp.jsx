@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PageHeader from "../../components/PageHeader";
@@ -9,24 +9,115 @@ import { WebLogo } from "../../constant/Index";
 import CommonInputField from "../../components/CommonInputField/CommonInputField";
 import { useAuthRegisterMutation } from "../../redux/services/AuthServices";
 import { signUpValidation } from "../../helper/HelperValidation";
-
+import Alert from "../../components/Alert/Alert";
+import InputMask from "react-input-mask";
+import { BeatLoader } from "react-spinners";
 const SignUp = () => {
   const navigate = useNavigate();
-  const [authRegister, response] = useAuthRegisterMutation();
+  const [authRegister, { data, error, isLoading, isSuccess, isError }] =
+    useAuthRegisterMutation();
+
   const [signup, setSignUp] = useState({
     fname: "",
     lname: "",
     email: "",
-    phonenumber: "",
+    phone_number: "",
     password: "",
     password_confirm: "",
   });
   const [formErrors, setFormErrors] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("all data ", formErrors);
     if (signUpValidation(signup, setFormErrors)) {
+      let data = new FormData();
+      data.append("first_name", signup?.fname);
+      data.append("last_name", signup?.lname);
+      data.append("email", signup?.email);
+      data.append("password", signup?.password);
+      data.append("password_confirmation", signup?.password_confirm);
+      data.append("phone_number", signup?.phone_number);
+      console.log("all data ", signup);
+      authRegister(data);
     }
   };
+
+  // useEffect(() => {
+  //   console.log(response, "all done");
+  //   if (response?.isSuccess) {
+  //     Alert({
+  //       title: "Success",
+  //       text: "Account created successfully. Please verify your email by clicking the link we sent to your inbox.",
+  //     });
+  //     navigate("/verify-otp");
+  //     // localStorage.setItem("email", user?.email);
+  //     setUser({
+  //       fname: "",
+  //       lname: "",
+  //       email: "",
+  //       phone_number: "",
+  //       password: "",
+  //       password_confirm: "",
+  //     });
+  //   }
+  //   if (response?.isError) {
+  //     // if (
+  //     //   response?.error?.data?.errors?.length === 0 &&
+  //     //   response?.error?.data?.message === "Bad Request!"
+  //     // ) {
+  //     //   setFormErrors(response?.error?.data?.errors);
+  //     // } else if (response?.error?.data?.errors?.website) {
+  //     //   setFormErrors({ website: response?.error?.data?.errors?.website?.[0] });
+  //     // } else if (response?.error?.data?.errors?.profile_photo) {
+  //     //   setFormErrors({
+  //     //     profile_photo: response?.error?.data?.errors?.profile_photo?.[0],
+  //     //   });
+  //     // }
+  //     // if (Object.keys(response?.error?.data?.errors).length > 0) {
+  //     //   const errorMessages = response?.error?.data?.errors
+  //     //     ? Object.values(response.error.data.errors).flat().join("\n")
+  //     //     : "An unexpected error occurred.";
+  //     //   Alert({
+  //     //     title: "Error",
+  //     //     text: errorMessages,
+  //     //     iconStyle: "error",
+  //     //   });
+  //     // } else {
+  //     Alert({
+  //       title: "Error",
+  //       text: response?.error?.data?.message,
+  //       iconStyle: "error",
+  //     });
+  //     // }
+  //   }
+  // }, [response]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      Alert({
+        title: "Success",
+        text: "Account created successfully. Please verify your email by clicking the link we sent to your inbox.",
+      });
+      localStorage.setItem("email", signup?.email);
+      setSignUp({
+        fname: "",
+        lname: "",
+        email: "",
+        phone_number: "",
+        password: "",
+        password_confirm: "",
+      });
+      navigate("/verify-otp");
+    }
+
+    if (isError) {
+      Alert({
+        title: "Error",
+        text: error?.data?.message || "Something went wrong",
+        iconStyle: "error",
+      });
+    }
+  }, [isSuccess, isError, error]);
 
   return (
     <>
@@ -65,6 +156,9 @@ const SignUp = () => {
                             }
                             placeholder="John"
                             height="50px"
+                            errors={
+                              formErrors?.fname ? formErrors?.fname : null
+                            }
                           />
                         </div>
                         <div className="col-lg-6">
@@ -81,6 +175,9 @@ const SignUp = () => {
                             }
                             placeholder="Doe"
                             height="50px"
+                            errors={
+                              formErrors?.lname ? formErrors?.lname : null
+                            }
                           />
                         </div>
                       </div>
@@ -89,7 +186,7 @@ const SignUp = () => {
                           <span className="text-danger">*</span> Email
                         </label>
                         <CommonInputField
-                          type="text"
+                          type="email"
                           className="form-control"
                           value={signup?.email}
                           onChange={(e) =>
@@ -97,25 +194,62 @@ const SignUp = () => {
                           }
                           placeholder="youremail@gmail.com"
                           height="50px"
+                          errors={formErrors?.email ? formErrors?.email : null}
                         />
                       </div>
                       <div className="form-group mb-4">
                         <label>
                           <span className="text-danger">*</span> Phone Number
                         </label>
-                        <CommonInputField
+                        {/* <CommonInputField
                           type="text"
                           className="form-control"
-                          value={signup?.phonenumber}
+                          value={signup?.phone_number}
                           onChange={(e) =>
                             setSignUp({
                               ...signup,
-                              phonenumber: e.target.value,
+                              phone_number: e.target.value,
                             })
                           }
                           placeholder="123-123-1234"
                           height="50px"
+                          errors={
+                            formErrors?.phone_number
+                              ? formErrors?.phone_number
+                              : null
+                          }
+                        /> */}
+
+                        <InputMask
+                          value={signup?.phone_number}
+                          onChange={(e) =>
+                            setSignUp({
+                              ...signup,
+                              phone_number: e.target.value,
+                            })
+                          }
+                          style={{ height: "50px" }}
+                          mask="999-999-9999"
+                          className={
+                            formErrors?.phone_number
+                              ? "border-danger form-control dashboard-input"
+                              : "form-control dashboard-input"
+                          }
+                          maskChar=" "
                         />
+                        {formErrors?.phone_number ? (
+                          <p
+                            className="error"
+                            style={{
+                              color: "red",
+                              fontSize: "13px",
+                              marginBottom: "0",
+                              marginTop: "10px",
+                            }}
+                          >
+                            {formErrors?.phone_number}
+                          </p>
+                        ) : null}
                       </div>
                       <div className="form-group mb-4">
                         <label>
@@ -130,6 +264,9 @@ const SignUp = () => {
                           onChange={(e) =>
                             setSignUp({ ...signup, password: e.target.value })
                           }
+                          errors={
+                            formErrors?.password ? formErrors?.password : null
+                          }
                         />
                       </div>
                       <div className="form-group mb-4">
@@ -142,9 +279,17 @@ const SignUp = () => {
                           className="form-control"
                           placeholder="Enter the Confirm password"
                           height="50px"
-                          value={signup?.password}
+                          value={signup?.password_confirm}
                           onChange={(e) =>
-                            setSignUp({ ...signup, password: e.target.value })
+                            setSignUp({
+                              ...signup,
+                              password_confirm: e.target.value,
+                            })
+                          }
+                          errors={
+                            formErrors?.password_confirm
+                              ? formErrors?.password_confirm
+                              : null
                           }
                         />
                       </div>
@@ -160,11 +305,16 @@ const SignUp = () => {
 
                       <div className="form-group my-3">
                         <button
-                          type="submit"
+                          type="button"
                           onClick={handleSubmit}
                           className="gradient-button w-100"
+                          disabled={isLoading}
                         >
-                          Sign Up
+                          {isLoading ? (
+                            <BeatLoader color="#fff" size={20} />
+                          ) : (
+                            "Submit"
+                          )}
                         </button>
                       </div>
 

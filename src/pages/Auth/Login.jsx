@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
@@ -8,13 +8,69 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import "../../assets/css/login.css";
 import CommonInputField from "../../components/CommonInputField/CommonInputField";
-
+import { useDispatch } from "react-redux";
+import { setUserToken } from "../../redux/reducers/AuthReducer";
+import { BeatLoader } from "react-spinners";
+import Alert from "../../components/Alert/Alert";
+import { useLoginMutation } from "../../redux/services/AuthServices";
+import { signInValidation } from "../../helper/HelperValidation";
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [authLogin, response] = useLoginMutation();
   const [login, setLogin] = useState({
     email: "",
     password: "",
   });
+  const [formErrors, setFormErrors] = useState(null);
+
+  const handleSubmit = (e) => {
+    console.log(login);
+    e.preventDefault();
+    if (signInValidation(login, setFormErrors)) {
+      let data = new FormData();
+      data.append("email", login.email);
+      data.append("password", login.password);
+      authLogin(data);
+    }
+  };
+
+  useEffect(() => {
+    if (response?.isSuccess) {
+      console.log(response?.data?.data, "asdcjnsacj");
+      dispatch(setUserToken(response?.data?.data));
+      Alert({
+        title: "Success",
+        text: response?.data?.message,
+      });
+      navigate("/set-up");
+      setLogin({
+        email: "",
+        password: "",
+      });
+    }
+    if (response?.isError) {
+      if (response?.error?.data?.errors?.email?.[0]) {
+        Alert({
+          title: "Error",
+          text: response?.error?.data?.errors?.email?.[0],
+          iconStyle: "error",
+        });
+      } else if (response?.error?.data?.errors?.[0]) {
+        Alert({
+          title: "Error",
+          text: response?.error?.data?.errors?.[0],
+          iconStyle: "error",
+        });
+      } else {
+        Alert({
+          title: "Error",
+          text: response?.error?.data?.message,
+          iconStyle: "error",
+        });
+      }
+    }
+  }, [response]);
   return (
     <>
       {/* <Header /> */}
@@ -45,12 +101,13 @@ const Login = () => {
                           <span>Email</span>
                         </label>
                         <CommonInputField
-                          type="text"
+                          type="email"
                           className="form-control"
                           value={login?.email}
                           onChange={(e) =>
                             setLogin({ ...login, email: e.target.value })
                           }
+                          errors={formErrors?.email ? formErrors?.email : null}
                           placeholder="youremail@gmail.com"
                           height="50px"
                         />
@@ -70,6 +127,9 @@ const Login = () => {
                           onChange={(e) =>
                             setLogin({ ...login, password: e.target.value })
                           }
+                          errors={
+                            formErrors?.password ? formErrors?.password : null
+                          }
                         />
                       </div>
 
@@ -84,11 +144,15 @@ const Login = () => {
 
                       <div className="form-group my-3">
                         <button
-                          type="submit"
-                          onClick={(e) => navigate("/my-profile")}
+                          onClick={handleSubmit}
+                          type="button"
                           className="gradient-button w-100"
                         >
-                          Login
+                          {response?.isLoading ? (
+                            <BeatLoader color="#f9911c" size={20} />
+                          ) : (
+                            "Login"
+                          )}
                         </button>
                       </div>
 

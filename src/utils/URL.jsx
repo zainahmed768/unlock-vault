@@ -1,1 +1,1 @@
-export const BASE_URL = "https://cash-gravy.developer-ourbase-camp.com/api";
+export const BASE_URL = "https://admin-unlock-vault.developer-ourbase-camp.com/api";

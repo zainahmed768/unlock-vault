@@ -14,7 +14,6 @@ const AuthServices = createApi({
   reducerPath: "AuthServices",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    tagTypes: ["editInfo", "quiz"],
     prepareHeaders: (headers, { getState, endpoint }) => {
       const reducers = getState();
       const token = reducers?.AuthReducer?.userToken;
@@ -25,101 +24,60 @@ const AuthServices = createApi({
       return headers;
     },
   }),
+  tagTypes: ["editInfo", "quiz"], // ✅ Moved here, not inside baseQuery
   endpoints: (build) => ({
     login: build.mutation({
-      query: (data) => {
-        return {
-          url: LOGIN_URL,
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: LOGIN_URL,
+        method: "POST",
+        body: data,
+      }),
       invalidatesTags: ["editInfo"],
     }),
     authRegister: build.mutation({
-      query: (data) => {
-        return {
-          url: REGISTER_URL,
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: REGISTER_URL,
+        method: "POST",
+        body: data,
+      }),
       invalidatesTags: ["editInfo"],
     }),
     verifyAccount: build.mutation({
-      query: (data) => {
-        return {
-          url: VERIFY_ACCOUNT,
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: VERIFY_ACCOUNT,
+        method: "POST",
+        body: data,
+      }),
       invalidatesTags: ["editInfo"],
     }),
     forgetPassword: build.mutation({
-      query: (data) => {
-        return {
-          url: FORGET_PASSWORD,
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: FORGET_PASSWORD,
+        method: "POST",
+        body: data,
+      }),
     }),
     resetPassword: build.mutation({
-      query: (data) => {
-        return {
-          url: RESET_PASSWORD,
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: RESET_PASSWORD,
+        method: "POST",
+        body: data,
+      }),
     }),
     changePassword: build.mutation({
-      query: (data) => {
-        return {
-          url: CHANGE_PASSWORD,
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: CHANGE_PASSWORD,
+        method: "POST",
+        body: data,
+      }),
     }),
     resendOtp: build.mutation({
-      query: (data) => {
-        return {
-          url: RESEND_OTP,
-          method: "POST",
-          body: data,
-        };
-      },
+      query: (data) => ({
+        url: RESEND_OTP,
+        method: "POST",
+        body: data,
+      }),
     }),
-    // resendVerifyOtp: build.mutation({
-    //   query: (data) => {
-    //     return {
-    //       url: RESEND_VERIFY_OTP,
-    //       method: "POST",
-    //       body: data,
-    //     };
-    //   },
-    //   invalidatesTags: ["editInfo"],
-    // }),
-    // forgetOtp: build.mutation({
-    //   query: (data) => {
-    //     return {
-    //       url: FORGET_OTP,
-    //       method: "POST",
-    //       body: data,
-    //     };
-    //   },
-    // }),
-    // UpdatePassword: build.mutation({
-    //   query: (data) => {
-    //     return {
-    //       url: UPDATE_NEW_PASSWORD,
-    //       method: "POST",
-    //       body: data,
-    //     };
-    //   },
-    // }),
   }),
 });
 

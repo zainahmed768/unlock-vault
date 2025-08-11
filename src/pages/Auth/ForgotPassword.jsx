@@ -1,12 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import CommonInputField from "../../components/CommonInputField/CommonInputField";
+import { useForgetPasswordMutation } from "../../redux/services/AuthServices";
+import { checkEmailValidation } from "../../helper/HelperValidation";
+import Alert from "../../components/Alert/Alert";
+import { BeatLoader } from "react-spinners";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [forgetPassword, response] = useForgetPasswordMutation();
+  const [formErrors, setFormErrors] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (checkEmailValidation(email, setFormErrors)) {
+      let data = new FormData();
+      data.append("email", email);
+      forgetPassword(data);
+    }
+    // navigate("/new-password");
+  };
+  useEffect(() => {
+    console.log(response);
+    if (response?.isSuccess) {
+      Alert({
+        title: "Success",
+        text: response?.data?.message,
+      });
+      // navigate("/new-password");
+    }
+    if (response?.isError) {
+      console.log(response);
+      Alert({
+        title: "Error",
+        text: response?.error?.data?.message,
+        iconStyle: "error",
+      });
+    }
+  }, [response]);
   return (
     <>
       {/* page header starts here */}
@@ -36,15 +70,21 @@ const ForgotPassword = () => {
                           value={email}
                           placeholder="Youremail@gmail.com"
                           onChange={(e) => setEmail(e.target.value)}
+                          errors={formErrors?.email}
                         />
                       </div>
                       <div className="form-group my-3">
                         <button
                           type="button"
-                          onClick={() => navigate("/new-password")}
+                          onClick={handleSubmit}
+                          disabled={response?.isLoading}
                           className="gradient-button w-100"
                         >
-                          Submit
+                          {response?.isLoading ? (
+                            <BeatLoader color="#f9911c" size={20} />
+                          ) : (
+                            "Login"
+                          )}
                         </button>
                       </div>
                       <div className="form-group my-5 or-row">
