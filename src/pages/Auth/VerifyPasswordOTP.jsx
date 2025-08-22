@@ -8,24 +8,18 @@ import Alert from "../../components/Alert/Alert";
 import {
   useResendOtpMutation,
   useVerifyAccountMutation,
+  useVerifyPasswordOtpMutation,
 } from "../../redux/services/AuthServices";
 import { useDispatch } from "react-redux";
 import { VerifyOtpValidation } from "../../helper/HelperValidation";
 import { BeatLoader } from "react-spinners";
 
-const VerifyOTP = () => {
+const VerifyPasswordOTP = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [otp, setOtp] = useState(null);
   const [formErrors, setFormErrors] = useState(null);
-  const [verifyAccount, response] = useVerifyAccountMutation();
-  const [resendOtp, responsed] = useResendOtpMutation();
-
-  const HandleSend = () => {
-    let data = new FormData();
-    data.append("email", localStorage.getItem("email"));
-    resendOtp(data);
-  };
+  const [verifyAccount, response] = useVerifyPasswordOtpMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,19 +35,15 @@ const VerifyOTP = () => {
   useEffect(() => {
     console.log(response, "sdycgsd");
     if (response?.isSuccess) {
-      dispatch(setUserToken(response?.data?.data));
+      //   dispatch(setUserToken(response?.data?.data));
+      localStorage.setItem("otp", otp);
       Alert({
         title: "Success",
         text: response?.data?.message,
       });
-      navigate("/");
+      navigate("/new-password");
     }
-    if (responsed?.isSuccess) {
-      Alert({
-        title: "Success",
-        text: responsed?.data?.message,
-      });
-    }
+
     if (response?.isError) {
       console.log(response);
       Alert({
@@ -62,7 +52,7 @@ const VerifyOTP = () => {
         iconStyle: "error",
       });
     }
-  }, [response, responsed]);
+  }, [response]);
   return (
     <>
       {/* page header starts here */}
@@ -112,7 +102,7 @@ const VerifyOTP = () => {
                           <p
                             className="text-decoration-none "
                             // to="/forgot-password"
-                            onClick={HandleSend}
+                            // onClick={HandleSend}
                             style={{ cursor: "pointer", color: "#6b00ff" }}
                           >
                             Resend Otp
@@ -132,4 +122,4 @@ const VerifyOTP = () => {
   );
 };
 
-export default VerifyOTP;
+export default VerifyPasswordOTP;

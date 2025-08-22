@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import { Col, Container, Row } from "react-bootstrap";
 import CommonInputField from "../../components/CommonInputField/CommonInputField";
 import { useNavigate } from "react-router-dom";
+import { useResetPasswordMutation } from "../../redux/services/AuthServices";
+import { PasswordValidation } from "../../helper/HelperValidation";
+import { BeatLoader } from "react-spinners";
+import Alert from "../../components/Alert/Alert";
 
 const NewPassword = () => {
   const navigate = useNavigate();
@@ -10,6 +14,37 @@ const NewPassword = () => {
     password: "",
     confirm_password: "",
   });
+  const [formErrors, setFormErrors] = useState(null);
+  const [resetPassword, response] = useResetPasswordMutation();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (PasswordValidation(password, setFormErrors)) {
+      let data = new FormData();
+      data.append("email", localStorage.getItem("email"));
+      data.append("otp", localStorage.getItem("otp"));
+      data.append("password", password?.password);
+      data.append("password_confirmation", password?.confirm_password);
+      resetPassword(data);
+    }
+  };
+  useEffect(() => {
+    console.log(response);
+    if (response?.isSuccess) {
+      Alert({
+        title: "Success",
+        text: response?.data?.message,
+      });
+      navigate("/login");
+    }
+    if (response?.isError) {
+      console.log(response);
+      Alert({
+        title: "Error",
+        text: response?.error?.data?.message,
+        iconStyle: "error",
+      });
+    }
+  }, [response]);
   return (
     <>
       {/* page header starts here */}
@@ -42,6 +77,7 @@ const NewPassword = () => {
                               password: e.target.value,
                             })
                           }
+                          errors={formErrors?.password}
                         />
                       </div>
                       <div className="form-group mb-4">
@@ -56,15 +92,21 @@ const NewPassword = () => {
                               confirm_password: e.target.value,
                             })
                           }
+                          errors={formErrors?.confirm_password}
                         />
                       </div>
                       <div className="form-group mt-5">
                         <button
                           type="submit"
-                          onClick={() => navigate("/verify-otp")}
+                          onClick={handleSubmit}
                           className="gradient-button w-100"
+                          disabled={response?.isLoading}
                         >
-                          Submit
+                          {response?.isLoading ? (
+                            <BeatLoader color="#fff" size={20} />
+                          ) : (
+                            "Submit"
+                          )}
                         </button>
                       </div>
                     </form>

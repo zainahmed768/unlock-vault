@@ -142,3 +142,45 @@ export const checkEmailValidation = (email, setFormErrors) => {
   setFormErrors(errors);
   return isValid;
 };
+
+export const VerifyOtpValidation = (otp, setFormErrors) => {
+  let errors = {};
+  let isValid = true;
+
+  // Validate OTP
+  if (!otp || !otp) {
+    errors.otp = ["OTP is required"];
+    isValid = false;
+  } else if (!/^\d{6}$/.test(otp)) {
+    errors.otp = ["OTP must be a 6-digit number"];
+    isValid = false;
+  }
+  setFormErrors(errors);
+  return isValid;
+};
+
+export const PasswordValidation = (passwordState, setFormErrors) => {
+  let isValid = true;
+  let errors = {};
+
+  // Validate New Password
+  if (!passwordState?.password) {
+    errors.password = ["New password is required"];
+    isValid = false;
+  } else if (passwordState?.password.length < 8) {
+    errors.password = ["New password must be atleast 8 characters"];
+    isValid = false;
+  }
+
+  // Validate Confirm Password
+  if (!passwordState?.confirm_password) {
+    errors.confirm_password = ["Confirm password is required"];
+    isValid = false;
+  } else if (passwordState?.confirm_password !== passwordState?.password) {
+    errors.confirm_password = ["Confirm password must match the new password"];
+    isValid = false;
+  }
+
+  setFormErrors(errors);
+  return isValid;
+};

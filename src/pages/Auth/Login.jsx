@@ -43,7 +43,7 @@ const Login = () => {
         title: "Success",
         text: response?.data?.message,
       });
-      navigate("/set-up");
+      navigate("/");
       setLogin({
         email: "",
         password: "",

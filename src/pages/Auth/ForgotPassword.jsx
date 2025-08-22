@@ -30,7 +30,7 @@ const ForgotPassword = () => {
         title: "Success",
         text: response?.data?.message,
       });
-      // navigate("/new-password");
+      navigate("/verify-password-otp");
     }
     if (response?.isError) {
       console.log(response);
@@ -81,9 +81,9 @@ const ForgotPassword = () => {
                           className="gradient-button w-100"
                         >
                           {response?.isLoading ? (
-                            <BeatLoader color="#f9911c" size={20} />
+                            <BeatLoader color="#fff" size={20} />
                           ) : (
-                            "Login"
+                            "Submit"
                           )}
                         </button>
                       </div>

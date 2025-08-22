@@ -1,8 +1,20 @@
 import { NavLink, useLocation } from "react-router-dom";
+import { setlogoutUser } from "../../redux/reducers/AuthReducer";
+import { useDispatch } from "react-redux";
 // import "../ProfileLayout/profileLayout.css";
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   console.log(location, "location");
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(setlogoutUser());
+    Alert({
+      title: "success",
+      text: "you logout successfully",
+    });
+    navigate("/");
+  };
 
   return (
     <ul className="sidebar__list list-unstyled m-0 p-0">
@@ -46,7 +58,9 @@ const Sidebar = () => {
           }`
         }
       >
-        <li className="py-md-3 py-2">LOGOUT</li>
+        <li className="py-md-3 py-2" onClick={handleLogout}>
+          LOGOUT
+        </li>
       </NavLink>
     </ul>
   );

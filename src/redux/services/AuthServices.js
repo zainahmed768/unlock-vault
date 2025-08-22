@@ -8,6 +8,7 @@ import {
   RESEND_OTP,
   RESET_PASSWORD,
   VERIFY_ACCOUNT,
+  VERIFY_PASSWORD_OTP,
 } from "../../utils/endpoints";
 
 const AuthServices = createApi({
@@ -45,6 +46,14 @@ const AuthServices = createApi({
     verifyAccount: build.mutation({
       query: (data) => ({
         url: VERIFY_ACCOUNT,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["editInfo"],
+    }),
+    verifyPasswordOtp: build.mutation({
+      query: (data) => ({
+        url: VERIFY_PASSWORD_OTP,
         method: "POST",
         body: data,
       }),
@@ -91,4 +100,5 @@ export const {
   useResetPasswordMutation,
   useChangePasswordMutation,
   useResendOtpMutation,
+  useVerifyPasswordOtpMutation,
 } = AuthServices;
