@@ -109,6 +109,7 @@ import MyTokens from "../pages/MyProfile/MyTokens";
 import AuthRoute from "./AuthRoute";
 import PrivateRoutes from "./PrivateRoutes";
 import VerifyPasswordOTP from "../pages/Auth/VerifyPasswordOTP";
+import ChangePassword from "../pages/MyProfile/ChangePassword";
 
 const PublicRoutes = () => {
   return (
@@ -142,6 +143,7 @@ const PublicRoutes = () => {
 
           {/* User profile pages */}
           <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/my-subscription" element={<MySubscriptions />} />
           <Route path="/my-tokens" element={<MyTokens />} />
         </Route>

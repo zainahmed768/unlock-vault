@@ -184,3 +184,86 @@ export const PasswordValidation = (passwordState, setFormErrors) => {
   setFormErrors(errors);
   return isValid;
 };
+
+export const UpdateProfileValidation = (userData, setFormErrors) => {
+  let errors = {};
+  let isValid = true;
+  console.log(userData, "userData");
+
+  // ✅ First name (only if provided)
+  if (userData?.first_name) {
+    if (userData.first_name.length > 20) {
+      errors.first_name = ["First name must be under 20 characters"];
+      isValid = false;
+    }
+  }
+
+  // ✅ Last name (only if provided)
+  if (userData?.last_name) {
+    if (userData.last_name.length > 20) {
+      errors.last_name = ["Last name must be under 20 characters"];
+      isValid = false;
+    }
+  }
+
+  // ✅ Email (only if provided)
+  if (userData?.email) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email)) {
+      errors.email = ["Invalid email format"];
+      isValid = false;
+    }
+  }
+
+  // ✅ Phone number (only if provided)
+  if (userData?.phone_number) {
+    // Check if the phone number format is valid
+    if (
+      !/^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/gm.test(
+        userData.phone_number
+      )
+    ) {
+      if (!errors.phone_number) errors.phone_number = [];
+      errors.phone_number.push("Phone number is not valid");
+      isValid = false;
+    }
+  }
+
+  setFormErrors(errors);
+  return isValid;
+};
+
+export const ChangePasswordValidation = (userData, setFormErrors) => {
+  let errors = {};
+  let isValid = true;
+  console.log(userData, "changePasswordData");
+
+  // ✅ Current password (required)
+  if (!userData?.current_password) {
+    errors.current_password = ["Current password is required"];
+    isValid = false;
+  }
+
+  // ✅ New password (required + length rules)
+  if (!userData?.new_password) {
+    errors.new_password = ["New password is required"];
+    isValid = false;
+  } else if (userData.new_password.length < 8) {
+    errors.new_password = ["New password must be at least 8 characters"];
+    isValid = false;
+  } else if (userData.new_password.length > 20) {
+    errors.new_password = ["New password must not be greater than 20 characters"];
+    isValid = false;
+  }
+
+  // ✅ Confirm password (must match new password)
+  if (!userData?.new_password_confirmation) {
+    errors.new_password_confirmation = ["Password confirmation is required"];
+    isValid = false;
+  } else if (userData.new_password !== userData.new_password_confirmation) {
+    errors.new_password_confirmation = ["Passwords do not match"];
+    isValid = false;
+  }
+
+  setFormErrors(errors);
+  return isValid;
+};

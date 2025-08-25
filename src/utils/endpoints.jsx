@@ -14,3 +14,5 @@ export const RESET_PASSWORD = "/auth/reset-password";
 export const RESEND_OTP = "/auth/resend-code";
 
 export const CHANGE_PASSWORD = "/auth/change-password";
+
+export const UPDATE_PROFILE = "/auth/update-profile";

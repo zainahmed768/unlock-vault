@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import PageHeader from "../../components/PageHeader";
@@ -7,8 +7,78 @@ import ProfileLayout from "../../components/layout/ProfileLayout";
 import { Link } from "react-router-dom";
 import "../../assets/css/profile.css";
 import CommonInputField from "../../components/CommonInputField/CommonInputField";
-
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
+import { UpdateProfileValidation } from "../../helper/HelperValidation";
+import { useUpdateProfileMutation } from "../../redux/services/AuthServices";
+import Alert from "../../components/Alert/Alert";
+import InputMask from "react-input-mask";
+import { setUserToken } from "../../redux/reducers/AuthReducer";
 const MyProfile = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state?.AuthReducer?.user);
+  const [updateProfile, response] = useUpdateProfileMutation();
+  const [edit, setEdit] = useState(false);
+  const [userData, setUserData] = useState({
+    first_name: "",
+    last_name: "",
+    // email: "",
+    phone_number: "",
+  });
+  const [formErrors, setFormErrors] = useState(null);
+  const handleEditProfile = () => {
+    setEdit((edit) => !edit);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (UpdateProfileValidation(userData, setFormErrors)) {
+      console.log("Profile updated:", userData);
+      let data = new FormData();
+      userData?.first_name && data.append("first_name", userData?.first_name);
+      userData?.last_name && data.append("last_name", userData?.last_name);
+      userData?.phone_number &&
+        data.append("phone_number", userData?.phone_number);
+      updateProfile(data);
+    }
+  };
+
+  useEffect(() => {
+    setUserData({
+      first_name: user?.first_name ? user?.first_name : "",
+      last_name: user?.last_name ? user?.last_name : "",
+      // email: user?.email ? user?.email : "",
+      phone_number: user?.phone_number ? user?.phone_number : "",
+    });
+  }, [user]);
+
+  useEffect(() => {
+    console.log(response, "response");
+
+    if (response?.isSuccess) {
+      Alert({
+        title: "Success",
+        text: response?.data?.message,
+      });
+      dispatch(setUserToken({ user: response?.data?.data }));
+      setFormErrors(null); // clear errors after success
+      setEdit(false);
+    }
+
+    if (response?.isError) {
+      const backendErrors = response?.error?.data?.errors;
+      if (backendErrors) {
+        setFormErrors(backendErrors); // <-- store backend validation errors
+      }
+
+      Alert({
+        title: "Error",
+        text: response?.error?.data?.message,
+        iconStyle: "error",
+      });
+    }
+  }, [response]);
+
   return (
     <>
       <ProfileLayout type={"My Profile"}>
@@ -19,9 +89,9 @@ const MyProfile = () => {
           </div>
 
           <div class="col-lg-6 col d-flex justify-content-end my-lg-4 align-items-center">
-            <Link href="/edit-profile" className="gradient-button">
+            <Button onClick={handleEditProfile} className="gradient-button">
               Edit Profile
-            </Link>
+            </Button>
           </div>
         </div>
 
@@ -30,41 +100,69 @@ const MyProfile = () => {
             <p class="m-0 secondary-regular-font dark-color label level-5">
               First Name
             </p>
-            {/* <p class="m-0 secondary-bold-font bold-font  dark-color value level-5">
-              Jordan Gilbert
-            </p> */}
-            <CommonInputField value={"Jordan"} />
+            <CommonInputField
+              value={userData?.first_name}
+              onChange={(e) =>
+                setUserData({ ...userData, first_name: e.target.value })
+              }
+              errors={formErrors?.first_name ? formErrors?.first_name : null}
+              disabled={!edit}
+            />
           </div>
           <div class="col-md-4 my-md-4 my-2 info ">
             <p class="m-0 secondary-regular-font dark-color label level-5">
               Last Name
             </p>
-            {/* <p class="m-0 secondary-bold-font bold-font dark-color value level-5">
-              Jordan Gilbert
-            </p> */}
-            <CommonInputField value={"Gilbert"} />
+
+            <CommonInputField
+              value={userData?.last_name}
+              onChange={(e) =>
+                setUserData({ ...userData, last_name: e.target.value })
+              }
+              errors={formErrors?.last_name ? formErrors?.last_name : null}
+              disabled={!edit}
+            />
           </div>
+          {/* {user?.phone_number && ( */}
           <div class="col-md-4 my-md-4 my-2 info ">
             <p class="m-0 secondary-regular-font dark-color label level-5">
               Phone Number
             </p>
-            {/* <p class="m-0 secondary-bold-font bold-font dark-color value level-5">
-              123456789
-            </p> */}
-            <CommonInputField value={"123456789"} />
+
+            <InputMask
+              value={userData?.phone_number}
+              onChange={(e) =>
+                setUserData({
+                  ...userData,
+                  phone_number: e.target.value,
+                })
+              }
+              style={{ height: "50px" }}
+              mask="999-999-9999"
+              className={
+                formErrors?.phone_number
+                  ? "border-danger form-control dashboard-input"
+                  : "form-control dashboard-input"
+              }
+              maskChar=" "
+              disabled={!edit}
+            />
+            {formErrors?.phone_number ? (
+              <p
+                className="error"
+                style={{
+                  color: "red",
+                  fontSize: "13px",
+                  marginBottom: "0",
+                  marginTop: "10px",
+                }}
+              >
+                {formErrors?.phone_number}
+              </p>
+            ) : null}
           </div>
-        </div>
-        <div class="d-flex profile-row flex-column flex-md-row align-items-start align-items-md-center my-md-3 my-2">
-          <div class="info col-md-6">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
-              Email Address
-            </p>
-            {/* <p class="m-0 secondary-bold-font bold-font dark-color value level-5">
-              Jordangilbert@sample.com
-            </p> */}
-            <CommonInputField value={"Jordangilbert@sample.com"} />
-          </div>
-          <div class="info col-md-6 px-md-3 px-0 my-md-3 my-2">
+          {/* )} */}
+          <div class="col-md-4 my-md-4 my-2 info ">
             <p class="m-0 secondary-regular-font dark-color label level-5">
               Password
             </p>
@@ -82,6 +180,16 @@ const MyProfile = () => {
             </p>
           </div>
         </div>
+
+        {edit && (
+          <div class="d-flex profile-row flex-column flex-md-row align-items-start align-items-md-center my-md-3 my-2">
+            <div class="info col-md-6">
+              <Button onClick={handleSubmit} className="gradient-button">
+                Save
+              </Button>
+            </div>
+          </div>
+        )}
       </ProfileLayout>
     </>
   );

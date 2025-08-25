@@ -3,9 +3,23 @@ import { Col, Container, Row } from "react-bootstrap";
 import { WebLogo } from "../constant/Index";
 import { Link, useLocation } from "react-router-dom";
 import { MdWindow } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import Alert from "./Alert/Alert";
+import { setlogoutUser } from "../redux/reducers/AuthReducer";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
+  const userToken = useSelector((state) => state?.AuthReducer?.userToken);
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(setlogoutUser());
+    Alert({
+      title: "success",
+      text: "you logout successfully",
+    });
+    navigate("/");
+  };
   return (
     <>
       <header id="top">
@@ -14,7 +28,7 @@ const Header = () => {
             {/* <Col lg="1"></Col> */}
             <Col lg="12">
               <div className="header-wrapper">
-                <nav class="navbar">
+                <nav class={!userToken ? "navbar" : "navbar no-sign-in"}>
                   {/* <ul class="nav-left">
                     <li>
                       <a href="#" class="active">
@@ -120,28 +134,51 @@ const Header = () => {
                         Contact us
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        to={"/sign-in"}
-                        class={location?.pathname == "/sign-in" && "active"}
-                      >
-                        {location?.pathname == "/sign-in" && (
-                          <MdWindow size={17} className="me-1" />
-                        )}
-                        Sign In
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={"/my-profile"}
-                        class={location?.pathname == "/my-profile" && "active"}
-                      >
-                        {location?.pathname == "/my-profile" && (
-                          <MdWindow size={17} className="me-1" />
-                        )}
-                        Profile
-                      </Link>
-                    </li>
+                    {!userToken ? (
+                      <li>
+                        <Link
+                          to={"/sign-in"}
+                          class={location?.pathname == "/sign-in" && "active"}
+                        >
+                          {location?.pathname == "/sign-in" && (
+                            <MdWindow size={17} className="me-1" />
+                          )}
+                          Sign In
+                        </Link>
+                      </li>
+                    ) : (
+                      ""
+                    )}
+                    {userToken ? (
+                      <>
+                        <li>
+                          <Link
+                            to={"/my-profile"}
+                            class={
+                              location?.pathname == "/my-profile" && "active"
+                            }
+                          >
+                            {location?.pathname == "/my-profile" && (
+                              <MdWindow size={17} className="me-1" />
+                            )}
+                            Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            // to={"/my-profile"}
+                            onClick={handleLogout}
+                          >
+                            Logout
+                            {/* <span>
+                              <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </span> */}
+                          </Link>
+                        </li>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </ul>
                 </nav>
               </div>

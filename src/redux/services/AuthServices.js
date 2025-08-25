@@ -7,6 +7,7 @@ import {
   REGISTER_URL,
   RESEND_OTP,
   RESET_PASSWORD,
+  UPDATE_PROFILE,
   VERIFY_ACCOUNT,
   VERIFY_PASSWORD_OTP,
 } from "../../utils/endpoints";
@@ -87,6 +88,20 @@ const AuthServices = createApi({
         body: data,
       }),
     }),
+    updateProfile: build.mutation({
+      query: (data) => ({
+        url: UPDATE_PROFILE,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    changeProfilePassword: build.mutation({
+      query: (data) => ({
+        url: CHANGE_PASSWORD,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -101,4 +116,6 @@ export const {
   useChangePasswordMutation,
   useResendOtpMutation,
   useVerifyPasswordOtpMutation,
+  useUpdateProfileMutation,
+  useChangeProfilePasswordMutation,
 } = AuthServices;

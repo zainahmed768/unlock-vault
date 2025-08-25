@@ -164,6 +164,13 @@ header#top {
   border-radius: 50%;
   object-fit: contain;
 }
+header#top .header-wrapper .no-sign-in {
+  justify-content: flex-start;
+}
+header#top .header-wrapper .no-sign-in {
+  justify-content: flex-start;
+  gap: 222px;
+}
 /* navbar responsive starts here */
 @media (max-width: 1443px) {
   header#top .navbar {
