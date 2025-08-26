@@ -74,7 +74,9 @@ const ProfileLayout = ({ children, type, sidebar = true, profileImg }) => {
                           className="profile__img"
                           // src={profileImg ? profileImg : client1Img}
                           src={
-                            user?.profile_img_url ? user?.profile_img_url : profileImg
+                            user?.profile_img_url
+                              ? user?.profile_img_url
+                              : profileImg
                           }
                         />
                         {/* <label className="position-absolute">
@@ -88,9 +90,7 @@ const ProfileLayout = ({ children, type, sidebar = true, profileImg }) => {
                       </div>
                       <div className="heading-bg-wrapper">
                         <h5 className="text-uppercase heading-txt text-center">
-                          {children.props?.userData?.first_name
-                            ? `${children.props.userData.first_name} ${children.props.userData.last_name}`
-                            : "User Name"}
+                          {user?.name ? `${user?.name}` : "User Name"}
                         </h5>
                       </div>
                     </div>

@@ -172,14 +172,26 @@ header#top .header-wrapper .no-sign-in {
   gap: 222px;
 }
 /* navbar responsive starts here */
+@media (max-width: 1600px) {
+  header#top .header-wrapper .no-sign-in {
+    justify-content: flex-start;
+    gap: 274px;
+  }
+}
 @media (max-width: 1443px) {
   header#top .navbar {
     padding: 0 24px;
+  }
+  header#top .header-wrapper .no-sign-in {
+    gap: 198px;
   }
 }
 @media (max-width: 1370px) {
   header#top .navbar ul {
     gap: 19px;
+  }
+  .logo-container {
+    left: 49%;
   }
 }
 @media (max-width: 1290px) {
@@ -629,3 +641,4 @@ div#copyright {
   margin: 30px 0px;
 }
 /* identity ends here */
+

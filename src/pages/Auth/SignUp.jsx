@@ -230,12 +230,12 @@ const SignUp = () => {
                           }
                           style={{ height: "50px" }}
                           mask="999-999-9999"
+                          placeholder="+199-999-9999"
                           className={
                             formErrors?.phone_number
                               ? "border-danger form-control dashboard-input"
                               : "form-control dashboard-input"
                           }
-                          maskChar=" "
                         />
                         {formErrors?.phone_number ? (
                           <p
