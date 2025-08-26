@@ -9,9 +9,11 @@ import PageHeading from "../PageHeading";
 import Sidebar from "./Sidebar";
 import { client1Img } from "../../constant/Index";
 import Footer from "../Footer";
+import { useSelector } from "react-redux";
 
-const ProfileLayout = ({ children, type, sidebar = true }) => {
+const ProfileLayout = ({ children, type, sidebar = true, profileImg }) => {
   const location = useLocation(); // Get current route
+  const user = useSelector((state) => state?.AuthReducer?.user);
   //   console.log(sidebar, "sidebar");
   //   const [imageUrl, setImageUrl] = useState(profileImg);
 
@@ -67,9 +69,13 @@ const ProfileLayout = ({ children, type, sidebar = true }) => {
                       </div> */}
                       <div className="img__wrapp position-relative">
                         <img
-                          src={client1Img}
+                          // src={client1Img}
                           alt="sol tanning"
                           className="profile__img"
+                          // src={profileImg ? profileImg : client1Img}
+                          src={
+                            user?.profile_img_url ? user?.profile_img_url : profileImg
+                          }
                         />
                         {/* <label className="position-absolute">
                           <img src={fileUpload} alt="fileUpload" />
@@ -82,16 +88,16 @@ const ProfileLayout = ({ children, type, sidebar = true }) => {
                       </div>
                       <div className="heading-bg-wrapper">
                         <h5 className="text-uppercase heading-txt text-center">
-                          jORDAN gILBERT
+                          {children.props?.userData?.first_name
+                            ? `${children.props.userData.first_name} ${children.props.userData.last_name}`
+                            : "User Name"}
                         </h5>
                       </div>
                     </div>
                     <Sidebar />
                   </div>
                 </div>
-                <div className="col-lg-8 offset-lg-2 ms-lg-5 ">
-                  {children}
-                </div>
+                <div className="col-lg-8 offset-lg-2 ms-lg-5 ">{children}</div>
               </>
             ) : (
               <>{children}</>

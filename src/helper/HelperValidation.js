@@ -6,8 +6,8 @@ export const signUpValidation = (userData, setFormErrors) => {
   if (!userData || !userData.fname) {
     errors.fname = ["First name is required"];
     isValid = false;
-  } else if (userData.fname.length > 20) {
-    errors.fname = ["First name must be under 20 characters"];
+  } else if (userData.fname.length > 15) {
+    errors.fname = ["First name must be under 15 characters"];
     isValid = false;
   }
 
@@ -15,8 +15,8 @@ export const signUpValidation = (userData, setFormErrors) => {
   if (!userData || !userData.lname) {
     errors.lname = ["Last name is required"];
     isValid = false;
-  } else if (userData.lname.length > 20) {
-    errors.lname = ["Last name must be under 20 characters"];
+  } else if (userData.lname.length > 15) {
+    errors.lname = ["Last name must be under 15 characters"];
     isValid = false;
   }
 
@@ -192,16 +192,16 @@ export const UpdateProfileValidation = (userData, setFormErrors) => {
 
   // ✅ First name (only if provided)
   if (userData?.first_name) {
-    if (userData.first_name.length > 20) {
-      errors.first_name = ["First name must be under 20 characters"];
+    if (userData.first_name.length > 15) {
+      errors.first_name = ["First name must be under 15 characters"];
       isValid = false;
     }
   }
 
   // ✅ Last name (only if provided)
   if (userData?.last_name) {
-    if (userData.last_name.length > 20) {
-      errors.last_name = ["Last name must be under 20 characters"];
+    if (userData.last_name.length > 15) {
+      errors.last_name = ["Last name must be under 15 characters"];
       isValid = false;
     }
   }

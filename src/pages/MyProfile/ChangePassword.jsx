@@ -17,7 +17,6 @@ const ChangePassword = () => {
   const [changeProfilePassword, response] = useChangeProfilePasswordMutation();
   const handleSubmit = () => {
     if (ChangePasswordValidation(password, setFormErrors)) {
-    
       let data = new FormData();
       data.append("current_password", password?.current_password);
       data.append("new_password", password?.new_password);
@@ -36,6 +35,11 @@ const ChangePassword = () => {
         text: response?.data?.message,
       });
       setFormErrors(null);
+      setPassword({
+        current_password: "",
+        new_password: "",
+        new_password_confirmation: "",
+      });
     }
 
     if (response?.isError) {

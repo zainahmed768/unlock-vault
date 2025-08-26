@@ -34,7 +34,7 @@ const NewPassword = () => {
         title: "Success",
         text: response?.data?.message,
       });
-      navigate("/login");
+      navigate("/sign-in");
     }
     if (response?.isError) {
       console.log(response);

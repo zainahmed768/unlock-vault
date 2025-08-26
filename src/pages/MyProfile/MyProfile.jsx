@@ -22,8 +22,9 @@ const MyProfile = () => {
   const [userData, setUserData] = useState({
     first_name: "",
     last_name: "",
-    // email: "",
+    email: "",
     phone_number: "",
+    profile_img: null, // image
   });
   const [formErrors, setFormErrors] = useState(null);
   const handleEditProfile = () => {
@@ -39,6 +40,9 @@ const MyProfile = () => {
       userData?.last_name && data.append("last_name", userData?.last_name);
       userData?.phone_number &&
         data.append("phone_number", userData?.phone_number);
+      userData?.profile_img &&
+        data.append("profile_img", userData?.profile_img); // ✅ image
+
       updateProfile(data);
     }
   };
@@ -47,8 +51,9 @@ const MyProfile = () => {
     setUserData({
       first_name: user?.first_name ? user?.first_name : "",
       last_name: user?.last_name ? user?.last_name : "",
-      // email: user?.email ? user?.email : "",
+      email: user?.email ? user?.email : "",
       phone_number: user?.phone_number ? user?.phone_number : "",
+      profile_img: null,
     });
   }, [user]);
 
@@ -81,7 +86,7 @@ const MyProfile = () => {
 
   return (
     <>
-      <ProfileLayout type={"My Profile"}>
+      <ProfileLayout type={"My Profile"} profileImg={user?.profile_img}>
         <div class="row">
           <div class="col-lg-6 col">
             <h2 class="mt-3 mb-0 heading-txt text-uppercase">My Profile</h2>
@@ -123,6 +128,16 @@ const MyProfile = () => {
               disabled={!edit}
             />
           </div>
+          <div class="col-md-4 my-md-4 my-2 info">
+            <p class="m-0 secondary-regular-font dark-color label level-5">
+              Email
+            </p>
+            <CommonInputField
+              value={userData?.email}
+              // errors={formErrors?.first_name ? formErrors?.first_name : null}
+              disabled={true}
+            />
+          </div>
           {/* {user?.phone_number && ( */}
           <div class="col-md-4 my-md-4 my-2 info ">
             <p class="m-0 secondary-regular-font dark-color label level-5">
@@ -160,6 +175,22 @@ const MyProfile = () => {
                 {formErrors?.phone_number}
               </p>
             ) : null}
+          </div>
+          {/* )} */}
+          {/* {edit && ( */}
+          <div className="col-md-4 my-md-4 my-2 info">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
+              Profile Image
+            </p>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={(e) =>
+                setUserData({ ...userData, profile_img: e.target.files[0] })
+              }
+              disabled={!edit}
+            />
           </div>
           {/* )} */}
           <div class="col-md-4 my-md-4 my-2 info ">

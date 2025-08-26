@@ -156,7 +156,7 @@ const Login = () => {
                         </button>
                       </div>
 
-                      {/* <div className="form-group my-3 or-row text-center">
+                      <div className="form-group my-3 or-row text-center">
                         <h6 className="heading-txt">OR</h6>
                       </div>
 
@@ -164,7 +164,7 @@ const Login = () => {
                         <Link to="/sign-up" className="gradient-button">
                           Sign Up
                         </Link>
-                      </div> */}
+                      </div>
                     </form>
                   </div>
                 </div>

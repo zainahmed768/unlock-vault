@@ -16,7 +16,7 @@ const Header = () => {
     dispatch(setlogoutUser());
     Alert({
       title: "success",
-      text: "you logout successfully",
+      text: "Logout successfully",
     });
     navigate("/");
   };

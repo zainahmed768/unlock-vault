@@ -10,7 +10,7 @@ import {
   Card,
   Form,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -40,9 +40,11 @@ import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
 import CustomModal from "../components/CustomModal";
 const Home = () => {
+  const navigate = useNavigate();
   const [activeKey, setActiveKey] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [qr, setQr] = useState(false);
+  const [step, setStep] = useState(1);
   const toggleAccordion = (key) => {
     setActiveKey(activeKey === key ? null : key);
   };
@@ -93,8 +95,23 @@ const Home = () => {
   const handleClose = () => {
     setShowModal(false);
   };
-  const handleQr = () => {
-    setQr(true);
+  // const handleQr = () => {
+  //   // setQr(true);
+  //   if (step === 2) {
+  //     // final step → redirect
+  //     navigate("/sign-up");
+  //   } else {
+  //     setStep((prev) => prev + 1);
+  //   }
+  // };
+
+  const handleNext = () => {
+    if (step === 2) {
+      // final step → redirect
+      navigate("/sign-up");
+    } else {
+      setStep((prev) => prev + 1);
+    }
   };
   return (
     <>
@@ -607,7 +624,12 @@ const Home = () => {
               </Row>
             </div>
             <div className="upload-img-wrapper text-center">
-              {qr ? (
+              {step === 1 && (
+                <figure>
+                  <img src={identityImg} className="img-fluid" alt="" />
+                </figure>
+              )}
+              {step === 2 && (
                 <figure className="qr-img mt-4">
                   <div className="qr-heading-txt-wrapper">
                     <h6 className="heading-txt">
@@ -616,17 +638,15 @@ const Home = () => {
                   </div>
                   <img src={qrImg} className="img-fluid" alt="" />
                 </figure>
-              ) : (
-                <figure>
-                  <img src={identityImg} className="img-fluid" alt="" />
-                </figure>
               )}
             </div>
+
             <div className="upload-submit-btn-wrapper text-center">
-              <button onClick={handleQr} className="gradient-button">
-                Get Started
+              <button onClick={handleNext} className="gradient-button">
+                {step === 2 ? "Continue" : "Get Started"}
               </button>
             </div>
+
             <div className="upload-txt-wrapper text-center mt-3">
               <p className="mb-0">
                 By proceeding, you agree to our{" "}

@@ -98,7 +98,7 @@ const VerifyPasswordOTP = () => {
                             "Submit"
                           )}
                         </button>
-                        <div className="form-group my-4 text-center">
+                        {/* <div className="form-group my-4 text-center">
                           <p
                             className="text-decoration-none "
                             // to="/forgot-password"
@@ -107,7 +107,7 @@ const VerifyPasswordOTP = () => {
                           >
                             Resend Otp
                           </p>
-                        </div>
+                        </div> */}
                       </div>
                     </form>
                   </div>
