@@ -14,6 +14,7 @@ import { BeatLoader } from "react-spinners";
 import Alert from "../../components/Alert/Alert";
 import { useLoginMutation } from "../../redux/services/AuthServices";
 import { signInValidation } from "../../helper/HelperValidation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
 
   const handleSubmit = (e) => {
@@ -108,18 +110,18 @@ const Login = () => {
                             setLogin({ ...login, email: e.target.value })
                           }
                           errors={formErrors?.email ? formErrors?.email : null}
-                          placeholder="youremail@gmail.com"
+                          placeholder="Enter the Email"
                           height="50px"
                         />
                       </div>
 
-                      <div className="form-group mb-4">
+                      <div className="form-group mb-4 position-relative">
                         <label>
                           <span className="text-danger">*</span>{" "}
                           <span>Password</span>
                         </label>
                         <CommonInputField
-                          type="password"
+                          type={showPassword ? "text" : "password"}
                           className="form-control"
                           placeholder="Enter the password"
                           height="50px"
@@ -131,9 +133,50 @@ const Login = () => {
                             formErrors?.password ? formErrors?.password : null
                           }
                         />
+                        <span
+                          className="position-absolute"
+                          style={{
+                            right: "15px",
+                            top: formErrors?.password ? "50%" : "67%",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            color: "#fff",
+                          }}
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
                       </div>
 
-                      <div className="form-group my-4">
+                      {/* <div className="form-group my-4">
+                        <Link
+                          className="text-secondary forgot-text text-decoration-none"
+                          to="/forgot-password"
+                        >
+                          Forgot password?
+                        </Link>
+                      </div> */}
+                      <div className="form-group my-3 d-flex justify-content-between align-items-center">
+                        <div className="form-check">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id="rememberMe"
+                            // checked={login?.rememberMe || false}
+                            // onChange={(e) =>
+                            //   setLogin({
+                            //     ...login,
+                            //     rememberMe: e.target.checked,
+                            //   })
+                            // }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="rememberMe"
+                          >
+                            Remember Me
+                          </label>
+                        </div>
                         <Link
                           className="text-secondary forgot-text text-decoration-none"
                           to="/forgot-password"
@@ -149,7 +192,7 @@ const Login = () => {
                           className="gradient-button w-100"
                         >
                           {response?.isLoading ? (
-                            <BeatLoader color="#f9911c" size={20} />
+                            <BeatLoader color="#fff" size={20} />
                           ) : (
                             "Login"
                           )}

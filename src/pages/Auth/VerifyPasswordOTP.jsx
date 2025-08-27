@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { setUserToken } from "../../redux/reducers/AuthReducer";
 import Alert from "../../components/Alert/Alert";
 import {
+  useForgetPasswordMutation,
   useResendOtpMutation,
   useVerifyAccountMutation,
   useVerifyPasswordOtpMutation,
@@ -20,7 +21,7 @@ const VerifyPasswordOTP = () => {
   const [otp, setOtp] = useState(null);
   const [formErrors, setFormErrors] = useState(null);
   const [verifyAccount, response] = useVerifyPasswordOtpMutation();
-
+  const [forgetPassword, forgotResponse] = useForgetPasswordMutation();
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(otp, "otp sdcjnsdj");
@@ -31,7 +32,11 @@ const VerifyPasswordOTP = () => {
       verifyAccount(data);
     }
   };
-
+  const HandleSend = () => {
+    let data = new FormData();
+    data.append("email", localStorage.getItem("email"));
+    forgetPassword(data);
+  };
   useEffect(() => {
     console.log(response, "sdycgsd");
     if (response?.isSuccess) {
@@ -53,6 +58,28 @@ const VerifyPasswordOTP = () => {
       });
     }
   }, [response]);
+
+  useEffect(() => {
+    console.log(forgotResponse, "sdycgsd");
+    if (forgotResponse?.isSuccess) {
+      //   dispatch(setUserToken(forgotResponse?.data?.data));
+      // localStorage.setItem("otp", otp);
+      Alert({
+        title: "Success",
+        text: forgotResponse?.data?.message,
+      });
+      // navigate("/new-password");
+    }
+
+    if (forgotResponse?.isError) {
+      console.log(forgotResponse);
+      Alert({
+        title: "Error",
+        text: forgotResponse?.error?.data?.message,
+        iconStyle: "error",
+      });
+    }
+  }, [forgotResponse]);
   return (
     <>
       {/* page header starts here */}
@@ -98,16 +125,22 @@ const VerifyPasswordOTP = () => {
                             "Submit"
                           )}
                         </button>
-                        {/* <div className="form-group my-4 text-center">
+                        <div className="form-group my-4 text-center">
                           <p
                             className="text-decoration-none "
                             // to="/forgot-password"
-                            // onClick={HandleSend}
-                            style={{ cursor: "pointer", color: "#6b00ff" }}
+                            onClick={HandleSend}
+                            style={{
+                              cursor: "pointer",
+                              color: "#6b00ff",
+                              opacity: forgotResponse?.isLoading && 0.7,
+                            }}
                           >
-                            Resend Otp
+                            {forgotResponse?.isLoading
+                              ? "Resend Otp..."
+                              : "Resend Otp"}
                           </p>
-                        </div> */}
+                        </div>
                       </div>
                     </form>
                   </div>

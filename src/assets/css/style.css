@@ -174,8 +174,7 @@ header#top .header-wrapper .no-sign-in {
 /* navbar responsive starts here */
 @media (max-width: 1600px) {
   header#top .header-wrapper .no-sign-in {
-    justify-content: flex-start;
-    gap: 274px;
+    gap: 203px;
   }
 }
 @media (max-width: 1443px) {
@@ -183,9 +182,15 @@ header#top .header-wrapper .no-sign-in {
     padding: 0 24px;
   }
   header#top .header-wrapper .no-sign-in {
-    gap: 198px;
+    gap: 0px;
+    justify-content: space-between;
   }
 }
+/* @media (max-width: 1435px) {
+  header#top .header-wrapper .no-sign-in {
+    gap: 174px;
+  }
+} */
 @media (max-width: 1370px) {
   header#top .navbar ul {
     gap: 19px;
@@ -641,4 +646,7 @@ div#copyright {
   margin: 30px 0px;
 }
 /* identity ends here */
-
+.profile__sidebar .heading-bg-wrapper h5 {
+  font-size: 15px;
+  margin: 0px;
+}

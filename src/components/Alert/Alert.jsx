@@ -30,7 +30,7 @@ function Alert({ title, text, iconStyle = "success" }) {
     text: `${text}!`,
     background: "#000", // black background
     color: "#fff",
-    confirmButtonColor: "#ff4757", // red button
+    confirmButtonColor: "#6b00ff", // red button
     customClass: {
       popup: "swal2-border-radius", // you can still use built-in classes
     },

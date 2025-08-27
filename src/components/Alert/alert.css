@@ -21,7 +21,7 @@
 
 /* Confirm button */
 .custom-swal-button {
-  background-color: #ff4757 !important;
+  background-color: #6b00ff !important;
   color: #fff !important;
   border-radius: 6px !important;
   padding: 8px 20px !important;
@@ -30,5 +30,5 @@
 }
 
 .custom-swal-button:hover {
-  background-color: #e84118 !important;
+  background-color: #6a00ffdf !important;
 }

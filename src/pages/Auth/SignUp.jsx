@@ -12,6 +12,8 @@ import { signUpValidation } from "../../helper/HelperValidation";
 import Alert from "../../components/Alert/Alert";
 import InputMask from "react-input-mask";
 import { BeatLoader } from "react-spinners";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [authRegister, { data, error, isLoading, isSuccess, isError }] =
@@ -25,6 +27,9 @@ const SignUp = () => {
     password: "",
     password_confirm: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [formErrors, setFormErrors] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -93,10 +98,11 @@ const SignUp = () => {
   // }, [response]);
 
   useEffect(() => {
+    console.log(isSuccess, data, "isSuccess");
     if (isSuccess) {
       Alert({
         title: "Success",
-        text: "Account created successfully. Please verify your email by clicking the link we sent to your inbox.",
+        text: data?.message,
       });
       localStorage.setItem("email", signup?.email);
       setSignUp({
@@ -110,10 +116,31 @@ const SignUp = () => {
       navigate("/verify-otp");
     }
 
+    // if (isError) {
+    //   Alert({
+    //     title: "Error",
+    //     text: error?.data?.message || "Something went wrong",
+    //     iconStyle: "error",
+    //   });
+    // }
+
     if (isError) {
+      const validationErrors = error?.data?.errors;
+      let errorMessage = error?.data?.message || "Something went wrong";
+
+      // If there are validation errors, pick the first one (or join all)
+      if (validationErrors && typeof validationErrors === "object") {
+        // Example: pick first error
+        const firstError = Object.values(validationErrors).flat()[0];
+        errorMessage = firstError;
+
+        // Or, if you want to show all errors combined:
+        // errorMessage = Object.values(validationErrors).flat().join(", ");
+      }
+
       Alert({
         title: "Error",
-        text: error?.data?.message || "Something went wrong",
+        text: errorMessage,
         iconStyle: "error",
       });
     }
@@ -154,11 +181,12 @@ const SignUp = () => {
                             onChange={(e) =>
                               setSignUp({ ...signup, fname: e.target.value })
                             }
-                            placeholder="John"
+                            placeholder="Enter the First Name"
                             height="50px"
                             errors={
                               formErrors?.fname ? formErrors?.fname : null
                             }
+                            maxLength={15}
                           />
                         </div>
                         <div className="col-lg-6">
@@ -173,11 +201,12 @@ const SignUp = () => {
                             onChange={(e) =>
                               setSignUp({ ...signup, lname: e.target.value })
                             }
-                            placeholder="Doe"
+                            placeholder="Enter the Last Name"
                             height="50px"
                             errors={
                               formErrors?.lname ? formErrors?.lname : null
                             }
+                            maxLength={15}
                           />
                         </div>
                       </div>
@@ -192,7 +221,7 @@ const SignUp = () => {
                           onChange={(e) =>
                             setSignUp({ ...signup, email: e.target.value })
                           }
-                          placeholder="youremail@gmail.com"
+                          placeholder="Enter the Email"
                           height="50px"
                           errors={formErrors?.email ? formErrors?.email : null}
                         />
@@ -230,7 +259,7 @@ const SignUp = () => {
                           }
                           style={{ height: "50px" }}
                           mask="999-999-9999"
-                          placeholder="+199-999-9999"
+                          placeholder="Enter the Phone Number"
                           className={
                             formErrors?.phone_number
                               ? "border-danger form-control dashboard-input"
@@ -251,13 +280,13 @@ const SignUp = () => {
                           </p>
                         ) : null}
                       </div>
-                      <div className="form-group mb-4">
+                      <div className="form-group mb-4 position-relative">
                         <label>
                           <span className="text-danger">*</span> Password
                         </label>
                         <CommonInputField
-                          type="password"
-                          className="form-control"
+                          type={showPassword ? "text" : "password"}
+                          className="form-control pe-5" // pe-5 gives padding for the eye button
                           placeholder="Enter the password"
                           height="50px"
                           value={signup?.password}
@@ -268,14 +297,29 @@ const SignUp = () => {
                             formErrors?.password ? formErrors?.password : null
                           }
                         />
+
+                        {/* Eye Icon */}
+                        <span
+                          className="position-absolute"
+                          style={{
+                            right: "15px",
+                            top: formErrors?.password ? "50%" : "67%",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            color: "#fff",
+                          }}
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
                       </div>
-                      <div className="form-group mb-4">
+                      <div className="form-group mb-4 position-relative">
                         <label>
                           <span className="text-danger">*</span> Confirm
                           Password
                         </label>
                         <CommonInputField
-                          type="password"
+                          type={showConfirmPassword ? "text" : "password"}
                           className="form-control"
                           placeholder="Enter the Confirm password"
                           height="50px"
@@ -292,6 +336,21 @@ const SignUp = () => {
                               : null
                           }
                         />
+                        <span
+                          className="position-absolute"
+                          style={{
+                            right: "15px",
+                            top: formErrors?.password_confirm ? "50%" : "67%",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            color: "#fff",
+                          }}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
+                        >
+                          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
                       </div>
 
                       <div className="form-group my-4">

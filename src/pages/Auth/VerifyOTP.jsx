@@ -38,8 +38,34 @@ const VerifyOTP = () => {
     }
   };
 
+  // useEffect(() => {
+  //   console.log(response, "sdycgsd");
+  //   if (response?.isSuccess) {
+  //     dispatch(setUserToken(response?.data?.data));
+  //     Alert({
+  //       title: "Success",
+  //       text: response?.data?.message,
+  //     });
+  //     navigate("/");
+  //   }
+  //   if (responsed?.isSuccess) {
+  //     Alert({
+  //       title: "Success",
+  //       text: responsed?.data?.message,
+  //     });
+  //   }
+  //   if (response?.isError) {
+  //     console.log(response);
+  //     Alert({
+  //       title: "Error",
+  //       text: response?.error?.data?.message,
+  //       iconStyle: "error",
+  //     });
+  //   }
+  // }, [response, responsed]);
+
+  // ✅ Handle "response"
   useEffect(() => {
-    console.log(response, "sdycgsd");
     if (response?.isSuccess) {
       dispatch(setUserToken(response?.data?.data));
       Alert({
@@ -48,21 +74,34 @@ const VerifyOTP = () => {
       });
       navigate("/");
     }
-    if (responsed?.isSuccess) {
-      Alert({
-        title: "Success",
-        text: responsed?.data?.message,
-      });
-    }
+
     if (response?.isError) {
-      console.log(response);
       Alert({
         title: "Error",
         text: response?.error?.data?.message,
         iconStyle: "error",
       });
     }
-  }, [response, responsed]);
+  }, [response, dispatch, navigate]);
+
+  // ✅ Handle "responsed"
+  useEffect(() => {
+    if (responsed?.isSuccess) {
+      Alert({
+        title: "Success",
+        text: responsed?.data?.message,
+      });
+    }
+
+    if (responsed?.isError) {
+      Alert({
+        title: "Error",
+        text: responsed?.error?.data?.message,
+        iconStyle: "error",
+      });
+    }
+  }, [responsed]);
+
   return (
     <>
       {/* page header starts here */}
@@ -87,6 +126,7 @@ const VerifyOTP = () => {
                         </label>
                         <OTPInput
                           value={otp}
+                          inputType="number"
                           onChange={setOtp}
                           numInputs={6}
                           renderSeparator={<span>-</span>}

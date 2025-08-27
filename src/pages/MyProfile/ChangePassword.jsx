@@ -6,6 +6,7 @@ import { useChangeProfilePasswordMutation } from "../../redux/services/AuthServi
 import { ChangePasswordValidation } from "../../helper/HelperValidation";
 import { BeatLoader } from "react-spinners";
 import Alert from "../../components/Alert/Alert";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ChangePassword = () => {
   const [password, setPassword] = useState({
@@ -14,6 +15,9 @@ const ChangePassword = () => {
     new_password_confirmation: "",
   });
   const [formErrors, setFormErrors] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showNewConfirmPassword, setShowNewConfirmPassword] = useState(false);
   const [changeProfilePassword, response] = useChangeProfilePasswordMutation();
   const handleSubmit = () => {
     if (ChangePasswordValidation(password, setFormErrors)) {
@@ -66,46 +70,74 @@ const ChangePassword = () => {
         </div>
 
         <div class="row profile-row">
-          <div class="col-md-4 my-md-4 my-2 info">
+          <div class="col-md-4 my-md-4 my-2 info position-relative">
             <p class="m-0 secondary-regular-font dark-color label level-5">
               Current password
             </p>
             <CommonInputField
-              type={"password"}
+              type={showPassword ? "text" : "password"}
               value={password?.current_password}
               onChange={(e) =>
                 setPassword({ ...password, current_password: e.target.value })
               }
+              placeholder={"Enter the Current password"}
               errors={
                 formErrors?.current_password
                   ? formErrors?.current_password
                   : null
               }
             />
+            <span
+              className="position-absolute"
+              style={{
+                right: "25px",
+                top: "60%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "#fff",
+              }}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
-          <div class="col-md-4 my-md-4 my-2 info ">
+          <div class="col-md-4 my-md-4 my-2 info position-relative">
             <p class="m-0 secondary-regular-font dark-color label level-5">
               New password
             </p>
 
             <CommonInputField
-              type={"password"}
+              type={showConfirmPassword ? "text" : "password"}
               value={password?.new_password}
               onChange={(e) =>
                 setPassword({ ...password, new_password: e.target.value })
               }
+              placeholder={"Enter the New password"}
               errors={
                 formErrors?.new_password ? formErrors?.new_password : null
               }
             />
+            <span
+              className="position-absolute"
+              style={{
+                right: "25px",
+                top: "60%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "#fff",
+              }}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
-          <div class="col-md-4 my-md-4 my-2 info ">
+          <div class="col-md-4 my-md-4 my-2 info position-relative">
             <p class="m-0 secondary-regular-font dark-color label level-5">
-              Last Name
+              New Password Confirmation
             </p>
 
             <CommonInputField
-              type={"password"}
+              type={showConfirmPassword ? "text" : "password"}
               value={password?.new_password_confirmation}
               onChange={(e) =>
                 setPassword({
@@ -113,12 +145,26 @@ const ChangePassword = () => {
                   new_password_confirmation: e.target.value,
                 })
               }
+              placeholder={"Enter the New Password Confirmation"}
               errors={
                 formErrors?.new_password_confirmation
                   ? formErrors?.new_password_confirmation
                   : null
               }
             />
+            <span
+              className="position-absolute"
+              style={{
+                right: "25px",
+                top: "60%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "#fff",
+              }}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
         </div>
 

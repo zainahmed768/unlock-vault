@@ -7,6 +7,7 @@ import { useResetPasswordMutation } from "../../redux/services/AuthServices";
 import { PasswordValidation } from "../../helper/HelperValidation";
 import { BeatLoader } from "react-spinners";
 import Alert from "../../components/Alert/Alert";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const NewPassword = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const NewPassword = () => {
     password: "",
     confirm_password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
   const [resetPassword, response] = useResetPasswordMutation();
   const handleSubmit = (e) => {
@@ -65,11 +68,11 @@ const NewPassword = () => {
                   </div>
                   <div className="auth-fields-wrapper mt-5">
                     <form action="">
-                      <div className="form-group mb-4">
+                      <div className="form-group mb-4 position-relative">
                         <label htmlFor="">New password</label>
                         <CommonInputField
                           type="password"
-                          placeholder="*************"
+                          placeholder="Enter the New password"
                           value={password?.password}
                           onChange={(e) =>
                             setPassword({
@@ -79,12 +82,25 @@ const NewPassword = () => {
                           }
                           errors={formErrors?.password}
                         />
+                        <span
+                          className="position-absolute"
+                          style={{
+                            right: "15px",
+                            top: formErrors?.password ? "50%" : "67%",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            color: "#fff",
+                          }}
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
                       </div>
-                      <div className="form-group mb-4">
+                      <div className="form-group mb-4 position-relative" >
                         <label htmlFor="">Re-enter Password</label>
                         <CommonInputField
                           type="password"
-                          placeholder="*************"
+                          placeholder="Enter the Re-enter Password"
                           value={password?.confirm_password}
                           onChange={(e) =>
                             setPassword({
@@ -94,6 +110,21 @@ const NewPassword = () => {
                           }
                           errors={formErrors?.confirm_password}
                         />
+                        <span
+                          className="position-absolute"
+                          style={{
+                            right: "15px",
+                            top: formErrors?.password_confirm ? "50%" : "67%",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            color: "#fff",
+                          }}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
+                        >
+                          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
                       </div>
                       <div className="form-group mt-5">
                         <button

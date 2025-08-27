@@ -110,8 +110,10 @@ const MyProfile = () => {
               onChange={(e) =>
                 setUserData({ ...userData, first_name: e.target.value })
               }
+              placeholder="Enter the First Name"
               errors={formErrors?.first_name ? formErrors?.first_name : null}
               disabled={!edit}
+              maxLength={15}
             />
           </div>
           <div class="col-md-4 my-md-4 my-2 info ">
@@ -124,8 +126,10 @@ const MyProfile = () => {
               onChange={(e) =>
                 setUserData({ ...userData, last_name: e.target.value })
               }
+              placeholder="Enter the Last Name"
               errors={formErrors?.last_name ? formErrors?.last_name : null}
               disabled={!edit}
+              maxLength={15}
             />
           </div>
           <div class="col-md-4 my-md-4 my-2 info">
@@ -154,7 +158,7 @@ const MyProfile = () => {
               }
               style={{ height: "50px" }}
               mask="999-999-9999"
-              placeholder="+199-999-9999"
+              placeholder="Enter the Phone Number"
               className={
                 formErrors?.phone_number
                   ? "border-danger form-control dashboard-input"

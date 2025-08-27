@@ -21,7 +21,7 @@
   font-weight: 500;
   margin-bottom: 9px;
 }
-.auth-card-wrapper .auth-fields-wrapper input {
+.auth-card-wrapper .auth-fields-wrapper input:not([type="checkbox"]) {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(2px) saturate(180%);
   box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2),
@@ -69,7 +69,12 @@
   color: #f9911c !important;
   border: 1px solid #f9911c;
 }
-.auth-sec .otp-fields-wrapper input[type="text"] {
+/* .auth-sec .otp-fields-wrapper input[type="text"] {
+  flex: 1;
+  height: 74px;
+  font-size: 20px;
+} */
+.auth-sec .otp-fields-wrapper input {
   flex: 1;
   height: 74px;
   font-size: 20px;

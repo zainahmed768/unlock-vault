@@ -32,11 +32,31 @@ const ForgotPassword = () => {
       });
       navigate("/verify-password-otp");
     }
+    // if (response?.isError) {
+    //   console.log(response);
+    //   Alert({
+    //     title: "Error",
+    //     text: response?.error?.data?.message,
+    //     iconStyle: "error",
+    //   });
+    // }
+
     if (response?.isError) {
-      console.log(response);
+      const errorData = response?.error?.data;
+      let errorMessage = errorData?.message || "Something went wrong";
+
+      // If there are validation errors, pick the first one
+      if (errorData?.errors && typeof errorData.errors === "object") {
+        const firstError = Object.values(errorData.errors).flat()[0];
+        errorMessage = firstError || errorMessage;
+
+        // OR if you want to show all errors together
+        // errorMessage = Object.values(errorData.errors).flat().join(", ");
+      }
+
       Alert({
         title: "Error",
-        text: response?.error?.data?.message,
+        text: errorMessage,
         iconStyle: "error",
       });
     }
@@ -68,7 +88,7 @@ const ForgotPassword = () => {
                         <CommonInputField
                           type="text"
                           value={email}
-                          placeholder="Youremail@gmail.com"
+                          placeholder="Enter the Email"
                           onChange={(e) => setEmail(e.target.value)}
                           errors={formErrors?.email}
                         />
@@ -93,7 +113,8 @@ const ForgotPassword = () => {
                       <div className="form-group my-3">
                         <div className="col-lg-6 offset-lg-3 text-center">
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={() => navigate("/sign-up")}
                             className="gradient-button w-100"
                           >
                             Sign Up

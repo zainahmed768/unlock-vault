@@ -1,9 +1,112 @@
+// export const signUpValidation = (userData, setFormErrors) => {
+//   let errors = {};
+//   let isValid = true;
+//   console.log("from signup", userData);
+//   // Validate first name
+//   if (!userData || !userData.fname) {
+//     errors.fname = ["First name is required"];
+//     isValid = false;
+//   } else if (userData.fname.length > 15) {
+//     errors.fname = ["First name must be under 15 characters"];
+//     isValid = false;
+//   }
+
+//   // Validate last name
+//   if (!userData || !userData.lname) {
+//     errors.lname = ["Last name is required"];
+//     isValid = false;
+//   } else if (userData.lname.length > 15) {
+//     errors.lname = ["Last name must be under 15 characters"];
+//     isValid = false;
+//   }
+
+//   // Validate email
+//   if (!userData || !userData.email) {
+//     errors.email = ["Email is required"];
+//     isValid = false;
+//   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email)) {
+//     errors.email = ["Invalid email format"];
+//     isValid = false;
+//   }
+
+//   if (userData?.phone_number) {
+//     // Check if the phone number format is valid
+//     if (
+//       !/^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/gm.test(
+//         userData.phone_number
+//       )
+//     ) {
+//       if (!errors.phone_number) errors.phone_number = [];
+//       errors.phone_number.push("Phone number is not valid");
+//       isValid = false;
+//     }
+//   }
+//   // Validate password
+//   if (!userData || !userData.password) {
+//     errors.password = ["Password is required"];
+//     isValid = false;
+//   } else if (userData.password.length < 8 || userData.password.length > 20) {
+//     errors.password = ["Password must be between 8 to 20 characters"];
+//     isValid = false;
+//   } else if (
+//     !/[A-Z]/.test(userData.password) // At least one uppercase letter
+//   ) {
+//     errors.password = ["Password must include at least one uppercase letter"];
+//     isValid = false;
+//   } else if (
+//     !/[a-z]/.test(userData.password) // At least one lowercase letter
+//   ) {
+//     errors.password = ["Password must include at least one lowercase letter"];
+//     isValid = false;
+//   } else if (
+//     !/[0-9]/.test(userData.password) // At least one digit
+//   ) {
+//     errors.password = ["Password must include at least one number"];
+//     isValid = false;
+//   } else if (
+//     !/[!@#$%^&*(),.?":{}|<>]/.test(userData.password) // At least one special character
+//   ) {
+//     errors.password = ["Password must include at least one special character"];
+//     isValid = false;
+//   }
+
+//   // Validate confirm password
+//   if (!userData || !userData.password_confirm) {
+//     errors.password_confirm = ["Confirm password is required"];
+//     isValid = false;
+//   } else if (userData.password_confirm !== userData.password) {
+//     errors.password_confirm = ["Passwords do not match"];
+//     isValid = false;
+//   }
+
+//   // Set errors and return validation status
+//   setFormErrors(errors);
+//   return isValid;
+// };
+
+const validatePassword = (password, fieldName = "Password") => {
+  let errors = [];
+
+  if (!password) {
+    errors.push(`${fieldName} is required`);
+  } else {
+    if (password.length < 6 || password.length > 20) {
+      errors.push(`${fieldName} must be between 6 to 20 characters`);
+    }
+    if (!/\d/.test(password)) {
+      errors.push(`${fieldName} must include at least one number`);
+    }
+  }
+
+  return errors;
+};
+
 export const signUpValidation = (userData, setFormErrors) => {
   let errors = {};
   let isValid = true;
-  console.log("from signup", userData);
-  // Validate first name
-  if (!userData || !userData.fname) {
+
+  // First Name
+  if (!userData?.fname) {
     errors.fname = ["First name is required"];
     isValid = false;
   } else if (userData.fname.length > 15) {
@@ -11,8 +114,8 @@ export const signUpValidation = (userData, setFormErrors) => {
     isValid = false;
   }
 
-  // Validate last name
-  if (!userData || !userData.lname) {
+  // Last Name
+  if (!userData?.lname) {
     errors.lname = ["Last name is required"];
     isValid = false;
   } else if (userData.lname.length > 15) {
@@ -20,8 +123,8 @@ export const signUpValidation = (userData, setFormErrors) => {
     isValid = false;
   }
 
-  // Validate email
-  if (!userData || !userData.email) {
+  // Email
+  if (!userData?.email) {
     errors.email = ["Email is required"];
     isValid = false;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email)) {
@@ -29,49 +132,27 @@ export const signUpValidation = (userData, setFormErrors) => {
     isValid = false;
   }
 
+  // Phone (optional)
   if (userData?.phone_number) {
-    // Check if the phone number format is valid
     if (
       !/^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/gm.test(
         userData.phone_number
       )
     ) {
-      if (!errors.phone_number) errors.phone_number = [];
-      errors.phone_number.push("Phone number is not valid");
+      errors.phone_number = ["Phone number is not valid"];
       isValid = false;
     }
   }
-  // Validate password
-  if (!userData || !userData.password) {
-    errors.password = ["Password is required"];
-    isValid = false;
-  } else if (userData.password.length < 8 || userData.password.length > 20) {
-    errors.password = ["Password must be between 8 to 20 characters"];
-    isValid = false;
-  } else if (
-    !/[A-Z]/.test(userData.password) // At least one uppercase letter
-  ) {
-    errors.password = ["Password must include at least one uppercase letter"];
-    isValid = false;
-  } else if (
-    !/[a-z]/.test(userData.password) // At least one lowercase letter
-  ) {
-    errors.password = ["Password must include at least one lowercase letter"];
-    isValid = false;
-  } else if (
-    !/[0-9]/.test(userData.password) // At least one digit
-  ) {
-    errors.password = ["Password must include at least one number"];
-    isValid = false;
-  } else if (
-    !/[!@#$%^&*(),.?":{}|<>]/.test(userData.password) // At least one special character
-  ) {
-    errors.password = ["Password must include at least one special character"];
+
+  // Password
+  const passwordErrors = validatePassword(userData?.password, "Password");
+  if (passwordErrors.length) {
+    errors.password = passwordErrors;
     isValid = false;
   }
 
-  // Validate confirm password
-  if (!userData || !userData.password_confirm) {
+  // Confirm Password
+  if (!userData?.password_confirm) {
     errors.password_confirm = ["Confirm password is required"];
     isValid = false;
   } else if (userData.password_confirm !== userData.password) {
@@ -79,7 +160,6 @@ export const signUpValidation = (userData, setFormErrors) => {
     isValid = false;
   }
 
-  // Set errors and return validation status
   setFormErrors(errors);
   return isValid;
 };
@@ -159,20 +239,47 @@ export const VerifyOtpValidation = (otp, setFormErrors) => {
   return isValid;
 };
 
-export const PasswordValidation = (passwordState, setFormErrors) => {
-  let isValid = true;
-  let errors = {};
+// export const PasswordValidation = (passwordState, setFormErrors) => {
+//   let isValid = true;
+//   let errors = {};
 
-  // Validate New Password
-  if (!passwordState?.password) {
-    errors.password = ["New password is required"];
-    isValid = false;
-  } else if (passwordState?.password.length < 8) {
-    errors.password = ["New password must be atleast 8 characters"];
+//   // Validate New Password
+//   if (!passwordState?.password) {
+//     errors.password = ["New password is required"];
+//     isValid = false;
+//   } else if (passwordState?.password.length < 8) {
+//     errors.password = ["New password must be atleast 8 characters"];
+//     isValid = false;
+//   }
+
+//   // Validate Confirm Password
+//   if (!passwordState?.confirm_password) {
+//     errors.confirm_password = ["Confirm password is required"];
+//     isValid = false;
+//   } else if (passwordState?.confirm_password !== passwordState?.password) {
+//     errors.confirm_password = ["Confirm password must match the new password"];
+//     isValid = false;
+//   }
+
+//   setFormErrors(errors);
+//   return isValid;
+// };
+
+export const PasswordValidation = (passwordState, setFormErrors) => {
+  let errors = {};
+  let isValid = true;
+
+  // New Password
+  const passwordErrors = validatePassword(
+    passwordState?.password,
+    "New password"
+  );
+  if (passwordErrors.length) {
+    errors.password = passwordErrors;
     isValid = false;
   }
 
-  // Validate Confirm Password
+  // Confirm Password
   if (!passwordState?.confirm_password) {
     errors.confirm_password = ["Confirm password is required"];
     isValid = false;
@@ -184,7 +291,6 @@ export const PasswordValidation = (passwordState, setFormErrors) => {
   setFormErrors(errors);
   return isValid;
 };
-
 export const UpdateProfileValidation = (userData, setFormErrors) => {
   let errors = {};
   let isValid = true;
@@ -232,30 +338,65 @@ export const UpdateProfileValidation = (userData, setFormErrors) => {
   return isValid;
 };
 
+// export const ChangePasswordValidation = (userData, setFormErrors) => {
+//   let errors = {};
+//   let isValid = true;
+//   console.log(userData, "changePasswordData");
+
+//   // ✅ Current password (required)
+//   if (!userData?.current_password) {
+//     errors.current_password = ["Current password is required"];
+//     isValid = false;
+//   }
+
+//   // ✅ New password (required + length rules)
+//   if (!userData?.new_password) {
+//     errors.new_password = ["New password is required"];
+//     isValid = false;
+//   } else if (userData.new_password.length < 8) {
+//     errors.new_password = ["New password must be at least 8 characters"];
+//     isValid = false;
+//   } else if (userData.new_password.length > 20) {
+//     errors.new_password = [
+//       "New password must not be greater than 20 characters",
+//     ];
+//     isValid = false;
+//   }
+
+//   // ✅ Confirm password (must match new password)
+//   if (!userData?.new_password_confirmation) {
+//     errors.new_password_confirmation = ["Password confirmation is required"];
+//     isValid = false;
+//   } else if (userData.new_password !== userData.new_password_confirmation) {
+//     errors.new_password_confirmation = ["Passwords do not match"];
+//     isValid = false;
+//   }
+
+//   setFormErrors(errors);
+//   return isValid;
+// };
+
 export const ChangePasswordValidation = (userData, setFormErrors) => {
   let errors = {};
   let isValid = true;
-  console.log(userData, "changePasswordData");
 
-  // ✅ Current password (required)
+  // Current Password
   if (!userData?.current_password) {
     errors.current_password = ["Current password is required"];
     isValid = false;
   }
 
-  // ✅ New password (required + length rules)
-  if (!userData?.new_password) {
-    errors.new_password = ["New password is required"];
-    isValid = false;
-  } else if (userData.new_password.length < 8) {
-    errors.new_password = ["New password must be at least 8 characters"];
-    isValid = false;
-  } else if (userData.new_password.length > 20) {
-    errors.new_password = ["New password must not be greater than 20 characters"];
+  // New Password
+  const passwordErrors = validatePassword(
+    userData?.new_password,
+    "New password"
+  );
+  if (passwordErrors.length) {
+    errors.new_password = passwordErrors;
     isValid = false;
   }
 
-  // ✅ Confirm password (must match new password)
+  // Confirm Password
   if (!userData?.new_password_confirmation) {
     errors.new_password_confirmation = ["Password confirmation is required"];
     isValid = false;

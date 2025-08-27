@@ -6,6 +6,7 @@ import { MdWindow } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "./Alert/Alert";
 import { setlogoutUser } from "../redux/reducers/AuthReducer";
+import { CgProfile } from "react-icons/cg";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -159,7 +160,7 @@ const Header = () => {
                             }
                           >
                             {location?.pathname == "/my-profile" && (
-                              <MdWindow size={17} className="me-1" />
+                              <CgProfile size={17} className="me-1" />
                             )}
                             Profile
                           </Link>
