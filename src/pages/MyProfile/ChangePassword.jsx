@@ -7,8 +7,10 @@ import { ChangePasswordValidation } from "../../helper/HelperValidation";
 import { BeatLoader } from "react-spinners";
 import Alert from "../../components/Alert/Alert";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState({
     current_password: "",
     new_password: "",
@@ -38,6 +40,7 @@ const ChangePassword = () => {
         title: "Success",
         text: response?.data?.message,
       });
+      navigate("/my-profile");
       setFormErrors(null);
       setPassword({
         current_password: "",
@@ -62,16 +65,16 @@ const ChangePassword = () => {
   return (
     <>
       <ProfileLayout type={"My Profile"}>
-        <div class="row">
-          <div class="col-lg-6 col">
-            <h2 class="mt-3 mb-0 heading-txt text-uppercase">My Profile</h2>
+        <div className="row">
+          <div className="col-lg-6 col">
+            <h2 className="mt-3 mb-0 heading-txt text-uppercase">My Profile</h2>
             <p>Nunc pellentesque libero et lore</p>
           </div>
         </div>
 
-        <div class="row profile-row">
-          <div class="col-md-4 my-md-4 my-2 info position-relative">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+        <div className="row profile-row">
+          <div className="col-md-4 my-md-4 my-2 info position-relative">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               Current password
             </p>
             <CommonInputField
@@ -101,8 +104,8 @@ const ChangePassword = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <div class="col-md-4 my-md-4 my-2 info position-relative">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+          <div className="col-md-4 my-md-4 my-2 info position-relative">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               New password
             </p>
 
@@ -131,8 +134,8 @@ const ChangePassword = () => {
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <div class="col-md-4 my-md-4 my-2 info position-relative">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+          <div className="col-md-4 my-md-4 my-2 info position-relative">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               New Password Confirmation
             </p>
 
@@ -168,8 +171,8 @@ const ChangePassword = () => {
           </div>
         </div>
 
-        <div class="d-flex profile-row flex-column flex-md-row align-items-start align-items-md-center my-md-3 my-2">
-          <div class="info col-md-6">
+        <div className="d-flex profile-row flex-column flex-md-row align-items-start align-items-md-center my-md-3 my-2">
+          <div className="info col-md-6">
             <Button
               onClick={handleSubmit}
               disabled={response?.isLoading}

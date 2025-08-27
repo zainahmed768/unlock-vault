@@ -29,11 +29,11 @@ const Header = () => {
             {/* <Col lg="1"></Col> */}
             <Col lg="12">
               <div className="header-wrapper">
-                <nav class={!userToken ? "navbar" : "navbar no-sign-in"}>
-                  {/* <ul class="nav-left">
+                <nav className={!userToken ? "navbar" : "navbar no-sign-in"}>
+                  {/* <ul className="nav-left">
                     <li>
-                      <a href="#" class="active">
-                        <i class="icon-grid"></i> Home
+                      <a href="#" className="active">
+                        <i className="icon-grid"></i> Home
                       </a>
                     </li>
                     <li>
@@ -46,11 +46,11 @@ const Header = () => {
                       <a href="#">Builders</a>
                     </li>
                   </ul> */}
-                  <ul class="nav-left">
+                  <ul className="nav-left">
                     <li>
                       <Link
                         to="/"
-                        class={location?.pathname == "/" && "active"}
+                        className={location?.pathname == "/" && "active"}
                       >
                         {location?.pathname == "/" && (
                           <MdWindow size={17} className="me-1" />
@@ -61,7 +61,7 @@ const Header = () => {
                     <li>
                       <Link
                         to={"/about"}
-                        class={location?.pathname == "/about" && "active"}
+                        className={location?.pathname == "/about" && "active"}
                       >
                         {location?.pathname == "/about" && (
                           <MdWindow size={17} className="me-1" />
@@ -72,7 +72,7 @@ const Header = () => {
                     <li>
                       <Link
                         to={"/vaults"}
-                        class={location?.pathname == "/vaults" && "active"}
+                        className={location?.pathname == "/vaults" && "active"}
                       >
                         {location?.pathname == "/vaults" && (
                           <MdWindow size={17} className="me-1" />
@@ -86,7 +86,7 @@ const Header = () => {
                     <li>
                       <Link
                         to={"/relics"}
-                        class={location?.pathname == "/relics" && "active"}
+                        className={location?.pathname == "/relics" && "active"}
                       >
                         {location?.pathname == "/relics" && (
                           <MdWindow size={17} className="me-1" />
@@ -95,17 +95,17 @@ const Header = () => {
                       </Link>
                     </li>
                   </ul>
-                  <div class="logo-container">
+                  <div className="logo-container">
                     <Link to={"/"}>
-                      <img src={WebLogo} alt="Logo" class="center-logo" />
+                      <img src={WebLogo} alt="Logo" className="center-logo" />
                     </Link>
                   </div>
 
-                  <ul class="nav-right">
+                  <ul className="nav-right">
                     <li>
                       <Link
                         to={"/token"}
-                        class={location?.pathname == "/token" && "active"}
+                        className={location?.pathname == "/token" && "active"}
                       >
                         {location?.pathname == "/token" && (
                           <MdWindow size={17} className="me-1" />
@@ -116,7 +116,7 @@ const Header = () => {
                     <li>
                       <Link
                         to={"/path"}
-                        class={location?.pathname == "/path" && "active"}
+                        className={location?.pathname == "/path" && "active"}
                       >
                         {location?.pathname == "/path" && (
                           <MdWindow size={17} className="me-1" />
@@ -127,7 +127,7 @@ const Header = () => {
                     <li>
                       <Link
                         to={"/contact-us"}
-                        class={location?.pathname == "/contact-us" && "active"}
+                        className={location?.pathname == "/contact-us" && "active"}
                       >
                         {location?.pathname == "/contact-us" && (
                           <MdWindow size={17} className="me-1" />
@@ -139,7 +139,7 @@ const Header = () => {
                       <li>
                         <Link
                           to={"/sign-in"}
-                          class={location?.pathname == "/sign-in" && "active"}
+                          className={location?.pathname == "/sign-in" && "active"}
                         >
                           {location?.pathname == "/sign-in" && (
                             <MdWindow size={17} className="me-1" />
@@ -155,7 +155,7 @@ const Header = () => {
                         <li>
                           <Link
                             to={"/my-profile"}
-                            class={
+                            className={
                               location?.pathname == "/my-profile" && "active"
                             }
                           >
@@ -172,7 +172,7 @@ const Header = () => {
                           >
                             Logout
                             {/* <span>
-                              <i class="fa fa-sign-out" aria-hidden="true"></i>
+                              <i className="fa fa-sign-out" aria-hidden="true"></i>
                             </span> */}
                           </Link>
                         </li>

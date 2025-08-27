@@ -97,7 +97,7 @@ const About = () => {
                     </div>
                     <div className="video-btn-wrapper">
                       <Button className="video-btn">
-                        <i class="fa-solid fa-play"></i>
+                        <i className="fa-solid fa-play"></i>
                       </Button>
                     </div>
                     <div className="video-down-content-wrapper d-flex justify-content-between">

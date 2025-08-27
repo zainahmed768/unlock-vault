@@ -9,7 +9,7 @@ const MySubscriptions = () => {
         <section className="subscription-sec">
           <div className="row">
             <div className="col-lg-12">
-              <div class="alert alert-danger" role="alert">
+              <div className="alert alert-danger" role="alert">
                 <p>
                   Your membership has expired, and access to the application is
                   currently restricted. To continue using all features, please

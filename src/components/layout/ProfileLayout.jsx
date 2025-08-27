@@ -1,36 +1,32 @@
-import React, { useState } from "react";
-// import profileImg from "../../assets/images/profile.png";
-// import "../ProfileLayout/profileLayout.css";
-import { NavLink, useLocation } from "react-router-dom";
-
+import React, { useRef } from "react";
+import { useSelector } from "react-redux";
 import Header from "../Header";
 import PageHeader from "../PageHeader";
 import PageHeading from "../PageHeading";
 import Sidebar from "./Sidebar";
-import { client1Img } from "../../constant/Index";
 import Footer from "../Footer";
-import { useSelector } from "react-redux";
+import { FaPencilAlt } from "react-icons/fa"; // pencil icon
 
-const ProfileLayout = ({ children, type, sidebar = true, profileImg }) => {
-  const location = useLocation(); // Get current route
+const ProfileLayout = ({
+  children,
+  type,
+  sidebar = true,
+  profileImg,
+  onImageSelect,
+  edit,
+}) => {
   const user = useSelector((state) => state?.AuthReducer?.user);
-  //   console.log(sidebar, "sidebar");
-  //   const [imageUrl, setImageUrl] = useState(profileImg);
+  const fileInputRef = useRef(null);
 
-  //   const handleChange = (info) => {
-  //     console.log("Upload Info:", info.file);
+  const handleIconClick = () => {
+    fileInputRef.current.click();
+  };
 
-  //     if (info.file.status === "done") {
-  //       // Check if the server response contains the URL
-  //       const uploadedUrl = info.file?.response?.url; // Adjust this based on your API response structure
-
-  //       if (uploadedUrl) {
-  //         setImageUrl(uploadedUrl); // Set the image URL from the response
-  //       } else {
-  //         console.error("Image URL not found in the response");
-  //       }
-  //     }
-  //   };
+  const handleFileChange = (e) => {
+    if (onImageSelect) {
+      onImageSelect(e.target.files[0]); // pass file back to parent (MyProfile)
+    }
+  };
 
   return (
     <>
@@ -38,55 +34,59 @@ const ProfileLayout = ({ children, type, sidebar = true, profileImg }) => {
       <PageHeader>
         <PageHeading heading={type} />
       </PageHeader>
-      {/* <PrimaryHeader
-        pageTitle={type}
-        pageDesc={
-          "Stay Ahead of the Game with SafetyBuilt’s Site Safety Training Courses"
-        }
-      /> */}
-      <section className="profile__wrapp  mt-5 site_width">
+
+      <section className="profile__wrapp mt-5 site_width">
         <div className="container">
           <div className="row">
-            {sidebar == true ? (
+            {sidebar ? (
               <>
                 <div className="col-lg-3">
                   <div className="profile__sidebar position-relative mb-3 py-3">
                     <div className="profile__info mb-4">
-                      {/* <div className="img__wrapp position-relative">
-                        <img
-                          src={profileImg}
-                          alt="sol tanning"
-                          className="profile__img"
-                        />
-                        <label className="position-absolute">
-                          <img src={fileUpload} alt="fileUpload" />
-                          <input
-                            type="file"
-                            name="file-upload"
-                            className="d-none"
-                          />
-                        </label>
-                      </div> */}
                       <div className="img__wrapp position-relative">
                         <img
-                          // src={client1Img}
-                          alt="sol tanning"
+                          alt="profile_image"
                           className="profile__img"
-                          // src={profileImg ? profileImg : client1Img}
-                          src={
-                            user?.profile_img_url
-                              ? user?.profile_img_url
-                              : profileImg
-                          }
+                          // src={
+                          //   user?.profile_img_url
+                          //     ? user?.profile_img_url
+                          //     : profileImg
+                          // }
+                          src={profileImg || user?.profile_img_url}
                         />
-                        {/* <label className="position-absolute">
-                          <img src={fileUpload} alt="fileUpload" />
-                          <input
-                            type="file"
-                            name="file-upload"
-                            className="d-none"
-                          />
-                        </label> */}
+                        {/* ✅ Only show pencil when edit is true */}
+                        {edit && (
+                          <>
+                            <button
+                              type="button"
+                              className="edit-icon-btn position-absolute"
+                              style={{
+                                top: "10px",
+                                right: "65px",
+                                background: "#fff",
+                                borderRadius: "50%",
+                                border: "1px solid #ddd",
+                                // padding: "5px",
+                                width: "33px",
+                                height: "33px",
+                                cursor: "pointer",
+                                zIndex: 99,
+                              }}
+                              onClick={handleIconClick}
+                            >
+                              <FaPencilAlt size={14} color="#333" />
+                            </button>
+
+                            {/* Hidden file input */}
+                            <input
+                              type="file"
+                              accept="image/*"
+                              ref={fileInputRef}
+                              style={{ display: "none" }}
+                              onChange={handleFileChange}
+                            />
+                          </>
+                        )}
                       </div>
                       <div className="heading-bg-wrapper">
                         <h5 className="text-uppercase heading-txt text-center">
@@ -97,7 +97,7 @@ const ProfileLayout = ({ children, type, sidebar = true, profileImg }) => {
                     <Sidebar />
                   </div>
                 </div>
-                <div className="col-lg-8 offset-lg-2 ms-lg-5 ">{children}</div>
+                <div className="col-lg-8 offset-lg-2 ms-lg-5">{children}</div>
               </>
             ) : (
               <>{children}</>

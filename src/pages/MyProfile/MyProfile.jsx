@@ -14,11 +14,13 @@ import { useUpdateProfileMutation } from "../../redux/services/AuthServices";
 import Alert from "../../components/Alert/Alert";
 import InputMask from "react-input-mask";
 import { setUserToken } from "../../redux/reducers/AuthReducer";
+import { BeatLoader } from "react-spinners";
 const MyProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.AuthReducer?.user);
   const [updateProfile, response] = useUpdateProfileMutation();
   const [edit, setEdit] = useState(false);
+  const [previewImg, setPreviewImg] = useState(null);
   const [userData, setUserData] = useState({
     first_name: "",
     last_name: "",
@@ -70,15 +72,40 @@ const MyProfile = () => {
       setEdit(false);
     }
 
+    // if (response?.isError) {
+    //   const backendErrors = response?.error?.data?.errors;
+    //   if (backendErrors) {
+    //     setFormErrors(backendErrors); // <-- store backend validation errors
+    //   }
+
+    //   Alert({
+    //     title: "Error",
+    //     text: response?.error?.data?.message,
+    //     iconStyle: "error",
+    //   });
+    // }
+
     if (response?.isError) {
       const backendErrors = response?.error?.data?.errors;
-      if (backendErrors) {
-        setFormErrors(backendErrors); // <-- store backend validation errors
+      let errorMessage =
+        response?.error?.data?.message || "Something went wrong";
+
+      // If there are validation errors
+      if (backendErrors && typeof backendErrors === "object") {
+        // Store all errors in formErrors
+        setFormErrors(backendErrors);
+
+        // ✅ Pick first error to display in alert
+        const firstError = Object.values(backendErrors).flat()[0];
+        errorMessage = firstError;
+
+        // Or if you want ALL errors in alert:
+        // errorMessage = Object.values(backendErrors).flat().join(", ");
       }
 
       Alert({
         title: "Error",
-        text: response?.error?.data?.message,
+        text: errorMessage,
         iconStyle: "error",
       });
     }
@@ -86,23 +113,34 @@ const MyProfile = () => {
 
   return (
     <>
-      <ProfileLayout type={"My Profile"} profileImg={user?.profile_img}>
-        <div class="row">
-          <div class="col-lg-6 col">
-            <h2 class="mt-3 mb-0 heading-txt text-uppercase">My Profile</h2>
+      <ProfileLayout
+        type={"My Profile"}
+        // profileImg={user?.profile_img}
+        profileImg={
+          previewImg || user?.profile_img_url || user?.profile_img || null
+        }
+        onImageSelect={(file) => {
+          setUserData({ ...userData, profile_img: file });
+          setPreviewImg(URL.createObjectURL(file));
+        }}
+        edit={edit}
+      >
+        <div className="row">
+          <div className="col-lg-6 col">
+            <h2 className="mt-3 mb-0 heading-txt text-uppercase">My Profile</h2>
             <p>Nunc pellentesque libero et lore</p>
           </div>
 
-          <div class="col-lg-6 col d-flex justify-content-end my-lg-4 align-items-center">
+          <div className="col-lg-6 col d-flex justify-content-end my-lg-4 align-items-center">
             <Button onClick={handleEditProfile} className="gradient-button">
               Edit Profile
             </Button>
           </div>
         </div>
 
-        <div class="row profile-row">
-          <div class="col-md-4 my-md-4 my-2 info">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+        <div className="row profile-row">
+          <div className="col-md-4 my-md-4 my-2 info">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               First Name
             </p>
             <CommonInputField
@@ -116,8 +154,8 @@ const MyProfile = () => {
               maxLength={15}
             />
           </div>
-          <div class="col-md-4 my-md-4 my-2 info ">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+          <div className="col-md-4 my-md-4 my-2 info ">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               Last Name
             </p>
 
@@ -132,8 +170,8 @@ const MyProfile = () => {
               maxLength={15}
             />
           </div>
-          <div class="col-md-4 my-md-4 my-2 info">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+          <div className="col-md-4 my-md-4 my-2 info">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               Email
             </p>
             <CommonInputField
@@ -143,8 +181,8 @@ const MyProfile = () => {
             />
           </div>
           {/* {user?.phone_number && ( */}
-          <div class="col-md-4 my-md-4 my-2 info ">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+          <div className="col-md-4 my-md-4 my-2 info ">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               Phone Number
             </p>
 
@@ -183,7 +221,7 @@ const MyProfile = () => {
           </div>
           {/* )} */}
           {/* {edit && ( */}
-          <div className="col-md-4 my-md-4 my-2 info">
+          {/* <div className="col-md-4 my-md-4 my-2 info">
             <p className="m-0 secondary-regular-font dark-color label level-5">
               Profile Image
             </p>
@@ -196,19 +234,23 @@ const MyProfile = () => {
               }
               disabled={!edit}
             />
-          </div>
+          </div> */}
           {/* )} */}
-          <div class="col-md-4 my-md-4 my-2 info ">
-            <p class="m-0 secondary-regular-font dark-color label level-5">
+          <div className="col-md-4 my-md-4 my-2 info ">
+            <p className="m-0 secondary-regular-font dark-color label level-5">
               Password
             </p>
-            <p class="m-0 secondary-bold-font bold-font dark-color value level-5">
-              <span class=" secondary-bold-font dark-color password level-5">
+            <p className="m-0 secondary-bold-font bold-font text-white pt-3">
+              <span
+                className="secondary-bold-font dark-color level-5"
+                style={{ color: "#fff " }}
+              >
                 **************
               </span>{" "}
               <Link
                 to={"/change-password"}
                 className="secondary-bold-font dark-color level-5"
+                style={{ color: "#6b00ff " }}
               >
                 {" "}
                 CHANGE PASSWORD
@@ -218,10 +260,14 @@ const MyProfile = () => {
         </div>
 
         {edit && (
-          <div class="d-flex profile-row flex-column flex-md-row align-items-start align-items-md-center my-md-3 my-2">
-            <div class="info col-md-6">
+          <div className="d-flex profile-row flex-column flex-md-row align-items-start align-items-md-center my-md-3 my-2">
+            <div className="info col-md-6">
               <Button onClick={handleSubmit} className="gradient-button">
-                Save
+                {response?.isLoading ? (
+                  <BeatLoader color="#fff" size={20} />
+                ) : (
+                  "Save"
+                )}
               </Button>
             </div>
           </div>

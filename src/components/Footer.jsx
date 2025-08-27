@@ -56,17 +56,17 @@ const Footer = () => {
                       <ul className="d-flex gap-2 list-unstyled mb-0">
                         <li>
                           <Link to="/">
-                            <i class="fa-brands fa-facebook heading-txt"></i>
+                            <i className="fa-brands fa-facebook heading-txt"></i>
                           </Link>
                         </li>
                         <li>
                           <Link to="/">
-                            <i class="fa-brands fa-twitter heading-txt"></i>
+                            <i className="fa-brands fa-twitter heading-txt"></i>
                           </Link>
                         </li>
                         <li>
                           <Link to="/">
-                            <i class="fa-brands fa-linkedin heading-txt"></i>
+                            <i className="fa-brands fa-linkedin heading-txt"></i>
                           </Link>
                         </li>
                       </ul>
@@ -87,7 +87,7 @@ const Footer = () => {
                         className="icon-txt-wrapper d-flex gap-3 align-items-center"
                       >
                         <div className="icon-wrapper">
-                          <i class="fa-solid fa-envelope"></i>
+                          <i className="fa-solid fa-envelope"></i>
                         </div>
                         <div className="txt-wrapper">
                           <p className="mb-0">hello@squareup.com</p>
@@ -100,7 +100,7 @@ const Footer = () => {
                         className="icon-txt-wrapper d-flex gap-3 align-items-center"
                       >
                         <div className="icon-wrapper">
-                          <i class="fa-solid fa-phone"></i>
+                          <i className="fa-solid fa-phone"></i>
                         </div>
                         <div className="txt-wrapper">
                           <p className="mb-0">+1 91813 23 2309</p>
@@ -113,7 +113,7 @@ const Footer = () => {
                         className="icon-txt-wrapper d-flex gap-3 align-items-center"
                       >
                         <div className="icon-wrapper">
-                          <i class="fa-solid fa-location-dot"></i>
+                          <i className="fa-solid fa-location-dot"></i>
                         </div>
                         <div className="txt-wrapper">
                           <p className="mb-0">
