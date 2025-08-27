@@ -140,7 +140,7 @@ const ChangePassword = () => {
             </p>
 
             <CommonInputField
-              type={showConfirmPassword ? "text" : "password"}
+              type={showNewConfirmPassword ? "text" : "password"}
               value={password?.new_password_confirmation}
               onChange={(e) =>
                 setPassword({
@@ -164,9 +164,9 @@ const ChangePassword = () => {
                 cursor: "pointer",
                 color: "#fff",
               }}
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              onClick={() => setShowNewConfirmPassword(!showNewConfirmPassword)}
             >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              {showNewConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
         </div>

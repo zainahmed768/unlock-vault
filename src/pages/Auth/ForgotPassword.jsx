@@ -26,11 +26,16 @@ const ForgotPassword = () => {
   useEffect(() => {
     console.log(response);
     if (response?.isSuccess) {
+      localStorage.setItem("email", email);
       Alert({
         title: "Success",
         text: response?.data?.message,
       });
-      navigate("/verify-password-otp");
+      navigate("/verify-password-otp", {
+        state: {
+          email: email,
+        },
+      });
     }
     // if (response?.isError) {
     //   console.log(response);

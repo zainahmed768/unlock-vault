@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import { Col, Container, Row } from "react-bootstrap";
 import OTPInput from "react-otp-input";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setUserToken } from "../../redux/reducers/AuthReducer";
 import Alert from "../../components/Alert/Alert";
 import {
@@ -18,25 +18,50 @@ import { BeatLoader } from "react-spinners";
 const VerifyPasswordOTP = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [otp, setOtp] = useState(null);
   const [formErrors, setFormErrors] = useState(null);
   const [verifyAccount, response] = useVerifyPasswordOtpMutation();
   const [forgetPassword, forgotResponse] = useForgetPasswordMutation();
+  // ⏳ Timer state
+  const [timer, setTimer] = useState(0);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(otp, "otp sdcjnsdj");
     if (VerifyOtpValidation(otp, setFormErrors)) {
       let data = new FormData();
-      data.append("email", localStorage.getItem("email"));
+      data.append(
+        "email",
+        localStorage.getItem("email")
+          ? localStorage.getItem("email")
+          : location?.state?.email
+      );
       data.append("otp", otp);
       verifyAccount(data);
     }
   };
   const HandleSend = () => {
     let data = new FormData();
-    data.append("email", localStorage.getItem("email"));
+    data.append(
+      "email",
+      localStorage.getItem("email") || location?.state?.email
+    );
     forgetPassword(data);
+    // Start 2 min countdown (120 seconds)
+    setTimer(120);
   };
+
+  // ⏱ Countdown effect
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
+
   useEffect(() => {
     console.log(response, "sdycgsd");
     if (response?.isSuccess) {
@@ -46,7 +71,11 @@ const VerifyPasswordOTP = () => {
         title: "Success",
         text: response?.data?.message,
       });
-      navigate("/new-password");
+      navigate("/new-password", {
+        state: {
+          email: location?.state?.email,
+        },
+      });
     }
 
     if (response?.isError) {
@@ -80,6 +109,14 @@ const VerifyPasswordOTP = () => {
       });
     }
   }, [forgotResponse]);
+
+  // Helper to format timer as mm:ss
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+  };
+
   return (
     <>
       {/* page header starts here */}
@@ -104,6 +141,7 @@ const VerifyPasswordOTP = () => {
                         </label>
                         <OTPInput
                           value={otp}
+                          inputType="number"
                           onChange={setOtp}
                           numInputs={6}
                           renderSeparator={<span>-</span>}
@@ -126,20 +164,25 @@ const VerifyPasswordOTP = () => {
                           )}
                         </button>
                         <div className="form-group my-4 text-center">
-                          <p
-                            className="text-decoration-none "
-                            // to="/forgot-password"
-                            onClick={HandleSend}
-                            style={{
-                              cursor: "pointer",
-                              color: "#6b00ff",
-                              opacity: forgotResponse?.isLoading && 0.7,
-                            }}
-                          >
-                            {forgotResponse?.isLoading
-                              ? "Resend Otp..."
-                              : "Resend Otp"}
-                          </p>
+                          {timer > 0 ? (
+                            <p style={{ color: "#6b00ff" }}>
+                              Resend available in {formatTime(timer)}
+                            </p>
+                          ) : (
+                            <p
+                              className="text-decoration-none"
+                              onClick={HandleSend}
+                              style={{
+                                cursor: "pointer",
+                                color: "#6b00ff",
+                                opacity: forgotResponse?.isLoading && 0.7,
+                              }}
+                            >
+                              {forgotResponse?.isLoading
+                                ? "Resending..."
+                                : "Resend Otp"}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </form>

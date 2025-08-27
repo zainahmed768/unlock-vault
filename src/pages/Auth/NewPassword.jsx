@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import { Col, Container, Row } from "react-bootstrap";
 import CommonInputField from "../../components/CommonInputField/CommonInputField";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useResetPasswordMutation } from "../../redux/services/AuthServices";
 import { PasswordValidation } from "../../helper/HelperValidation";
 import { BeatLoader } from "react-spinners";
@@ -11,6 +11,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const NewPassword = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [password, setPassword] = useState({
     password: "",
     confirm_password: "",
@@ -71,7 +72,7 @@ const NewPassword = () => {
                       <div className="form-group mb-4 position-relative">
                         <label htmlFor="">New password</label>
                         <CommonInputField
-                          type="password"
+                          type={showPassword ? "text" : "password"}
                           placeholder="Enter the New password"
                           value={password?.password}
                           onChange={(e) =>
@@ -96,10 +97,10 @@ const NewPassword = () => {
                           {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </span>
                       </div>
-                      <div className="form-group mb-4 position-relative" >
+                      <div className="form-group mb-4 position-relative">
                         <label htmlFor="">Re-enter Password</label>
                         <CommonInputField
-                          type="password"
+                          type={showConfirmPassword ? "text" : "password"}
                           placeholder="Enter the Re-enter Password"
                           value={password?.confirm_password}
                           onChange={(e) =>

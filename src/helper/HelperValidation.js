@@ -133,15 +133,16 @@ export const signUpValidation = (userData, setFormErrors) => {
   }
 
   // Phone (optional)
-  if (userData?.phone_number) {
-    if (
-      !/^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/gm.test(
-        userData.phone_number
-      )
-    ) {
-      errors.phone_number = ["Phone number is not valid"];
-      isValid = false;
-    }
+  if (!userData?.phone_number) {
+    errors.phone_number = ["Phone number is required"];
+    isValid = false;
+  } else if (
+    !/^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/gm.test(
+      userData.phone_number
+    )
+  ) {
+    errors.phone_number = ["Phone number is not valid"];
+    isValid = false;
   }
 
   // Password

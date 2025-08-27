@@ -79,6 +79,19 @@
   height: 74px;
   font-size: 20px;
 }
+.auth-sec .otp-fields-wrapper input::-webkit-outer-spin-button,
+.auth-sec .otp-fields-wrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.auth-sec .otp-fields-wrapper input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.auth-sec .otp-fields-wrapper input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
 .auth-fields-wrapper a.forgot-text {
   color: #6b00ff !important;
 }

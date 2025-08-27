@@ -242,7 +242,7 @@ const MyProfile = () => {
             </p>
             <p className="m-0 secondary-bold-font bold-font text-white pt-3">
               <span
-                className="secondary-bold-font dark-color level-5"
+                className="secondary-bold-font dark-color level-5 d-block"
                 style={{ color: "#fff " }}
               >
                 **************
