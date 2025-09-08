@@ -47,7 +47,7 @@ const Paths = () => {
               <Col lg="4">
                 <div className="function-img-wrapper">
                   <figure>
-                    <img src={vault2} alt="" className="img-fluid" />
+                    <img src={vault2} alt="" className="img-fluid w-100" />
                   </figure>
                 </div>
               </Col>
@@ -63,13 +63,13 @@ const Paths = () => {
             <Col lg="4">
               <div className="function-img-wrapper">
                 <figure>
-                  <img src={functionImg} alt="" className="img-fluid" />
+                  <img src={functionImg} alt="" className="img-fluid w-100" />
                 </figure>
               </div>
             </Col>
             <Col lg="8">
               <div className="function-content-wrapper ms-lg-5">
-                <h3 className="heading-txt mb-5">
+                <h3 className="heading-txt mb-lg-5 my-4">
                   Path as a series of relics or a transformational journey
                 </h3>
                 <p>

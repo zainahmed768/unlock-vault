@@ -25,7 +25,7 @@ const ContactUs = () => {
           <Container>
             <Row>
               <Col lg="6">
-                <div className="contact-img-wrapper text-center">
+                <div className="contact-img-wrapper text-center mb-lg-0 mb-5">
                   <figure>
                     <img src={contactImg} className="img-fluid" alt="" />
                   </figure>

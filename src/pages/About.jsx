@@ -5,7 +5,14 @@ import Newsletter from "../components/Newsletter";
 import PageHeader from "../components/PageHeader";
 import PageHeading from "../components/PageHeading";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import { test1, test2, test3, test4, vaultbg, videoImg } from "../constant/Index";
+import {
+  test1,
+  test2,
+  test3,
+  test4,
+  vaultbg,
+  videoImg,
+} from "../constant/Index";
 import { partners, vaults } from "../constant/Data";
 import Slider from "react-slick";
 
@@ -55,7 +62,6 @@ const About = () => {
       <Header />
       {/* page Header starts here */}
       <PageHeader>
-        
         <PageHeading
           heading={"About Us"}
           text={
@@ -72,9 +78,14 @@ const About = () => {
                     <figure>
                       <img src={videoImg} className="img-fluid" alt="" />
                     </figure>
+                    <div className="video-btn-wrapper d-block d-lg-none">
+                      <Button className="video-btn">
+                        <i className="fa-solid fa-play"></i>
+                      </Button>
+                    </div>
                   </div>
                   <div className="video-content-wrapper position-absolute top-0">
-                    <div className="video-testimonials-wrapper d-flex align-items-center justify-content-end gap-2">
+                    <div className="video-testimonials-wrapper d-flex align-items-center justify-content-lg-end gap-2">
                       <div className="testimonails-list-img-wrapper">
                         <ul className="d-flex list-unstyled">
                           <li>
@@ -95,12 +106,12 @@ const About = () => {
                         <p>32k Happy customers</p>
                       </div>
                     </div>
-                    <div className="video-btn-wrapper">
+                    <div className="video-btn-wrapper d-none d-lg-block">
                       <Button className="video-btn">
                         <i className="fa-solid fa-play"></i>
                       </Button>
                     </div>
-                    <div className="video-down-content-wrapper d-flex justify-content-between">
+                    <div className="video-down-content-wrapper d-block d-lg-flex justify-content-between">
                       <h3 className="heading-txt">Relic Access Guide</h3>
                       <p>
                         Lorem ipsum dolor sit amet consectetur. Elit orci enim

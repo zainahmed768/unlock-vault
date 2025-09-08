@@ -10,7 +10,7 @@ const Footer = () => {
         <Container>
           <Row className="footer-first-row align-items-center">
             <Col lg="2">
-              <div className="footer-logo-wrapper">
+              <div className="footer-logo-wrapper pt-5 pt-lg-0">
                 <figure>
                   <Link to="/">
                     <img src={WebLogo} className="img-fluid" alt="" srcset="" />
@@ -22,7 +22,7 @@ const Footer = () => {
               <Row>
                 <Col lg="7">
                   <div className="footer-links-wrapper">
-                    <ul className="d-flex list-unstyled gap-4 mb-0">
+                    <ul className="d-flex list-unstyled gap-4 mb-0 mt-lg-0 mt-4">
                       <li>
                         <Link to="/about">About Us</Link>
                       </li>
@@ -48,7 +48,7 @@ const Footer = () => {
                   </div>
                 </Col>
                 <Col lg="5">
-                  <div className="footer-social-wrapper d-flex justify-content-end align-items-center gap-3">
+                  <div className="footer-social-wrapper d-flex justify-content-lg-end mt-4 mt-lg-0 align-items-center gap-3">
                     <div className="footer-social-links-wrapper">
                       <h6 className="mb-0">Stay Connected</h6>
                     </div>
@@ -78,7 +78,7 @@ const Footer = () => {
           </Row>
           <div id="copyright">
             <Row>
-              <Col lg="6">
+              <Col lg="8">
                 <div className="footer-info-wrapper">
                   <ul className="d-flex align-items-center gap-3 list-unstyled mb-0">
                     <li>
@@ -125,9 +125,9 @@ const Footer = () => {
                   </ul>
                 </div>
               </Col>
-              <Col lg="6">
+              <Col lg="4">
                 <div className="copyright-txt-wrapper">
-                  <p className="text-end mb-0">
+                  <p className="text-lg-end mt-lg-0 mt-4 mb-0">
                     © 2025 Adifrntway. All rights reserved.
                   </p>
                 </div>

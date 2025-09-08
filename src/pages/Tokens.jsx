@@ -79,7 +79,7 @@ const Tokens = () => {
             <Col lg="4">
               <div className="function-img-wrapper">
                 <figure>
-                  <img src={functionImg} alt="" className="img-fluid" />
+                  <img src={functionImg} alt="" className="img-fluid w-100" />
                 </figure>
               </div>
             </Col>

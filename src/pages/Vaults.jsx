@@ -69,14 +69,14 @@ const Vaults = () => {
               <Col lg="6">
                 <div className="vault-img-wrapper">
                   <figure>
-                    <img src={vault1} className="img-fluid" alt="" />
+                    <img src={vault1} className="img-fluid w-100" alt="" />
                   </figure>
                 </div>
               </Col>
               <Col lg="6">
                 <div className="vault-img-wrapper">
                   <figure>
-                    <img src={vault2} className="img-fluid" alt="" />
+                    <img src={vault2} className="img-fluid w-100" alt="" />
                   </figure>
                 </div>
               </Col>

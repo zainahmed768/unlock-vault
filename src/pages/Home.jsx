@@ -361,9 +361,14 @@ const Home = () => {
                   <figure>
                     <img src={videoImg} className="img-fluid" alt="" />
                   </figure>
+                  <div className="video-btn-wrapper d-block d-lg-none">
+                    <Button className="video-btn">
+                      <i className="fa-solid fa-play"></i>
+                    </Button>
+                  </div>
                 </div>
                 <div className="video-content-wrapper position-absolute top-0">
-                  <div className="video-testimonials-wrapper d-flex align-items-center justify-content-end gap-2">
+                  <div className="video-testimonials-wrapper d-flex align-items-center justify-content-lg-end gap-2">
                     <div className="testimonails-list-img-wrapper">
                       <ul className="d-flex list-unstyled">
                         <li>
@@ -384,12 +389,12 @@ const Home = () => {
                       <p>32k Happy customers</p>
                     </div>
                   </div>
-                  <div className="video-btn-wrapper">
+                  <div className="video-btn-wrapper d-none d-lg-block">
                     <Button className="video-btn">
                       <i className="fa-solid fa-play"></i>
                     </Button>
                   </div>
-                  <div className="video-down-content-wrapper d-flex justify-content-between">
+                  <div className="video-down-content-wrapper d-block d-lg-flex justify-content-between">
                     <h3 className="heading-txt">Relic Access Guide</h3>
                     <p>
                       Lorem ipsum dolor sit amet consectetur. Elit orci enim
@@ -463,15 +468,17 @@ const Home = () => {
         <Container>
           <Row>
             <Col lg="2">
-              <div className="client-img-wrapper client-img-1">
-                <figure>
-                  <img src={client1Img} className="img-fluid" alt="" />
-                </figure>
-              </div>
-              <div className="client-img-wrapper client-img-3">
-                <figure>
-                  <img src={client3Img} className="img-fluid" alt="" />
-                </figure>
+              <div className="client-right-wrapper">
+                <div className="client-img-wrapper client-img-1">
+                  <figure>
+                    <img src={client1Img} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+                <div className="client-img-wrapper client-img-3">
+                  <figure>
+                    <img src={client3Img} className="img-fluid" alt="" />
+                  </figure>
+                </div>
               </div>
             </Col>
             <Col lg="8">
@@ -505,15 +512,17 @@ const Home = () => {
               </div>
             </Col>
             <Col lg="2">
-              <div className="client-img-wrapper client-img-2">
-                <figure>
-                  <img src={client2Img} className="img-fluid" alt="" />
-                </figure>
-              </div>
-              <div className="client-img-wrapper client-img-4">
-                <figure>
-                  <img src={client4Img} className="img-fluid" alt="" />
-                </figure>
+              <div className="client-left-wrapper">
+                <div className="client-img-wrapper client-img-2">
+                  <figure>
+                    <img src={client2Img} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+                <div className="client-img-wrapper client-img-4">
+                  <figure>
+                    <img src={client4Img} className="img-fluid" alt="" />
+                  </figure>
+                </div>
               </div>
             </Col>
           </Row>

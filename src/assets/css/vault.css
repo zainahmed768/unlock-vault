@@ -56,3 +56,8 @@
 .functions-sec {
   padding: 60px 0px;
 }
+/* responsive starts here */
+.break-sec{
+  padding-top: 0px;
+}
+/* responsive ends here */
