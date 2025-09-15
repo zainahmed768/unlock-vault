@@ -1,6 +1,10 @@
 //  auth endpoint
 export const LOGIN_URL = `auth/login`;
 
+export const XUMM_LOGIN = `auth/xumm-login`;
+
+export const XUMM_STATUS = `auth/xumm-status`;
+
 export const REGISTER_URL = `auth/register`;
 
 export const VERIFY_ACCOUNT = `auth/verify-registration-otp`;

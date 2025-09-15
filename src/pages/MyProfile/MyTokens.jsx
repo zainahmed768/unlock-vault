@@ -1,27 +1,29 @@
 import React from "react";
 import ProfileLayout from "../../components/layout/ProfileLayout";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const MyTokens = () => {
+  const user = useSelector((state) => state?.AuthReducer?.user);
   const tokens = [
     {
       name: "XRP",
       //   symbol: "BTC",
-      total: "0.7845",
+      total: user?.xrp_tokens,
       image:
         "https://altcoinsbox.com/wp-content/uploads/2023/01/xrp-logo-600x600.webp",
     },
     {
       name: "A17C",
       //   symbol: "ETH",
-      total: "12.4532",
+      total: user?.a17c_tokens,
       image:
         "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ethereum-ETH-icon.png",
     },
     {
       name: "obisky",
       //   symbol: "SOL",
-      total: "208.12",
+      total: user?.obisky_tokens,
       image:
         "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ethereum-ETH-icon.png",
     },

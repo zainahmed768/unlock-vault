@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import "../assets/css/style.css";
 import {
@@ -39,12 +39,27 @@ import {
 import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
 import CustomModal from "../components/CustomModal";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useLazyXummLoginQuery,
+  useLazyXummStatusQuery,
+} from "../redux/services/AuthServices";
+import Alert from "../components/Alert/Alert";
+import { BeatLoader } from "react-spinners";
+import { setUserToken } from "../redux/reducers/AuthReducer";
 const Home = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const intervalRef = useRef(null);
+  const [xummLogin, response] = useLazyXummLoginQuery();
+  const [xummStatus, statuResponse] = useLazyXummStatusQuery();
   const [activeKey, setActiveKey] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [qr, setQr] = useState(false);
   const [step, setStep] = useState(1);
+  const user = useSelector((state) => state?.AuthReducer?.user);
+  const userToken = useSelector((state) => state?.AuthReducer?.userToken);
+  console.log(user, "23456uhn");
   const toggleAccordion = (key) => {
     setActiveKey(activeKey === key ? null : key);
   };
@@ -105,14 +120,79 @@ const Home = () => {
   //   }
   // };
 
+  // const handleNext = () => {
+  //   if (step === 1) {
+  //     xummLogin({ page_type: 0 });
+  //   }
+  //   if (step === 2) {
+  //     // final step → redirect
+  //     navigate("/sign-up");
+  //   } else {
+  //     setStep((prev) => prev + 1);
+  //   }
+  // };
+  console.log(step, "yghsvjcasc");
   const handleNext = () => {
-    if (step === 2) {
-      // final step → redirect
-      navigate("/sign-up");
-    } else {
-      setStep((prev) => prev + 1);
+    if (step === 1) {
+      setStep(2);
+      xummLogin({ page_type: 0 });
+    } else if (step === 2) {
+      // navigate("/sign-up");
     }
   };
+
+  useEffect(() => {
+    if (user && user?.wallet_connected === 0) {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (response?.isSuccess) {
+      intervalRef.current = setInterval(() => {
+        xummStatus({ id: user?.id });
+      }, 10000);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [response?.isSuccess, xummStatus, user?.id]);
+
+  useEffect(() => {
+    console.log(statuResponse, "statuResponse");
+
+    if (statuResponse?.isSuccess) {
+      dispatch(setUserToken({ user: statuResponse?.data?.user }));
+
+      if (statuResponse?.data?.connected === true) {
+        // ✅ stop polling when connected
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+        Alert({
+          title: "Success",
+          text: "Your Wallet has been Connected",
+        });
+        handleClose();
+      }
+    }
+
+    if (statuResponse?.isError) {
+      Alert({
+        title: "Error",
+        text: statuResponse?.error?.data?.error,
+        iconStyle: "error",
+      });
+    }
+  }, [statuResponse, dispatch, handleClose]);
+
   return (
     <>
       <Header />
@@ -141,13 +221,19 @@ const Home = () => {
                   </div>
                   <div className="banner-btn-wrapper text-center mt-3">
                     {/* <Button>Enter a Vault</Button> */}
-                    <a
-                      href="#"
-                      onClick={handleModal}
-                      className="gradient-button"
-                    >
-                      Enter a Vault
-                    </a>
+                    {userToken ? (
+                      <a
+                        href="#"
+                        onClick={handleModal}
+                        className="gradient-button"
+                      >
+                        Enter a Vault
+                      </a>
+                    ) : (
+                      <Link to="/sign-up" className="gradient-button">
+                        Enter a Vault
+                      </Link>
+                    )}
                   </div>
                 </div>
               </Col>
@@ -569,25 +655,24 @@ const Home = () => {
       </section>
       {/* faq ends here */}
       <CustomModal
+        // show={showModal}
+        // onHide={() => setShowModal(false)}
         show={showModal}
-        onHide={() => setShowModal(false)}
+        onHide={handleClose}
         // title="My Reusable Modal"
       >
         <Container>
           <div className="upload-modal-wrapper">
             <div className="upload-heading-wrapper text-center position-relative">
-              <h3 className="heading-txt">Identity Verification</h3>
-              <p>
-                Your identity will be verified using a document issued by a
-                country/authority
-              </p>
+              <h3 className="heading-txt">Scan QR To Enter a Vault</h3>
+              <p>Click Get Started To proceed with Qr</p>
               <div className="close-btn-wrapper position-absolute end-0 top-0">
                 <button className="close" onClick={handleClose}>
                   X
                 </button>
               </div>
             </div>
-            <div className="upload-flow-wrapper">
+            {/* <div className="upload-flow-wrapper">
               <Row className="align-items-center">
                 <Col
                   md="4"
@@ -631,7 +716,7 @@ const Home = () => {
                   </div>
                 </Col>
               </Row>
-            </div>
+            </div> */}
             <div className="upload-img-wrapper text-center">
               {step === 1 && (
                 <figure>
@@ -645,7 +730,17 @@ const Home = () => {
                       Please scan QR from your Zam wallet App.
                     </h6>
                   </div>
-                  <img src={qrImg} className="img-fluid" alt="" />
+                  {response?.isLoading ? (
+                    <div className="qr-loader">
+                      <BeatLoader color="#fff" size={20} />
+                    </div>
+                  ) : (
+                    <img
+                      src={response?.data?.qr_url}
+                      className="img-fluid"
+                      alt=""
+                    />
+                  )}
                 </figure>
               )}
             </div>

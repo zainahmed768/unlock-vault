@@ -110,6 +110,7 @@ import AuthRoute from "./AuthRoute";
 import PrivateRoutes from "./PrivateRoutes";
 import VerifyPasswordOTP from "../pages/Auth/VerifyPasswordOTP";
 import ChangePassword from "../pages/MyProfile/ChangePassword";
+import LiveStreamList from "../pages/LiveStream/LiveStreamList";
 
 const PublicRoutes = () => {
   return (
@@ -135,12 +136,13 @@ const PublicRoutes = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/relics" element={<Relics />} />
+          <Route path="/qr-scan" element={<Relics />} />
           <Route path="/vaults" element={<Vaults />} />
           <Route path="/token" element={<Tokens />} />
           <Route path="/path" element={<Paths />} />
           <Route path="/video" element={<Videos />} />
           <Route path="/photos" element={<Photos />} />
-
+          <Route path="/live-stream" element={<LiveStreamList />} />
           {/* User profile pages */}
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/change-password" element={<ChangePassword />} />

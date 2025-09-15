@@ -10,6 +10,8 @@ import {
   UPDATE_PROFILE,
   VERIFY_ACCOUNT,
   VERIFY_PASSWORD_OTP,
+  XUMM_LOGIN,
+  XUMM_STATUS,
 } from "../../utils/endpoints";
 
 const AuthServices = createApi({
@@ -20,13 +22,15 @@ const AuthServices = createApi({
       const reducers = getState();
       const token = reducers?.AuthReducer?.userToken;
       headers.set("Accept", "application/json");
-      if (endpoint !== REGISTER_URL && token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
+      // if (endpoint !== REGISTER_URL && token) {
+      //   headers.set("authorization", `Bearer ${token}`);
+      // }
+      headers.set("authorization", `Bearer ${token}`);
+
       return headers;
     },
   }),
-  tagTypes: ["editInfo", "quiz"], // ✅ Moved here, not inside baseQuery
+  tagTypes: ["editInfo", "quiz"],
   endpoints: (build) => ({
     login: build.mutation({
       query: (data) => ({
@@ -35,6 +39,13 @@ const AuthServices = createApi({
         body: data,
       }),
       invalidatesTags: ["editInfo"],
+    }),
+    xummLogin: build.query({
+      query: (data) => ({
+        url: XUMM_LOGIN,
+        method: "GET",
+        params: data,
+      }),
     }),
     authRegister: build.mutation({
       query: (data) => ({
@@ -102,6 +113,12 @@ const AuthServices = createApi({
         body: data,
       }),
     }),
+    xummStatus: build.query({
+      query: ({ id }) => ({
+        url: `${XUMM_STATUS}/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -118,4 +135,6 @@ export const {
   useVerifyPasswordOtpMutation,
   useUpdateProfileMutation,
   useChangeProfilePasswordMutation,
+  useLazyXummLoginQuery,
+  useLazyXummStatusQuery,
 } = AuthServices;

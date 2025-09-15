@@ -821,7 +821,7 @@ div#copyright {
   color: #fff;
 }
 .upload-img-wrapper figure.qr-img img {
-  filter: invert(1);
+  /* filter: invert(1); */
   height: 387px;
   margin: 30px 0px;
 }

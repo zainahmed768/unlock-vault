@@ -49,7 +49,16 @@ const Sidebar = () => {
       >
         <li className="py-md-3 py-2">My Tokens</li>
       </NavLink>
-
+      <NavLink
+        to="/connect-xumm"
+        className={({ isActive }) =>
+          `level-5-sm d-flex align-items-center justify-content-center reg-font dark-color text-uppercase ${
+            isActive ? "active-profile" : ""
+          }`
+        }
+      >
+        <li className="py-md-3 py-2">Connect To XUMM</li>
+      </NavLink>
       <NavLink
         to="#"
         className={({ isActive }) =>
