@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../utils/URL";
 import {
   CHANGE_PASSWORD,
+  CONNECT_WALLET_PROFILE,
   FORGET_PASSWORD,
   LOGIN_URL,
   REGISTER_URL,
@@ -119,6 +120,13 @@ const AuthServices = createApi({
         method: "GET",
       }),
     }),
+    connectWalletViaProfile: build.mutation({
+      query: ({ id, data }) => ({
+        url: `${CONNECT_WALLET_PROFILE}/${id}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -137,4 +145,5 @@ export const {
   useChangeProfilePasswordMutation,
   useLazyXummLoginQuery,
   useLazyXummStatusQuery,
+  useConnectWalletViaProfileMutation,
 } = AuthServices;

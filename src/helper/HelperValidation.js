@@ -409,3 +409,23 @@ export const ChangePasswordValidation = (userData, setFormErrors) => {
   setFormErrors(errors);
   return isValid;
 };
+
+// Wallet Address Validation
+export const validateWalletAddress = (walletAddress, setFormErrors) => {
+  let errors = {};
+  let isValid = true;
+
+  if (!walletAddress) {
+    errors.walletAddress = ["Wallet address is required"];
+    isValid = false;
+  } else if (walletAddress.length < 10) {
+    errors.walletAddress = ["Wallet address must be at least 10 characters"];
+    isValid = false;
+  } else if (walletAddress.length > 50) {
+    errors.walletAddress = ["Wallet address must not exceed 50 characters"];
+    isValid = false;
+  }
+
+  setFormErrors(errors);
+  return isValid;
+};

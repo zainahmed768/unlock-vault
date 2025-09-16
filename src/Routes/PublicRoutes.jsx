@@ -111,6 +111,8 @@ import PrivateRoutes from "./PrivateRoutes";
 import VerifyPasswordOTP from "../pages/Auth/VerifyPasswordOTP";
 import ChangePassword from "../pages/MyProfile/ChangePassword";
 import LiveStreamList from "../pages/LiveStream/LiveStreamList";
+import QrScan from "../pages/QrScan";
+import ConnectXumm from "../pages/MyProfile/ConnectXumm";
 
 const PublicRoutes = () => {
   return (
@@ -136,7 +138,7 @@ const PublicRoutes = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/relics" element={<Relics />} />
-          <Route path="/qr-scan" element={<Relics />} />
+          <Route path="/connect-xumm" element={<ConnectXumm />} />
           <Route path="/vaults" element={<Vaults />} />
           <Route path="/token" element={<Tokens />} />
           <Route path="/path" element={<Paths />} />

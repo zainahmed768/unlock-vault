@@ -1,7 +1,66 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { qrImg } from "../constant/Index";
+import {
+  useLazyXummLoginQuery,
+  useLazyXummStatusQuery,
+} from "../redux/services/AuthServices";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "../redux/reducers/AuthReducer";
 
 const QrScan = () => {
+  const dispatch = useDispatch();
+  const [xummLogin, response] = useLazyXummLoginQuery();
+  const [xummStatus, statuResponse] = useLazyXummStatusQuery();
+  const intervalRef = useRef(null);
+  const user = useSelector((state) => state?.AuthReducer?.user);
+  const userToken = useSelector((state) => state?.AuthReducer?.userToken);
+
+  useEffect(() => {
+    xummLogin({ page_type: 0 });
+  }, [xummLogin]);
+
+  useEffect(() => {
+    if (response?.isSuccess) {
+      intervalRef.current = setInterval(() => {
+        xummStatus({ id: user?.id });
+      }, 10000);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [response?.isSuccess, xummStatus, user?.id]);
+
+  useEffect(() => {
+    console.log(statuResponse, "statuResponse");
+
+    if (statuResponse?.isSuccess) {
+      dispatch(setUserToken({ user: statuResponse?.data?.user }));
+
+      if (statuResponse?.data?.connected === true) {
+        // ✅ stop polling when connected
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+        Alert({
+          title: "Success",
+          text: "Your Wallet has been Connected",
+        });
+      }
+    }
+
+    if (statuResponse?.isError) {
+      Alert({
+        title: "Error",
+        text: statuResponse?.error?.data?.error,
+        iconStyle: "error",
+      });
+    }
+  }, [statuResponse, dispatch]);
   return (
     <>
       {/* page header starts here */}
@@ -24,9 +83,19 @@ const QrScan = () => {
                   </div>
                   <div className="auth-fields-wrapper mt-5">
                     <div className="qr-img-wrapper">
-                      <figure>
-                        <img src={qrImg} className="img-fluid" alt="" />
-                      </figure>
+                      {response?.isLoading ? (
+                        <div className="qr-loader">
+                          <BeatLoader color="#fff" size={20} />
+                        </div>
+                      ) : (
+                        <figure>
+                          <img
+                            src={response?.data?.qr_url}
+                            className="img-fluid"
+                            alt=""
+                          />
+                        </figure>
+                      )}
                     </div>
                   </div>
                 </div>

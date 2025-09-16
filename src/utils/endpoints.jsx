@@ -19,4 +19,6 @@ export const RESEND_OTP = "/auth/resend-registration-otp";
 
 export const CHANGE_PASSWORD = "/auth/change-password";
 
+export const CONNECT_WALLET_PROFILE = "/auth/connect-via-wallet-address";
+
 export const UPDATE_PROFILE = "/auth/update-profile";
