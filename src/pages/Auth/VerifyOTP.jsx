@@ -21,15 +21,19 @@ const VerifyOTP = () => {
   const [verifyAccount, response] = useVerifyAccountMutation();
   const [resendOtp, responsed] = useResendOtpMutation();
 
+  // ⏳ Timer state
+  const [timer, setTimer] = useState(0);
+
   const HandleSend = () => {
     let data = new FormData();
     data.append("email", localStorage.getItem("email"));
     resendOtp(data);
+    // Start 2 min countdown (120 seconds)
+    setTimer(120);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(otp, "otp sdcjnsdj");
     if (VerifyOtpValidation(otp, setFormErrors)) {
       let data = new FormData();
       data.append("email", localStorage.getItem("email"));
@@ -38,31 +42,16 @@ const VerifyOTP = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(response, "sdycgsd");
-  //   if (response?.isSuccess) {
-  //     dispatch(setUserToken(response?.data?.data));
-  //     Alert({
-  //       title: "Success",
-  //       text: response?.data?.message,
-  //     });
-  //     navigate("/");
-  //   }
-  //   if (responsed?.isSuccess) {
-  //     Alert({
-  //       title: "Success",
-  //       text: responsed?.data?.message,
-  //     });
-  //   }
-  //   if (response?.isError) {
-  //     console.log(response);
-  //     Alert({
-  //       title: "Error",
-  //       text: response?.error?.data?.message,
-  //       iconStyle: "error",
-  //     });
-  //   }
-  // }, [response, responsed]);
+  // ⏱ Countdown effect
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
 
   // ✅ Handle "response"
   useEffect(() => {
@@ -102,9 +91,15 @@ const VerifyOTP = () => {
     }
   }, [responsed]);
 
+  // Helper to format timer as mm:ss
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+  };
+
   return (
     <>
-      {/* page header starts here */}
       <PageHeader>
         <section className="auth-sec">
           <Container>
@@ -119,9 +114,9 @@ const VerifyOTP = () => {
                     </div>
                   </div>
                   <div className="auth-fields-wrapper mt-5">
-                    <form action="">
+                    <form>
                       <div className="form-group mb-4 otp-fields-wrapper">
-                        <label htmlFor="">
+                        <label>
                           <span className="text-danger">*</span> Email
                         </label>
                         <OTPInput
@@ -149,14 +144,25 @@ const VerifyOTP = () => {
                           )}
                         </button>
                         <div className="form-group my-4 text-center">
-                          <p
-                            className="text-decoration-none "
-                            // to="/forgot-password"
-                            onClick={HandleSend}
-                            style={{ cursor: "pointer", color: "#6b00ff" }}
-                          >
-                            Resend Otp
-                          </p>
+                          {timer > 0 ? (
+                            <p style={{ color: "#6b00ff" }}>
+                              Resend available in {formatTime(timer)}
+                            </p>
+                          ) : (
+                            <p
+                              className="text-decoration-none"
+                              onClick={HandleSend}
+                              style={{
+                                cursor: "pointer",
+                                color: "#6b00ff",
+                                opacity: responsed?.isLoading && 0.7,
+                              }}
+                            >
+                              {responsed?.isLoading
+                                ? "Resending..."
+                                : "Resend Otp"}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </form>
@@ -167,7 +173,6 @@ const VerifyOTP = () => {
           </Container>
         </section>
       </PageHeader>
-      {/* page header ends here */}
     </>
   );
 };

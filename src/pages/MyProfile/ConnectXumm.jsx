@@ -82,7 +82,8 @@ const ConnectXumm = () => {
   }, [statuResponse, dispatch]);
 
   useEffect(() => {
-    console.log(walletResponse, "walletResponsewkfjbs");
+    console.log(walletResponse, "walletResponse");
+
     if (walletResponse?.isSuccess) {
       Alert({
         title: "Success",
@@ -92,13 +93,25 @@ const ConnectXumm = () => {
     }
 
     if (walletResponse?.isError) {
+      const validationErrors = walletResponse?.error?.data?.errors;
+      let errorMessage =
+        walletResponse?.error?.data?.message || "Something went wrong";
+
+      if (validationErrors && typeof validationErrors === "object") {
+        const firstError = Object.values(validationErrors).flat()[0];
+        errorMessage = firstError;
+        // Or show all combined:
+        // errorMessage = Object.values(validationErrors).flat().join(", ");
+      }
+
       Alert({
         title: "Error",
-        text: walletResponse?.error?.data?.message,
+        text: errorMessage,
         iconStyle: "error",
       });
     }
   }, [walletResponse, dispatch]);
+
   return (
     <>
       <ProfileLayout type={"My Subscription"}>

@@ -83,7 +83,7 @@ const ChangePassword = () => {
               onChange={(e) =>
                 setPassword({ ...password, current_password: e.target.value })
               }
-              placeholder={"Enter the Current password"}
+              placeholder={"Current password"}
               errors={
                 formErrors?.current_password
                   ? formErrors?.current_password
@@ -115,7 +115,7 @@ const ChangePassword = () => {
               onChange={(e) =>
                 setPassword({ ...password, new_password: e.target.value })
               }
-              placeholder={"Enter the New password"}
+              placeholder={"New password"}
               errors={
                 formErrors?.new_password ? formErrors?.new_password : null
               }
@@ -148,7 +148,7 @@ const ChangePassword = () => {
                   new_password_confirmation: e.target.value,
                 })
               }
-              placeholder={"Enter the New Password Confirmation"}
+              placeholder={"New Password Confirmation"}
               errors={
                 formErrors?.new_password_confirmation
                   ? formErrors?.new_password_confirmation

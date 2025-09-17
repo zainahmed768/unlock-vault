@@ -63,7 +63,9 @@ const MyTokens = () => {
                           )}
                         </div>
                       </div>
-                      <span className="fw-semibold">{token.total}</span>
+                      <span className="fw-semibold">
+                        {token.total > 0 ? token.total : "$0000"}
+                      </span>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>

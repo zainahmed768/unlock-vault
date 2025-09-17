@@ -22,6 +22,7 @@ const Login = () => {
   const [login, setLogin] = useState({
     email: "",
     password: "",
+    rememberMe: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [formErrors, setFormErrors] = useState(null);
@@ -38,6 +39,17 @@ const Login = () => {
   };
 
   useEffect(() => {
+    const remembered = JSON.parse(localStorage.getItem("rememberMeData"));
+    if (remembered) {
+      setLogin({
+        email: remembered.email || "",
+        password: remembered.password || "",
+        rememberMe: true,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (response?.isSuccess) {
       console.log(response?.data?.data, "asdcjnsacj");
       dispatch(setUserToken(response?.data?.data));
@@ -46,11 +58,22 @@ const Login = () => {
         text: response?.data?.message,
       });
       navigate("/");
+      if (login.rememberMe) {
+        localStorage.setItem(
+          "rememberMeData",
+          JSON.stringify({ email: login.email, password: login.password })
+        );
+      } else {
+        localStorage.removeItem("rememberMeData");
+      }
+
       setLogin({
         email: "",
         password: "",
+        rememberMe: false,
       });
     }
+
     if (response?.isError) {
       if (response?.error?.data?.errors?.email?.[0]) {
         Alert({
@@ -162,13 +185,13 @@ const Login = () => {
                             type="checkbox"
                             className="form-check-input"
                             id="rememberMe"
-                            // checked={login?.rememberMe || false}
-                            // onChange={(e) =>
-                            //   setLogin({
-                            //     ...login,
-                            //     rememberMe: e.target.checked,
-                            //   })
-                            // }
+                            checked={login.rememberMe}
+                            onChange={(e) =>
+                              setLogin({
+                                ...login,
+                                rememberMe: e.target.checked,
+                              })
+                            }
                           />
                           <label
                             className="form-check-label"
