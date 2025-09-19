@@ -93,16 +93,11 @@ const ConnectXumm = () => {
     }
 
     if (walletResponse?.isError) {
-      const validationErrors = walletResponse?.error?.data?.errors;
+      const apiError = walletResponse?.error?.data?.error;
       let errorMessage =
-        walletResponse?.error?.data?.message || "Something went wrong";
-
-      if (validationErrors && typeof validationErrors === "object") {
-        const firstError = Object.values(validationErrors).flat()[0];
-        errorMessage = firstError;
-        // Or show all combined:
-        // errorMessage = Object.values(validationErrors).flat().join(", ");
-      }
+        apiError?.message ||
+        walletResponse?.error?.data?.message ||
+        "Something went wrong";
 
       Alert({
         title: "Error",
