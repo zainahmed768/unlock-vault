@@ -52,7 +52,9 @@ const Home = () => {
   const navigate = useNavigate();
   const intervalRef = useRef(null);
   const [xummLogin, response] = useLazyXummLoginQuery();
+  console.log(response, "responseafskv");
   const [xummStatus, statuResponse] = useLazyXummStatusQuery();
+  const [retryCount, setRetryCount] = useState(0);
   const [activeKey, setActiveKey] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [qr, setQr] = useState(false);
@@ -184,14 +186,35 @@ const Home = () => {
       }
     }
 
-    if (statuResponse?.isError) {
-      Alert({
-        title: "Error",
-        text: statuResponse?.error?.data?.error,
-        iconStyle: "error",
-      });
-    }
+    // if (statuResponse?.isError) {
+    //   xummLogin({ page_type: 0 });
+    //   Alert({
+    //     title: "Error",
+    //     text: statuResponse?.error?.data?.error,
+    //     iconStyle: "error",
+    //   });
+    // }
   }, [statuResponse, dispatch, handleClose]);
+
+  useEffect(() => {
+    if (statuResponse?.isError && retryCount < 3) {
+      let timeout = setTimeout(() => {
+        setRetryCount((prev) => prev + 1);
+        xummLogin({ page_type: 0 });
+      }, 5000);
+
+      if (retryCount === 0) {
+        // 👈 show alert only once
+        Alert({
+          title: "Error",
+          text: statuResponse?.error?.data?.error,
+          iconStyle: "error",
+        });
+      }
+
+      return () => clearTimeout(timeout);
+    }
+  }, [statuResponse, retryCount]);
 
   return (
     <>

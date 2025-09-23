@@ -21,6 +21,7 @@ const ConnectXumm = () => {
   const [connectWalletViaProfile, walletResponse] =
     useConnectWalletViaProfileMutation();
   const intervalRef = useRef(null);
+  const [retryCount, setRetryCount] = useState(0);
   const user = useSelector((state) => state?.AuthReducer?.user);
   const userToken = useSelector((state) => state?.AuthReducer?.userToken);
   const [walletAddress, setWalletAddress] = useState("");
@@ -72,14 +73,34 @@ const ConnectXumm = () => {
       }
     }
 
-    if (statuResponse?.isError) {
-      Alert({
-        title: "Error",
-        text: statuResponse?.error?.data?.error,
-        iconStyle: "error",
-      });
-    }
+    // if (statuResponse?.isError) {
+    //   Alert({
+    //     title: "Error",
+    //     text: statuResponse?.error?.data?.error,
+    //     iconStyle: "error",
+    //   });
+    // }
   }, [statuResponse, dispatch]);
+
+  useEffect(() => {
+    if (statuResponse?.isError && retryCount < 3) {
+      let timeout = setTimeout(() => {
+        setRetryCount((prev) => prev + 1);
+        xummLogin({ page_type: 0 });
+      }, 5000);
+
+      if (retryCount === 0) {
+        // 👈 show alert only once
+        Alert({
+          title: "Error",
+          text: statuResponse?.error?.data?.error,
+          iconStyle: "error",
+        });
+      }
+
+      return () => clearTimeout(timeout);
+    }
+  }, [statuResponse, retryCount]);
 
   useEffect(() => {
     console.log(walletResponse, "walletResponse");
@@ -89,6 +110,7 @@ const ConnectXumm = () => {
         title: "Success",
         text: walletResponse?.data?.message,
       });
+      setWalletAddress("");
       dispatch(setUserToken({ user: walletResponse?.data?.data?.user }));
     }
 
@@ -98,7 +120,7 @@ const ConnectXumm = () => {
         apiError?.message ||
         walletResponse?.error?.data?.message ||
         "Something went wrong";
-
+      xummLogin({ page_type: 0 });
       Alert({
         title: "Error",
         text: errorMessage,
