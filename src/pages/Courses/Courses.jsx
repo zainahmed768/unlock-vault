@@ -111,11 +111,19 @@ const Courses = () => {
                               <h5 class="course-title text-white">
                                 {course?.title}
                               </h5>
-                              <p class="course-price text-white">
-                                ${course?.price}
+                              <p class="course-price text-white mb-2">
+                                ${Number(course?.price).toFixed(2)}
                               </p>
-                              <div class="course-rating text-white">
+                              <div class="course-rating text-white mb-2">
                                 ★★★★☆ {course?.rating}
+                              </div>
+                              <div className="course-btn-wrapper mb-3">
+                                <Link
+                                  to={`/course-detail/${course?.id}`}
+                                  className="btn btn-primary"
+                                >
+                                  View Course
+                                </Link>
                               </div>
                             </div>
                           </div>

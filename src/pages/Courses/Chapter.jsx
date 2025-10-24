@@ -5,8 +5,11 @@ import PageHeading from "../../components/PageHeading";
 import Footer from "../../components/Footer";
 import { Container } from "react-bootstrap";
 import "../../assets/css/chapter.css";
+import { useParams } from "react-router-dom";
 
 const Chapter = () => {
+  const param = useParams();
+  console.log(param, "2345tgyhb");
   return (
     <>
       <Header />

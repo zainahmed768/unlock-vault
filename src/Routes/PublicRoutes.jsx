@@ -156,7 +156,7 @@ const PublicRoutes = () => {
           {/* course starts here */}
           <Route path="/courses" element={<Courses />} />
           <Route path="/course-detail/:id" element={<CoursesDetail />} />
-          <Route path="/chapter" element={<Chapter />} />
+          <Route path="/chapter/:id" element={<Chapter />} />
           {/* courses ends here  */}
         </Route>
       </Routes>

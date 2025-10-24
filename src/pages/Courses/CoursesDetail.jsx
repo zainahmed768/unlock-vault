@@ -5,7 +5,7 @@ import PageHeading from "../../components/PageHeading";
 import { Container } from "react-bootstrap";
 import Footer from "../../components/Footer";
 import { client1Img, client2Img, vault1 } from "../../constant/Index";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetCourseDetailsQuery } from "../../redux/services/CourseServices";
 import { BeatLoader } from "react-spinners";
 
@@ -23,9 +23,7 @@ const CoursesDetail = () => {
       <PageHeader>
         <PageHeading
           heading={singleData?.title}
-          text={
-          singleData?.short_description
-          }
+          text={singleData?.short_description}
         />
         {isLoading ? (
           <div
@@ -122,7 +120,6 @@ const CoursesDetail = () => {
                   </ul>
                 </div>
               )}
-
               {/* <div className="my-5">
                 <h3 className="text-capitalized heading-txt">
                   This Course Includes
@@ -163,14 +160,19 @@ const CoursesDetail = () => {
                   {singleData?.lessons?.map((single, i) => {
                     return (
                       <div className="col-md-6">
-                        <h6 className="semi-b-font level-6 text-uppercase text-white">
-                          Chapter 1: {single?.title}
-                          {single?.is_free == 1 ? (
-                            <span class="badge badge-primary ms-3">Free</span>
-                          ) : (
-                            <span class="badge badge-secondary ms-3">Paid</span>
-                          )}
-                        </h6>
+                        <Link to={`/chapter/${single?.id}`}>
+                          <h6 className="semi-b-font level-6 text-uppercase text-white">
+                            Chapter 1: {single?.title}
+                            {single?.is_free == 0 ? (
+                              <span class="badge badge-primary ms-3">Free</span>
+                            ) : (
+                              <span class="badge badge-secondary ms-3">
+                                Paid
+                              </span>
+                            )}
+                          </h6>
+                        </Link>
+
                         <p className="med-font level-7">
                           {single?.description?.length > 0
                             ? single?.description
