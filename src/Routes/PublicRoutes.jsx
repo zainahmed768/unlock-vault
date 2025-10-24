@@ -113,6 +113,9 @@ import ChangePassword from "../pages/MyProfile/ChangePassword";
 import LiveStreamList from "../pages/LiveStream/LiveStreamList";
 import QrScan from "../pages/QrScan";
 import ConnectXumm from "../pages/MyProfile/ConnectXumm";
+import Courses from "../pages/Courses/Courses";
+import CoursesDetail from "../pages/Courses/CoursesDetail";
+import Chapter from "../pages/Courses/Chapter";
 
 const PublicRoutes = () => {
   return (
@@ -122,7 +125,9 @@ const PublicRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/terms-conditions" element={<Terms />} />
         <Route path="/privacy-policy" element={<Privacy />} />
-
+        <Route path="/about" element={<About />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/relics" element={<Relics />} />
         {/* Auth-only (when NOT logged in) */}
         <Route element={<AuthRoute />}>
           <Route path="/sign-in" element={<Login />} />
@@ -135,9 +140,6 @@ const PublicRoutes = () => {
 
         {/* Private-only (when logged in) */}
         <Route element={<PrivateRoutes />}>
-          <Route path="/about" element={<About />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/relics" element={<Relics />} />
           <Route path="/connect-xumm" element={<ConnectXumm />} />
           <Route path="/vaults" element={<Vaults />} />
           <Route path="/token" element={<Tokens />} />
@@ -150,6 +152,12 @@ const PublicRoutes = () => {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/my-subscription" element={<MySubscriptions />} />
           <Route path="/my-tokens" element={<MyTokens />} />
+
+          {/* course starts here */}
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/course-detail/:id" element={<CoursesDetail />} />
+          <Route path="/chapter" element={<Chapter />} />
+          {/* courses ends here  */}
         </Route>
       </Routes>
     </HashRouter>

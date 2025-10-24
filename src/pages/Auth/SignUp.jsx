@@ -16,8 +16,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [authRegister, { data, error, isLoading, isSuccess, isError }] =
-    useAuthRegisterMutation();
+    const [authRegister, { data, error, isLoading, isSuccess, isError }] =
+      useAuthRegisterMutation();
 
   const [signup, setSignUp] = useState({
     fname: "",

@@ -830,3 +830,8 @@ div#copyright {
   font-size: 15px;
   margin: 0px;
 }
+.feedback-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

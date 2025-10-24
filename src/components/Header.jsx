@@ -120,15 +120,16 @@ const Header = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/relics"}
+                          to={"/courses"}
                           className={
-                            location?.pathname == "/relics" && "active"
+                            location?.pathname == "/courses" && "active"
                           }
                         >
-                          {location?.pathname == "/relics" && (
+                          {location?.pathname == "/courses" && (
                             <MdWindow size={17} className="me-1" />
                           )}
-                          Relics
+                          
+                          Courses
                         </Link>
                       </li>
                     </ul>
@@ -297,7 +298,7 @@ const Header = () => {
                         <Link to="/">Builders</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to="/relics">Relics</Link>
+                        <Link to="/courses">Courses</Link>
                       </li>
                       <li className="nav-item">
                         <Link to="/token">Tokens</Link>

@@ -6,6 +6,7 @@ import {
 } from "../redux/services/AuthServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "../redux/reducers/AuthReducer";
+import PageHeader from "../components/PageHeader";
 
 const QrScan = () => {
   const dispatch = useDispatch();
