@@ -23,6 +23,8 @@ export const CONNECT_WALLET_PROFILE = "/auth/connect-via-wallet-address";
 
 export const UPDATE_PROFILE = "/auth/update-profile";
 
+export const MY_TOKENS = "/auth/user/token-balances";
+
 // course starts here
 
 export const ALL_COURSES = "/courses";

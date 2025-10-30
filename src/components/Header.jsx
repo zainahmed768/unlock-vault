@@ -8,6 +8,7 @@ import Alert from "./Alert/Alert";
 import { setlogoutUser } from "../redux/reducers/AuthReducer";
 import { CgProfile } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
+import { FaBook } from "react-icons/fa";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -126,10 +127,10 @@ const Header = () => {
                           }
                         >
                           {location?.pathname == "/courses" && (
-                            <MdWindow size={17} className="me-1" />
+                            <FaBook size={17} className="me-1" />
                           )}
                           
-                          Courses
+                          Relics
                         </Link>
                       </li>
                     </ul>
@@ -298,7 +299,7 @@ const Header = () => {
                         <Link to="/">Builders</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to="/courses">Courses</Link>
+                        <Link to="/courses">Relics</Link>
                       </li>
                       <li className="nav-item">
                         <Link to="/token">Tokens</Link>

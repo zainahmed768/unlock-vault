@@ -1,180 +1,165 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
 import Footer from "../../components/Footer";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import "../../assets/css/chapter.css";
 import { useParams } from "react-router-dom";
-
+import { useGetCourseSectionsQuery } from "../../redux/services/CourseServices";
+import { MdOutlineSlowMotionVideo } from "react-icons/md";
+// ES2015 module syntax
+// import { PDFViewer } from "@progress/kendo-react-pdf-viewer";
 const Chapter = () => {
-  const param = useParams();
-  console.log(param, "2345tgyhb");
+  const params = useParams();
+  const { data: singleChapter, isLoading } = useGetCourseSectionsQuery(
+    params?.id
+  );
+
+  const chapterData = singleChapter?.data;
+  const lessons = chapterData?.lessons || [];
+
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  // ✅ Load first lesson automatically
+  useEffect(() => {
+    if (lessons.length > 0) {
+      setSelectedVideo(lessons[0]);
+    }
+  }, [lessons]);
+
+  // ✅ Handle lesson click
+  const handleLessonClick = (lesson) => {
+    setSelectedVideo(lesson);
+  };
+
   return (
     <>
       <Header />
+
       <PageHeader>
         <PageHeading
-          heading={"Chapter Details"}
-          text={
-            "Lorem ipsum dolor sit amet consectetur. Augue commodo elementum augue placerat eleifend placer"
-          }
+          heading={chapterData?.title}
+          text={chapterData?.description}
         />
       </PageHeader>
+
       <section className="view-course-section py-5 my-5">
         <Container>
-          <div className="row">
-            {/* Left Section */}
-            <div className="col-lg-8">
-              <div className="view-course-img-wrapper position-relative">
-                <div
-                  className="video-placeholder bg-dark text-white d-flex justify-content-center align-items-center"
-                  style={{ height: "400px" }}
-                >
-                  <p className="mb-0">Course Introductory Video</p>
+          {isLoading ? (
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "400px" }}
+            >
+              <Spinner animation="border" />
+            </div>
+          ) : (
+            <div className="row">
+              {/* ===== Left Side (Video Player) ===== */}
+              <div className="col-lg-8">
+                <div className="view-course-img-wrapper position-relative">
+                  {selectedVideo?.video_full_url ? (
+                    <video
+                      key={selectedVideo?.id}
+                      src={selectedVideo?.video_full_url}
+                      className="w-100 rounded"
+                      style={{ height: "400px", objectFit: "cover" }}
+                      controls
+                      autoPlay
+                      disablePictureInPicture
+                      controlsList="nodownload noremoteplayback nofullscreen"
+                    />
+                  ) : (
+                    <div
+                      className="video-placeholder bg-dark text-white d-flex justify-content-center align-items-center"
+                      style={{ height: "400px" }}
+                    >
+                      <p className="mb-0">No video available</p>
+                    </div>
+                    // <iframe
+                    //   src={selectedVideo?.pdf_full_url}
+                    //   width="100%"
+                    //   height="600vh"
+                    //   title="PDF Viewer"
+                    // />
+                  )}
                 </div>
-              </div>
 
-              <div className="view-course-content-wrapper mt-3">
-                <div className="view-course-headings-wrapper">
-                  <h2 className="heading-txt text-capitalized">Course Title</h2>
+                <div className="view-course-content-wrapper mt-3">
+                  <h2 className="heading-txt text-capitalize">
+                    {selectedVideo?.title || chapterData?.title}
+                  </h2>
                   <p>
-                    Course description goes here. This explains what the course
-                    is about in detail.
+                    {selectedVideo?.description || chapterData?.description}
                   </p>
                 </div>
-                {/* 
-                <div className="view-course-btn-wrapper d-flex gap-3 mb-5">
-                  <span className="GeneralButton">
-                    <button type="button">Submit Review</button>
-                  </span>
-                  <button
-                    type="button"
-                    className="btn btn-primary text-uppercase"
-                  >
-                    Download Certificate
-                  </button>
-                </div> */}
+                {console.log(
+                  selectedVideo?.pdf_full_url,
+                  "selectedVideo?.pdf_full_url"
+                )}
+              </div>
 
-                <div className="view-course-result-wrapper">
-                  {/* <div className="view-course-result-heading-wrapper">
-                    <h3 className="heading-txt text-capitalized">
-                      Results
-                    </h3>
-                  </div>
-                  <div className="view-course-result-list-wrapper">
-                    <ul className="p-0">
-                      <li>Chapters Covered: 10</li>
-                      <li>Quiz Percentage: 85%</li>
-                      <li>Quiz Score By Chapters:</li>
-                      <li>Quiz Total Marks: 100</li>
-                      <li>Achieved Marks: 85</li>
-                    </ul>
-                  </div> */}
-                </div>
+              {/* ===== Right Side (Lessons Sidebar) ===== */}
+              <div className="col-lg-4">
+                <div className="courses-sidebar-detail-wrapper">
+                  <div className="course-sidebar-card-wrapper">
+                    <div className="courses-sidebar-heading-wrapper">
+                      <h4 className="text-uppercase level-4 heading-font text-white">
+                        Course Lessons
+                      </h4>
+                    </div>
 
-                <div className="row mb-3">
-                  <div className="col-lg-8">
-                    <div className="view-courses-chapter-wrapper">
-                      <div className="chapters-tags-wrapper mt-3 d-flex gap-2 flex-wrap">
-                        <div className="chapter-tag-wrapper">
-                          <span className="badge bg-dark">
-                            Chapter 1 : 10/8
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span className="badge bg-dark">
-                            Chapter 2 : 15/13
-                          </span>
-                        </div>
-                        <div className="chapter-tag-wrapper">
-                          <span className="badge bg-dark">
-                            Chapter 3 : 20/18
-                          </span>
-                        </div>
-                      </div>
+                    <div className="chapters-tags-wrapper mt-3 d-flex flex-column gap-2">
+                      {lessons.length > 0 ? (
+                        lessons.map((lesson) => (
+                          <button
+                            key={lesson?.id}
+                            className={`badge bg-secondary p-2 text-start border-0 w-100 d-flex justify-content-between align-items-center ${
+                              selectedVideo?.id === lesson?.id
+                                ? "active-lesson"
+                                : ""
+                            }`}
+                            onClick={() => handleLessonClick(lesson)}
+                            disabled={lesson?.is_free == 0}
+                          >
+                            <div className="side-1 d-flex align-items-center">
+                              <MdOutlineSlowMotionVideo
+                                color="#fff"
+                                size={20}
+                                className="me-2"
+                              />
+                              {lesson?.title}
+                            </div>
+                            <div className="side-2">
+                              <span
+                                className={`lesson-badge ${
+                                  lesson?.is_free == 1
+                                    ? "free-badge"
+                                    : "paid-badge"
+                                }`}
+                                style={{
+                                  color: lesson?.is_free == 1 ? "green" : "red",
+                                }}
+                              >
+                                {lesson?.is_free == 1 ? "Free" : "Paid"}
+                              </span>
+                            </div>
+                          </button>
+                        ))
+                      ) : (
+                        <p className="text-muted small mt-2">
+                          No lessons found.
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* Right Sidebar */}
-            <div className="col-lg-4">
-              <div className="courses-sidebar-detail-wrapper">
-                <div className="course-sidebar-card-wrapper">
-                  <div className="courses-sidebar-heading-wrapper">
-                    <h4 className="text-uppercase level-4 heading-font">
-                      Course Details
-                    </h4>
-                  </div>
-
-                  {/* <div className="course-completeing-wrap my-3">
-                    <div className="progress">
-                      <div
-                        className="progress-bar"
-                        role="progressbar"
-                        style={{ width: "75%" }}
-                        aria-valuenow="75"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
-                  </div> */}
-
-                  {/* <div className="course-stats-wrapper">
-                    <ul className="m-0 p-0">
-                      <li>
-                        <span className="property">Progress :</span>{" "}
-                        <span className="value">75% Completed</span>
-                      </li>
-                      <li>
-                        <span className="property">Chapters :</span>{" "}
-                        <span className="value">12</span>
-                      </li>
-                      <li>
-                        <span className="property">Total Quizzes :</span>{" "}
-                        <span className="value">6</span>
-                      </li>
-                      <li>
-                        <span className="property">Total Marks :</span>{" "}
-                        <span className="value">100</span>
-                      </li>
-                      <li>
-                        <span className="property">Achieved Marks :</span>{" "}
-                        <span className="value">85</span>
-                      </li>
-                    </ul>
-                  </div> */}
-                </div>
-
-                <div className="course-content-wrapper mt-3">
-                  {/* <div className="course-content-heading-wrapper">
-                    <h4 className="level-4 heading-font text-uppercase">
-                      Course Content
-                    </h4>
-                  </div> */}
-
-                  <div className="chapters-tags-wrapper mt-3 d-flex gap-2 flex-wrap">
-                    <span className="badge bg-secondary">
-                      Chapter 1 - Introduction
-                    </span>
-                    <span className="badge bg-secondary">
-                      Chapter 2 - Basics
-                    </span>
-                    <span className="badge bg-secondary">
-                      Chapter 3 - Advanced Topics
-                    </span>
-                    <span className="badge bg-secondary">
-                      Chapter 4 - Summary
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          )}
         </Container>
       </section>
+
       <Footer />
     </>
   );

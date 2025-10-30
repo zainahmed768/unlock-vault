@@ -39,10 +39,20 @@ const CourseServices = createApi({
       }),
       providesTags: ["course"],
     }),
+    getCourseSections: build.query({
+      query: (id) => ({
+        url: `/courses/section/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export default CourseServices;
 
 // ✅ Export React hooks
-export const { useGetAllCoursesQuery, useGetCourseDetailsQuery } = CourseServices;
+export const {
+  useGetAllCoursesQuery,
+  useGetCourseDetailsQuery,
+  useGetCourseSectionsQuery,
+} = CourseServices;

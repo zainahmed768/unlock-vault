@@ -2,17 +2,21 @@ import React from "react";
 import ProfileLayout from "../../components/layout/ProfileLayout";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { useMyTokensQuery } from "../../redux/services/AuthServices";
 
 const MyTokens = () => {
   const user = useSelector((state) => state?.AuthReducer?.user);
+  const { data, isLoading } = useMyTokensQuery();
+  let AllTokensData = data?.data;
+  console.log(AllTokensData, "allToken");
   const tokens = [
-    {
-      name: "XRP",
-      //   symbol: "BTC",
-      total: user?.xrp_tokens,
-      image:
-        "https://altcoinsbox.com/wp-content/uploads/2023/01/xrp-logo-600x600.webp",
-    },
+    // {
+    //   name: "XRP",
+    //   //   symbol: "BTC",
+    //   total: user?.xrp_tokens,
+    //   image:
+    //     "https://altcoinsbox.com/wp-content/uploads/2023/01/xrp-logo-600x600.webp",
+    // },
     {
       name: "A17C",
       //   symbol: "ETH",
@@ -35,7 +39,7 @@ const MyTokens = () => {
         <section className="token-sec">
           <Row>
             <Col lg="12">
-              <Card className="p-4 shadow-sm">
+              {/* <Card className="p-4 shadow-sm">
                 <h4 className="mb-4 heading-txt">Tokens</h4>
 
                 <ListGroup variant="flush">
@@ -68,6 +72,82 @@ const MyTokens = () => {
                       </span>
                     </ListGroup.Item>
                   ))}
+                </ListGroup>
+              </Card> */}
+              <Card className="p-4 shadow-sm">
+                <h4 className="mb-4 heading-txt">Tokens</h4>
+
+                <ListGroup variant="flush">
+                  {AllTokensData?.tokens?.map((token, index) => (
+                    <ListGroup.Item
+                      key={index}
+                      className="d-flex justify-content-between align-items-center"
+                    >
+                      <div className="d-flex align-items-center gap-3">
+                        {/* {token.image && (
+                          <Image
+                            src={token.image}
+                            alt={token.name}
+                            width={30}
+                            height={30}
+                            roundedCircle
+                          />
+                        )} */}
+                        <img
+                          src="https://altcoinsbox.com/wp-content/uploads/2023/01/xrp-logo-600x600.webp"
+                          className="img-fluid"
+                          height={30}
+                          width={30}
+                          alt=""
+                        />
+                        <div>
+                          <strong className="text-white">
+                            {token.currency_code}
+                          </strong>{" "}
+                          {token?.currency_code && (
+                            <span className="text-white">
+                              {"(" + token?.currency_code + ")"}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <span className="fw-semibold">
+                        {token.balance > 0 ? token.balance : "$0000"}
+                      </span>
+                    </ListGroup.Item>
+                  ))}
+                  {tokens?.map((token, i) => {
+                    return (
+                      <ListGroup.Item
+                        key={i}
+                        className="d-flex justify-content-between align-items-center"
+                      >
+                        <div className="d-flex align-items-center gap-3">
+                          {token.image && (
+                            <Image
+                              src={token.image}
+                              alt={token.name}
+                              width={30}
+                              height={30}
+                              roundedCircle
+                            />
+                          )}
+
+                          <div>
+                            <strong className="text-white">{token.name}</strong>{" "}
+                            {token?.name && (
+                              <span className="text-white">
+                                {"(" + token?.name + ")"}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <span className="fw-semibold">
+                          {token.total > 0 ? token.total : "$0000"}
+                        </span>
+                      </ListGroup.Item>
+                    );
+                  })}
                 </ListGroup>
               </Card>
             </Col>

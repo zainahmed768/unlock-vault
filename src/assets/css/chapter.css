@@ -40,9 +40,47 @@
   column-count: 2;
 }
 .courses-sidebar-detail-wrapper {
-  background: #f5f5f5;
+  /* background: #f5f5f5; */
   padding: 20px 10px;
-  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(180%);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2),
+    inset 0 4px 20px rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+.courses-sidebar-detail-wrapper span.badge {
+  background-image: url(/src/assets/img/button.png);
+  text-decoration: none;
+  padding: 13px 21px;
+  border-radius: 8px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 103%;
+  color: #fff;
+  backdrop-filter: blur(25px);
+  border: 2px solid #7b799f;
+  font-size: 14px;
+  font-family: "Inter";
+  display: inline-block;
+  background-color: transparent;
+  text-align: left;
+}
+.chapters-tags-wrapper button.badge {
+  background-image: url(/src/assets/img/button.png);
+  text-decoration: none;
+  padding: 13px 21px !important;
+  border-radius: 8px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 103%;
+  color: #fff;
+  backdrop-filter: blur(25px);
+  border: 2px solid #7b799f;
+  font-size: 14px;
+  font-family: "Inter";
+  display: inline-block;
+  background-color: transparent;
+  text-align: left;
 }
 .course-sidebar-card-wrapper .course-stats-wrapper ul li {
   font-size: 14px;
@@ -80,4 +118,22 @@
 }
 .courses-sidebar-detail-wrapper h4.level-4 {
   color: #000;
+}
+
+.active-lesson {
+  background-color: #6b00ff !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+.chapters-tags-wrapper button.badge:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.chapter-card-wrapper {
+  padding: 13px 17px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(180%);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2),
+    inset 0 4px 20px rgba(255, 255, 255, 0.3);
+  border-radius: 11px;
 }

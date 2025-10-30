@@ -122,6 +122,9 @@ select#sort {
 }
 .course-card img {
   border-radius: 17px;
+  height: 300px;
+  object-fit: cover;
+  width: 100%;
 }
 .course-detail-section h3 {
   font-size: 30px;

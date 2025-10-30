@@ -5,6 +5,7 @@ import {
   CONNECT_WALLET_PROFILE,
   FORGET_PASSWORD,
   LOGIN_URL,
+  MY_TOKENS,
   REGISTER_URL,
   RESEND_OTP,
   RESET_PASSWORD,
@@ -127,6 +128,12 @@ const AuthServices = createApi({
         body: data,
       }),
     }),
+    MyTokens: build.query({
+      query: () => ({
+        url: `${MY_TOKENS}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -146,4 +153,5 @@ export const {
   useLazyXummLoginQuery,
   useLazyXummStatusQuery,
   useConnectWalletViaProfileMutation,
+  useMyTokensQuery,
 } = AuthServices;

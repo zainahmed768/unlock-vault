@@ -5,9 +5,10 @@ import PageHeading from "../../components/PageHeading";
 import { Container } from "react-bootstrap";
 import Footer from "../../components/Footer";
 import { client1Img, client2Img, vault1 } from "../../constant/Index";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useGetCourseDetailsQuery } from "../../redux/services/CourseServices";
 import { BeatLoader } from "react-spinners";
+import Alert from "../../components/Alert/Alert";
 
 const CoursesDetail = () => {
   const params = useParams();
@@ -15,7 +16,24 @@ const CoursesDetail = () => {
     params?.id
   );
   let singleData = singleCourse?.data;
-  console.log(params, singleCourse, "ahscbas");
+  console.log(params, singleCourse, singleData, "ahscbas");
+
+  const navigate = useNavigate();
+
+  const handleModal = (section_id, isFree) => {
+    console.log("Clicked section:", section_id, "Free:", isFree);
+
+    if (Number(isFree) === 1) {
+      navigate(`/chapter/${section_id}`);
+    } else {
+      Alert({
+        iconStyle: "warning",
+        title: "Subscription Required",
+        text: "This lesson is available only to subscribed users. Please purchase a subscription to access this course.",
+      });
+    }
+  };
+
   return (
     <>
       <Header />
@@ -35,7 +53,7 @@ const CoursesDetail = () => {
         ) : (
           <section className="course-detail-section my-5">
             <Container>
-              <div
+              {/* <div
                 className="row"
                 style={{
                   justifyContent: "space-between",
@@ -89,18 +107,59 @@ const CoursesDetail = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="learn-section py-5">
-                <h3 className="text-capitalized heading-txt">
-                  What You Will Learn
-                </h3>
-                <div className="row">
-                  <div className="col-lg-12 px-lg-0">
-                    <ul className="learn-list">
-                      {singleData?.what_you_learn?.map((single, i) => {
-                        return <li className="text-white">{single}</li>;
-                      })}
-                    </ul>
+              </div> */}
+              <div
+                className="row"
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                }}
+              >
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                  <div className="my-0">
+                    {/* <h3 className="text-capitalized heading-txt mb-3">
+                      Introductory Video
+                    </h3> */}
+                    <div className="video-player-wrapper position-relative">
+                      <video
+                        src={singleData?.intro_video_url}
+                        width="100%"
+                        height={"400px"}
+                        style={{ objectFit: "cover" }}
+                        poster={singleData?.thumbnail_url}
+                        controls
+                      ></video>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                  {/* <div className="pt-3 course-heading-wrapper">
+                    <h3 className="text-capitalized heading-txt">
+                      {singleData?.title}
+                    </h3>
+                  </div> */}
+                  {/* <div className="py-3">
+                    <span className="rating-stars">⭐⭐⭐⭐⭐</span>
+                    <span className="ms-2 rating">{singleData?.rating}</span>
+                  </div> */}
+                  <div className="col-lg-10">
+                    <p className="reg-font level-8 text-white">
+                      {singleData?.short_description}
+                    </p>
+                  </div>
+                  <div className="row align-items-center">
+                    <div className="col-lg-4 setmarging">
+                      <span className="reg-font level-8 text-white">Price</span>
+                      <h4 className="text-uppercase text-white">
+                        {Number(singleData?.price).toFixed(2) +
+                          " " +
+                          singleData?.currency_token?.currency_code}
+                      </h4>
+                    </div>
+                    <div className="col-lg-12 my-3">
+                      <button className="btn btn-primary">Buy Now</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -110,6 +169,7 @@ const CoursesDetail = () => {
                   {singleData?.description}
                 </p>
               </div>
+
               {singleData?.requirements > 0 && (
                 <div className="my-5">
                   <h3 className="text-capitalized heading-txt">Requirements</h3>
@@ -139,7 +199,7 @@ const CoursesDetail = () => {
                   })}
                 </div>
               </div> */}
-              <div className="my-5">
+              {/* <div className="my-5">
                 <h3 className="text-capitalized heading-txt mb-3">
                   Introductory Video
                 </h3>
@@ -147,48 +207,130 @@ const CoursesDetail = () => {
                   <video
                     src={singleData?.intro_video_url}
                     width="100%"
-                    poster="/images/thumbnail.jpg"
+                    poster={singleData?.thumbnail_url}
                     controls
                   ></video>
                 </div>
-              </div>
-              <div className="video_listing_sec">
+              </div> */}
+              {/* <div className="video_listing_sec">
                 <h3 className="text-capitalized heading-txt mb-3">
                   Video Listing
                 </h3>
                 <div className="row">
                   {singleData?.lessons?.map((single, i) => {
+                    console.log(single, "singlewejbfwe");
                     return (
                       <div className="col-md-6">
-                        <Link to={`/chapter/${single?.id}`}>
-                          <h6 className="semi-b-font level-6 text-uppercase text-white">
-                            Chapter 1: {single?.title}
-                            {single?.is_free == 0 ? (
-                              <span class="badge badge-primary ms-3">Free</span>
-                            ) : (
-                              <span class="badge badge-secondary ms-3">
-                                Paid
-                              </span>
-                            )}
-                          </h6>
-                        </Link>
+                        <div className="chapter-card-wrapper">
+                          <Link
+                            to="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleModal(single?.section_id, single?.is_free);
+                            }}
+                          >
+                            <h6 className="semi-b-font level-6 text-uppercase text-white">
+                              {single?.title}
+                              {single?.is_free == 1 ? (
+                                <span className="badge badge-primary ms-3">
+                                  Free
+                                </span>
+                              ) : (
+                                <span className="badge badge-secondary ms-3">
+                                  Paid
+                                </span>
+                              )}
+                            </h6>
+                          </Link>
 
-                        <p className="med-font level-7">
-                          {single?.description?.length > 0
-                            ? single?.description
-                            : "Learn about the basics of the course."}
-                        </p>
-                        <span>
-                          <img src="/icons/video_icon.png" alt="" width="20" />
-                          <span className="med-font level-8 secondary-3 ps-2">
-                            {Number(single?.video_duration).toFixed(2)} Minutes
+                          <p className="med-font level-7">
+                            {single?.description?.length > 0
+                              ? single?.description
+                              : "Learn about the basics of the course."}
+                          </p>
+                          <span>
+                            <img
+                              src="/icons/video_icon.png"
+                              alt=""
+                              width="20"
+                            />
+                            <span className="med-font level-8 secondary-3 ps-2">
+                              {Number(single?.video_duration).toFixed(2)}{" "}
+                              Minutes
+                            </span>
                           </span>
-                        </span>
-                        <hr />
+                        </div>
                       </div>
                     );
                   })}
                 </div>
+              </div> */}
+              <div className="video_listing_sec">
+                <h3 className="text-capitalized heading-txt mb-3">
+                  Video Listing
+                </h3>
+                {singleData?.sections?.map((chapter, i) => {
+                  return (
+                    <>
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div className="chapter-heading-wrapper">
+                            <h4 className="text-capitalized heading-txt">
+                              {chapter?.title}
+                            </h4>
+                          </div>
+                        </div>
+                        {chapter?.lessons?.map((single, i) => {
+                          return (
+                            <div className="col-md-6 my-3">
+                              <div className="chapter-card-wrapper">
+                                <Link
+                                  to="#"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleModal(
+                                      single?.section_id,
+                                      single?.is_free
+                                    );
+                                  }}
+                                >
+                                  <h6 className="semi-b-font level-6 text-uppercase text-white">
+                                    {single?.title}
+                                    {single?.is_free == 1 ? (
+                                      <span className="badge badge-primary ms-3">
+                                        Free
+                                      </span>
+                                    ) : (
+                                      <span className="badge badge-secondary ms-3">
+                                        Paid
+                                      </span>
+                                    )}
+                                  </h6>
+                                </Link>
+                                <p className="med-font level-7">
+                                  {single?.description?.length > 0
+                                    ? single?.description
+                                    : "Learn about the basics of the course."}
+                                </p>
+                                <span>
+                                  <img
+                                    src="/icons/video_icon.png"
+                                    alt=""
+                                    width="20"
+                                  />
+                                  <span className="med-font level-8 secondary-3 ps-2">
+                                    {Number(single?.video_duration).toFixed(2)}{" "}
+                                    Minutes
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
+                  );
+                })}
               </div>
               {/* <div className="my-5">
                 <h3 className="text-capitalized heading-txt mb-3">
@@ -223,6 +365,20 @@ const CoursesDetail = () => {
                   </div>
                 </div>
               </div> */}
+              <div className="learn-section py-5">
+                <h3 className="text-capitalized heading-txt">
+                  What You Will Learn
+                </h3>
+                <div className="row">
+                  <div className="col-lg-12 px-lg-0">
+                    <ul className="learn-list">
+                      {singleData?.what_you_learn?.map((single, i) => {
+                        return <li className="text-white">{single}</li>;
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </Container>
           </section>
         )}

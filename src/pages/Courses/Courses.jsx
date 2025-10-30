@@ -35,7 +35,7 @@ const Courses = () => {
       {/* page Header starts here */}
       <PageHeader>
         <PageHeading
-          heading={"Courses"}
+          heading={"Relics"}
           text={
             "Lorem ipsum dolor sit amet consectetur. Augue commodo elementum augue placerat eleifend placer"
           }
@@ -122,7 +122,7 @@ const Courses = () => {
                                   to={`/course-detail/${course?.id}`}
                                   className="btn btn-primary"
                                 >
-                                  View Course
+                                  View Relics
                                 </Link>
                               </div>
                             </div>
