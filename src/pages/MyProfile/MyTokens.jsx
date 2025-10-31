@@ -3,12 +3,14 @@ import ProfileLayout from "../../components/layout/ProfileLayout";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useMyTokensQuery } from "../../redux/services/AuthServices";
-
+import { Alert as AlertBootstrap } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 const MyTokens = () => {
   const user = useSelector((state) => state?.AuthReducer?.user);
-  const { data, isLoading } = useMyTokensQuery();
+  const navigate = useNavigate();
+  const { data, error, isLoading, isError } = useMyTokensQuery();
   let AllTokensData = data?.data;
-  console.log(AllTokensData, "allToken");
+  console.log(AllTokensData, data, error, "allToken");
   const tokens = [
     // {
     //   name: "XRP",
@@ -32,6 +34,9 @@ const MyTokens = () => {
         "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ethereum-ETH-icon.png",
     },
   ];
+  const handleLinks = () => {
+    navigate("/connect-xumm");
+  };
 
   return (
     <>
@@ -74,17 +79,18 @@ const MyTokens = () => {
                   ))}
                 </ListGroup>
               </Card> */}
-              <Card className="p-4 shadow-sm">
-                <h4 className="mb-4 heading-txt">Tokens</h4>
+              {AllTokensData?.tokens ? (
+                <Card className="p-4 shadow-sm">
+                  <h4 className="mb-4 heading-txt">Tokens</h4>
 
-                <ListGroup variant="flush">
-                  {AllTokensData?.tokens?.map((token, index) => (
-                    <ListGroup.Item
-                      key={index}
-                      className="d-flex justify-content-between align-items-center"
-                    >
-                      <div className="d-flex align-items-center gap-3">
-                        {/* {token.image && (
+                  <ListGroup variant="flush">
+                    {AllTokensData?.tokens?.map((token, index) => (
+                      <ListGroup.Item
+                        key={index}
+                        className="d-flex justify-content-between align-items-center"
+                      >
+                        <div className="d-flex align-items-center gap-3">
+                          {/* {token.image && (
                           <Image
                             src={token.image}
                             alt={token.name}
@@ -93,30 +99,30 @@ const MyTokens = () => {
                             roundedCircle
                           />
                         )} */}
-                        <img
-                          src="https://altcoinsbox.com/wp-content/uploads/2023/01/xrp-logo-600x600.webp"
-                          className="img-fluid"
-                          height={30}
-                          width={30}
-                          alt=""
-                        />
-                        <div>
-                          <strong className="text-white">
-                            {token.currency_code}
-                          </strong>{" "}
-                          {token?.currency_code && (
-                            <span className="text-white">
-                              {"(" + token?.currency_code + ")"}
-                            </span>
-                          )}
+                          <img
+                            src="https://altcoinsbox.com/wp-content/uploads/2023/01/xrp-logo-600x600.webp"
+                            className="img-fluid"
+                            height={30}
+                            width={30}
+                            alt=""
+                          />
+                          <div>
+                            <strong className="text-white">
+                              {token.currency_code}
+                            </strong>{" "}
+                            {token?.currency_code && (
+                              <span className="text-white">
+                                {"(" + token?.currency_code + ")"}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <span className="fw-semibold">
-                        {token.balance > 0 ? token.balance : "$0000"}
-                      </span>
-                    </ListGroup.Item>
-                  ))}
-                  {tokens?.map((token, i) => {
+                        <span className="fw-semibold">
+                          {token.balance > 0 ? token.balance : "$0000"}
+                        </span>
+                      </ListGroup.Item>
+                    ))}
+                    {/* {tokens?.map((token, i) => {
                     return (
                       <ListGroup.Item
                         key={i}
@@ -147,9 +153,20 @@ const MyTokens = () => {
                         </span>
                       </ListGroup.Item>
                     );
-                  })}
-                </ListGroup>
-              </Card>
+                  })} */}
+                  </ListGroup>
+                </Card>
+              ) : (
+                <AlertBootstrap variant="success" className="mt-3 connect-to-xumm">
+                  <strong className="my-3 d-block">{error?.data?.error}</strong>
+                  <button
+                    onClick={handleLinks}
+                    className="gradient-button d-block"
+                  >
+                    Connect To Xumm
+                  </button>
+                </AlertBootstrap>
+              )}
             </Col>
           </Row>
         </section>

@@ -82,11 +82,20 @@ p.label {
 .profile-row input.form-control:disabled {
   opacity: 0.7;
 }
-@media (max-width:800px){
-  .profile__wrapp{
+.connect-to-xumm {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(180%);
+  box-shadow: inset 0 8px 32px rgba(31, 38, 135, 0.2),
+    inset 0 4px 20px rgba(255, 255, 255, 0.3);
+}
+.connect-to-xumm strong {
+  color: #fff;
+}
+@media (max-width: 800px) {
+  .profile__wrapp {
     padding-top: 0px;
   }
-  button.gradient-button{
+  button.gradient-button {
     font-size: 13px;
   }
 }
