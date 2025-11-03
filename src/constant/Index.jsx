@@ -36,6 +36,16 @@ import lockIcon from "../assets/img/lock-icon.png";
 import video2Img from "../assets/img/video2.png";
 import identityImg from "../assets/img/identity-img.png";
 import qrImg from "../assets/img/qr-img.png";
+import Spinner from "../assets/img/spinner.png";
+import liveStream from "../assets/img/livestream1.png";
+import weedEmoji from "../assets/img/emoji.png";
+import WeedIcon from "../assets/img/weed-icon.png";
+import Leaf from "../assets/img/leaf.png";
+// Live Stream Gift icons
+import Gift1 from "../assets/img/gift1.gif";
+import Gift2 from "../assets/img/gift2.gif";
+import Gift3 from "../assets/img/gift3.png";
+import Gift4 from "../assets/img/gift4.webp";
 
 export {
   WebLogo,
@@ -76,4 +86,13 @@ export {
   video2Img,
   identityImg,
   qrImg,
+  Gift1,
+  Gift2,
+  Gift3,
+  Gift4,
+  Leaf,
+  liveStream,
+  weedEmoji,
+  WeedIcon,
+  Spinner,
 };

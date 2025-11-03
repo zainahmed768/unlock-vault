@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
 import { Col, Container, Row } from "react-bootstrap";
-import { videosData } from "../../constant/Data";
+import { streamData, videosData } from "../../constant/Data";
 import VideoCard from "../../components/VideoCard";
 import Newsletter from "../../components/Newsletter";
 import Footer from "../../components/Footer";
@@ -29,7 +29,7 @@ const LiveStreamList = () => {
       <section className="page-video-sec">
         <Container>
           <Row className="video-row">
-            {videosData?.map((video, i) => {
+            {streamData?.map((video, i) => {
               return (
                 <Col lg="4" className="p-0">
                   <VideoCard video={video} />

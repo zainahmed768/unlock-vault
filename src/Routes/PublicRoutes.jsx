@@ -116,6 +116,7 @@ import ConnectXumm from "../pages/MyProfile/ConnectXumm";
 import Courses from "../pages/Courses/Courses";
 import CoursesDetail from "../pages/Courses/CoursesDetail";
 import Chapter from "../pages/Courses/Chapter";
+import LiveStreamDetail from "../pages/LiveStream/LiveStreamDetail";
 
 const PublicRoutes = () => {
   return (
@@ -147,6 +148,7 @@ const PublicRoutes = () => {
           <Route path="/video" element={<Videos />} />
           <Route path="/photos" element={<Photos />} />
           <Route path="/live-stream" element={<LiveStreamList />} />
+          <Route path="/live-stream-detail" element={<LiveStreamDetail />} />
           {/* User profile pages */}
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/change-password" element={<ChangePassword />} />

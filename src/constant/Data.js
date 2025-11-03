@@ -191,6 +191,72 @@ export const videosData = [
   },
 ];
 
+export const streamData = [
+  {
+    id: 1,
+    title: "Live Stream Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault1,
+    type: "play",
+  },
+  {
+    id: 2,
+    title: "Live Stream Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "play",
+  },
+  {
+    id: 3,
+    title: "Live Stream Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault2,
+    type: "play",
+  },
+  {
+    id: 4,
+    title: "Live Stream Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: vault1,
+    type: "play",
+  },
+  {
+    id: 5,
+    title: "Live Stream Name",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "play",
+  },
+  {
+    id: 6,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 7,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 8,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+  {
+    id: 9,
+    title: "Subscribe to Unlock",
+    des: "Lorem ipsum dolor sit amet consectetur. Libero arcu quam ut vitae lectus sit. Diam massa amet ipsum ut n",
+    image: video2Img,
+    type: "lock",
+  },
+];
+
 export const photoData = [
   {
     id: 1,

@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { WebLogo } from "../constant/Index";
 import { Link, useLocation } from "react-router-dom";
-import { MdWindow } from "react-icons/md";
+import { MdGeneratingTokens, MdWindow } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "./Alert/Alert";
 import { setlogoutUser } from "../redux/reducers/AuthReducer";
 import { CgProfile } from "react-icons/cg";
-import { IoMdClose } from "react-icons/io";
+import { IoIosContact, IoMdClose } from "react-icons/io";
 import { FaBook } from "react-icons/fa";
 
 const Header = () => {
@@ -152,7 +152,7 @@ const Header = () => {
                           className={location?.pathname == "/token" && "active"}
                         >
                           {location?.pathname == "/token" && (
-                            <MdWindow size={17} className="me-1" />
+                            <MdGeneratingTokens size={17} className="me-1" />
                           )}
                           Tokens
                         </Link>
@@ -176,7 +176,7 @@ const Header = () => {
                           }
                         >
                           {location?.pathname == "/contact-us" && (
-                            <MdWindow size={17} className="me-1" />
+                            <IoIosContact size={17} className="me-1" />
                           )}
                           Contact us
                         </Link>
