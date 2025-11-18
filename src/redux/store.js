@@ -4,17 +4,29 @@ import storage from "redux-persist/lib/storage";
 import AuthReducer from "./reducers/AuthReducer";
 import AuthServices from "./services/AuthServices";
 import CourseServices from "./services/CourseServices";
+import LiveStreamServices from "./services/LiveStreamServices";
+import ChatService from "./services/ChatServices";
+import HomeServices from "./services/HomeServices";
 
 const store = configureStore({
   reducer: {
     AuthReducer,
     [AuthServices.reducerPath]: AuthServices.reducer,
     [CourseServices.reducerPath]: CourseServices.reducer,
+    [LiveStreamServices.reducerPath]: LiveStreamServices.reducer,
+    [ChatService.reducerPath]: ChatService.reducer,
+    [HomeServices.reducerPath]: HomeServices.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat([AuthServices.middleware, CourseServices.middleware]),
+    }).concat([
+      AuthServices.middleware,
+      CourseServices.middleware,
+      LiveStreamServices.middleware,
+      ChatService.middleware,
+      HomeServices.middleware,
+    ]),
 });
 
 export const persistor = persistStore(store);

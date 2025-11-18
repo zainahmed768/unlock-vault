@@ -148,7 +148,10 @@ const PublicRoutes = () => {
           <Route path="/video" element={<Videos />} />
           <Route path="/photos" element={<Photos />} />
           <Route path="/live-stream" element={<LiveStreamList />} />
-          <Route path="/live-stream-detail" element={<LiveStreamDetail />} />
+          <Route
+            path="/live-stream-detail/:id"
+            element={<LiveStreamDetail />}
+          />
           {/* User profile pages */}
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/change-password" element={<ChangePassword />} />

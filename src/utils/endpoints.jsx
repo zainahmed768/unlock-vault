@@ -28,3 +28,9 @@ export const MY_TOKENS = "/auth/user/token-balances";
 // course starts here
 
 export const ALL_COURSES = "/courses";
+
+// live stream starts here
+
+export const ALL_LIVE_STREAM = "/live-streams";
+
+export const PAGES = "/page";

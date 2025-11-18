@@ -117,7 +117,14 @@ const Header = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to="#">Builders</Link>
+                        <Link
+                          to="/live-stream"
+                          className={
+                            location?.pathname == "/live-stream" && "active"
+                          }
+                        >
+                          Builders
+                        </Link>
                       </li>
                       <li>
                         <Link
@@ -129,7 +136,6 @@ const Header = () => {
                           {location?.pathname == "/courses" && (
                             <FaBook size={17} className="me-1" />
                           )}
-                          
                           Relics
                         </Link>
                       </li>

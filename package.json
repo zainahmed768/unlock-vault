@@ -15,7 +15,10 @@
     "@videojs/http-streaming": "^3.17.2",
     "@zegocloud/zego-uikit-prebuilt": "^2.17.0",
     "antd": "^5.27.6",
+    "axios": "^1.13.2",
     "bootstrap": "^5.3.7",
+    "laravel-echo": "^2.2.6",
+    "pusher-js": "^8.4.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^18.3.1",
@@ -31,7 +34,8 @@
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.22.3",
-    "video.js": "^8.23.4"
+    "video.js": "^8.23.4",
+    "zego-zim-web": "^2.24.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",

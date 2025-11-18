@@ -112,10 +112,30 @@ const Courses = () => {
                                 {course?.title}
                               </h5>
                               <p class="course-price text-white mb-2">
-                                ${Number(course?.price).toFixed(2)}
+                                {Number(course?.price).toFixed(2)} ObiSky
                               </p>
                               <div class="course-rating text-white mb-2">
-                                ★★★★☆ {course?.rating}
+                                {Array.from({ length: 5 }, (_, index) => {
+                                  const filled =
+                                    index < Math.floor(course?.rating || 0);
+                                  const half =
+                                    course?.rating -
+                                      Math.floor(course?.rating) >=
+                                      0.5 &&
+                                    index === Math.floor(course?.rating);
+                                  return (
+                                    <span
+                                      key={index}
+                                      style={{
+                                        color:
+                                          filled || half ? "#FFD700" : "#555",
+                                      }}
+                                    >
+                                      {filled ? "★" : half ? "☆" : "☆"}
+                                    </span>
+                                  );
+                                })}{" "}
+                                {course?.rating}
                               </div>
                               <div className="course-btn-wrapper mb-3">
                                 <Link

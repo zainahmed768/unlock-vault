@@ -2,8 +2,10 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { video } from "../constant/Index";
 import "../assets/css/about.css";
+import { useLocation } from "react-router-dom";
 
 const PageHeader = ({ children }) => {
+  
   return (
     <>
       <section className="page-header">

@@ -98,8 +98,6 @@ const Chapter = () => {
                   "selectedVideo?.pdf_full_url"
                 )}
               </div>
-
-              {/* ===== Right Side (Lessons Sidebar) ===== */}
               <div className="col-lg-4">
                 <div className="courses-sidebar-detail-wrapper">
                   <div className="course-sidebar-card-wrapper">
@@ -108,7 +106,6 @@ const Chapter = () => {
                         Course Lessons
                       </h4>
                     </div>
-
                     <div className="chapters-tags-wrapper mt-3 d-flex flex-column gap-2">
                       {lessons.length > 0 ? (
                         lessons.map((lesson) => (
@@ -159,7 +156,6 @@ const Chapter = () => {
           )}
         </Container>
       </section>
-
       <Footer />
     </>
   );

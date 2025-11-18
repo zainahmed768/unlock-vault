@@ -240,14 +240,14 @@ const Home = () => {
                       <div className="banner-content-wrapper">
                         <div className="banner-heading-wrapper">
                           <h2 className="text-center heading-txt">
-                            {section?.content?.section_heading}
+                            Unlock the Vaults. Be Sovereign. Live Adifrntway
                           </h2>
-                          <p
-                            className="text-center"
-                            dangerouslySetInnerHTML={{
-                              __html: section?.content?.content,
-                            }}
-                          ></p>
+                          <p className="text-center">
+                            We build a decentralized Vault for
+                            spiritually-aligned creators to share sacred
+                            content, accessed through alignment and symbolic
+                            tokens (A17C and ObiSky), not paywalls.
+                          </p>
                         </div>
                         <div className="banner-btn-wrapper text-center mt-3">
                           {/* <Button>Enter a Vault</Button> */}
@@ -282,27 +282,17 @@ const Home = () => {
             <Col lg={12}>
               <div className="partner-heading-wrapper text-center">
                 <h4 className="mb-0 heading-txt">
-                  {HomeData?.sections?.map((section, i) => {
-                    return (
-                      section?.section_type?.id == 2 &&
-                      section?.content?.section_heading
-                    );
-                  })}
+                  Trusted by Industry Leaders
                 </h4>
               </div>
             </Col>
             <Col lg={12} className="mt-lg-5 mt-5">
               <Slider {...settings}>
-                {HomeData?.sections?.map((section, i) => {
+                {partners?.map((logo, i) => {
                   return (
-                    section?.section_type?.id == 2 &&
-                    section?.content?.items?.map((logo, i) => {
-                      return (
-                        <div key={i} className="partner-logo-wrapper">
-                          <img src={logo?.image} className="img-fluid" alt="" />
-                        </div>
-                      );
-                    })
+                    <div key={i} className="partner-logo-wrapper">
+                      <img src={logo} className="img-fluid" alt="" />
+                    </div>
                   );
                 })}
               </Slider>
@@ -319,12 +309,10 @@ const Home = () => {
             <Col lg="8">
               <div className="transform-text-wrapper">
                 <h3 className="text-center heading-txt">
-                  {HomeData?.sections?.map((section, i) => {
-                    return (
-                      section?.section_type?.id == 3 &&
-                      section?.content?.section_heading
-                    );
-                  })}
+                  Transform your business with cutting-edge IT solutions
+                  tailored to your needs. Our expert consultants deliver
+                  innovative strategies that propel your organization into the
+                  digital future.
                 </h3>
               </div>
             </Col>
@@ -336,23 +324,30 @@ const Home = () => {
       <section className="counter-sec">
         <Container>
           <Row>
-            {HomeData?.sections?.map((section, i) => {
-              return (
-                section?.section_type?.id == 4 &&
-                section?.content?.items?.map((txt, i) => {
-                  return (
-                    <Col lg="3" className="p-0">
-                      <div className="counter-text-wrapper text-center">
-                        <h2 className="heading-txt">
-                          {txt?.count + txt?.symbol}
-                        </h2>
-                        <p className="mb-0">{txt?.content} </p>
-                      </div>
-                    </Col>
-                  );
-                })
-              );
-            })}
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
+            <Col lg="3" className="p-0">
+              <div className="counter-text-wrapper text-center">
+                <h2 className="heading-txt">412k</h2>
+                <p className="mb-0">ialize in providing </p>
+              </div>
+            </Col>
           </Row>
         </Container>
       </section>
@@ -363,155 +358,177 @@ const Home = () => {
           <Row className="mb-5">
             <Col lg="12">
               <div className="works-heading-wrapper text-center">
-                {HomeData?.sections?.map((section, i) => {
-                  return (
-                    section?.section_type?.id == 5 && (
-                      <>
-                        <h3 className="heading-txt">
-                          {section?.content?.section_heading}
-                        </h3>
-                        <p>{section?.content?.title}</p>
-                      </>
-                    )
-                  );
-                })}
+                <h3 className="heading-txt">How it Works</h3>
+                <p>Enter portals of resonance. Unlock relics of remembrance.</p>
               </div>
             </Col>
           </Row>
           <Row className="work-row-card">
-            {HomeData?.sections?.map((section, i) => {
-              return (
-                section?.section_type?.id == 5 &&
-                section?.content?.items?.slice(0, 3)?.map((item, i) => {
-                  return (
-                    <Col lg="4" className="p-0">
-                      <div className="works-card-wrapper">
-                        <div className="works-card-heading-wrapper">
-                          <h4 className="heading-txt">{item?.name}</h4>
-                          <p>{item?.content}</p>
-                        </div>
-                        <div className="works-card-img-wrapper text-end">
-                          <figure>
-                            <img
-                              src={item?.image}
-                              className="img-fluid"
-                              alt=""
-                            />
-                          </figure>
-                        </div>
-                      </div>
-                    </Col>
-                  );
-                })
-              );
-            })}
+            <Col lg="4" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper">
+                  <h4 className="heading-txt">What is a Vault?</h4>
+                  <p>
+                    A Vault is a sovereign content chamber — a digital temple
+                    where aligned builders share sacred relics: music,
+                    teachings, visuals, and more. Each Vault is sealed until
+                    your resonance (in token form) unlocks the gate.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work1} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+            <Col lg="4" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper">
+                  <h4 className="heading-txt">
+                    No paywalls. No subscriptions. Only alignment.
+                  </h4>
+                  <p>
+                    Vaults are unlocked through symbolic actions — like holding
+                    17+ A17C tokens — rather than status or fiat. Deeper relics
+                    may require more A17C or ObiSky to access.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work2} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+            <Col lg="4" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper">
+                  <h4 className="heading-txt">
+                    Entry-level relics, access to sacred space
+                  </h4>
+                  <p>
+                    Vaults house “relics” — sacred or sovereign content such as
+                    music, teachings, visuals, or meditative tools — that are
+                    tiered, tracked, and optionally monetized via the ObiSky
+                    token.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work3} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
           </Row>
           <Row className="word-row-card-2">
-            {HomeData?.sections?.map((section, i) => {
-              return (
-                section?.section_type?.id == 5 &&
-                section?.content?.items?.slice(-2)?.map((item, i) => {
-                  return (
-                    <Col lg="6" className="p-0">
-                      <div className="works-card-wrapper">
-                        <div className="works-card-heading-wrapper w-75">
-                          <h4 className="heading-txt">{item?.name}</h4>
-                          <p
-                            dangerouslySetInnerHTML={{
-                              __html: item?.content?.replace(/\r\n/g, "<br/>"),
-                            }}
-                          ></p>
-                        </div>
-                        <div className="works-card-img-wrapper text-end">
-                          <figure>
-                            <img
-                              src={item?.image}
-                              className="img-fluid"
-                              alt=""
-                            />
-                          </figure>
-                        </div>
-                      </div>
-                    </Col>
-                  );
-                })
-              );
-            })}
+            <Col lg="6" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper w-75">
+                  <h4 className="heading-txt">How to Unlock a Vault</h4>
+                  <ul>
+                    <li>Connect Your Wallet (XRPL-enabled like XUMM)</li>
+                    <li>Hold 17+ A17C to meet the base access threshold</li>
+                    <li>
+                      Use ObiSky to unlock deeper relics or support builders
+                    </li>
+                    <li>
+                      Experience the Vault — visuals, sound, teachings, and
+                      guidance await
+                    </li>
+                  </ul>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work4} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
+            <Col lg="6" className="p-0">
+              <div className="works-card-wrapper">
+                <div className="works-card-heading-wrapper w-75">
+                  <h4 className="heading-txt">
+                    Entry-level relics, access to sacred space
+                  </h4>
+                  <p>
+                    Vaults house “relics” — sacred or sovereign content such as
+                    music, teachings, visuals, or meditative tools — that are
+                    tiered, tracked, and optionally monetized via the ObiSky
+                    token.
+                  </p>
+                </div>
+                <div className="works-card-img-wrapper text-end">
+                  <figure>
+                    <img src={work5} className="img-fluid" alt="" />
+                  </figure>
+                </div>
+              </div>
+            </Col>
           </Row>
         </Container>
       </section>
       {/* works ends here */}
       {/* video starts here */}
-      {HomeData?.sections?.map((section, i) => {
-        return (
-          section?.section_type?.id == 6 && (
-            <section className="video-sec">
-              <Container>
-                <Row>
-                  <Col lg="12">
-                    <div className="video-card-wrapper position-relative">
-                      <div className="video-img-wrapper">
-                        <figure>
-                          <img
-                            src={section?.content?.image}
-                            className="img-fluid"
-                            alt=""
-                          />
-                        </figure>
-                        <div className="video-btn-wrapper d-block d-lg-none">
-                          <Button className="video-btn">
-                            <i className="fa-solid fa-play"></i>
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="video-content-wrapper position-absolute top-0">
-                        <div className="video-testimonials-wrapper d-flex align-items-center justify-content-lg-end gap-2">
-                          <div className="testimonails-list-img-wrapper">
-                            <ul className="d-flex list-unstyled">
-                              <li>
-                                <img src={test1} className="img-fluid" alt="" />
-                              </li>
-                              <li>
-                                <img src={test2} className="img-fluid" alt="" />
-                              </li>
-                              <li>
-                                <img src={test3} className="img-fluid" alt="" />
-                              </li>
-                              <li className="test-icon">
-                                <img src={test4} className="img-fluid" alt="" />
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="testionails-txt-wrapper">
-                            <p>32k Happy customers</p>
-                          </div>
-                        </div>
-                        <div className="video-btn-wrapper d-none d-lg-block">
-                          <Button className="video-btn">
-                            <i className="fa-solid fa-play"></i>
-                          </Button>
-                        </div>
-                        <div className="video-down-content-wrapper d-block d-lg-flex justify-content-between">
-                          <h3 className="heading-txt">Relic Access Guide</h3>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur. Elit orci
-                            enim aliquam neque nascetur amet vivamus dictum.
-                            Nulla cras scelerisque placerat et ultrices commodo
-                            in vitae. Tincidunt consequat risus sit suspendisse
-                            sed volutpat etiam. Tortor ullamcorper urna eget
-                            feugiat massa sed non.
-                          </p>
-                        </div>
-                      </div>
+      <section className="video-sec">
+        <Container>
+          <Row>
+            <Col lg="12">
+              <div className="video-card-wrapper position-relative">
+                <div className="video-img-wrapper">
+                  <figure>
+                    <img src={videoImg} className="img-fluid" alt="" />
+                  </figure>
+                  <div className="video-btn-wrapper d-block d-lg-none">
+                    <Button className="video-btn">
+                      <i className="fa-solid fa-play"></i>
+                    </Button>
+                  </div>
+                </div>
+                <div className="video-content-wrapper position-absolute top-0">
+                  <div className="video-testimonials-wrapper d-flex align-items-center justify-content-lg-end gap-2">
+                    <div className="testimonails-list-img-wrapper">
+                      <ul className="d-flex list-unstyled">
+                        <li>
+                          <img src={test1} className="img-fluid" alt="" />
+                        </li>
+                        <li>
+                          <img src={test2} className="img-fluid" alt="" />
+                        </li>
+                        <li>
+                          <img src={test3} className="img-fluid" alt="" />
+                        </li>
+                        <li className="test-icon">
+                          <img src={test4} className="img-fluid" alt="" />
+                        </li>
+                      </ul>
                     </div>
-                  </Col>
-                </Row>
-              </Container>
-            </section>
-          )
-        );
-      })}
-
+                    <div className="testionails-txt-wrapper">
+                      <p>32k Happy customers</p>
+                    </div>
+                  </div>
+                  <div className="video-btn-wrapper d-none d-lg-block">
+                    <Button className="video-btn">
+                      <i className="fa-solid fa-play"></i>
+                    </Button>
+                  </div>
+                  <div className="video-down-content-wrapper d-block d-lg-flex justify-content-between">
+                    <h3 className="heading-txt">Relic Access Guide</h3>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur. Elit orci enim
+                      aliquam neque nascetur amet vivamus dictum. Nulla cras
+                      scelerisque placerat et ultrices commodo in vitae.
+                      Tincidunt consequat risus sit suspendisse sed volutpat
+                      etiam. Tortor ullamcorper urna eget feugiat massa sed non.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
       {/* video ends here */}
       {/* vault starts here */}
       <section className="vault-sec">
