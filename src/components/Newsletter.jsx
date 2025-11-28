@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { starIcon } from "../constant/Index";
+import { BeatLoader } from "react-spinners";
+import { useNewletterMutation } from "../redux/services/HomeServices";
+import Alert from "./Alert/Alert";
+import { newsletterValidation } from "../helper/HelperValidation";
 
 const Newsletter = () => {
+  const [Newletter, response] = useNewletterMutation();
+  const [email, setEmail] = useState("");
+  const [formErrors, setFormErrors] = useState(null);
+  const handleSubmit = () => {
+    if (newsletterValidation(email, setFormErrors)) {
+      let data = new FormData();
+      data.append("email", email);
+      Newletter({ data: data });
+    }
+  };
+
+  useEffect(() => {
+    if (response?.isSuccess) {
+      console.log(response?.data?.data, "asdcjnsacj");
+      Alert({
+        title: "Success",
+        text: response?.data?.message,
+        // text: "Submitted Successfully",
+      });
+      setEmail("");
+    }
+    if (response?.isError) {
+      Alert({
+        title: "Error",
+        text: response?.error?.data?.message,
+        iconStyle: "error",
+      });
+    }
+  }, [response]);
   return (
     <>
       {/* newsletter starts here */}
@@ -29,10 +62,37 @@ const Newsletter = () => {
                     type="email"
                     placeholder="Enter your email here"
                     className="me-2 bg-dark text-white border-secondary"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
-                  <button className="gradient-button">Submit</button>
+                  <button
+                    className="gradient-button"
+                    type="button"
+                    onClick={handleSubmit}
+                    disabled={response?.isLoading}
+                  >
+                    {response?.isLoading ? (
+                      <BeatLoader color="#fff" size={20} />
+                    ) : (
+                      "Submit"
+                    )}
+                  </button>
                 </Form>
               </div>
+              {formErrors?.email ? (
+                <p
+                  className="error"
+                  style={{
+                    color: "red",
+                    fontSize: "17px",
+                    marginBottom: "0",
+                    marginTop: "10px",
+                    textAlign:"center"
+                  }}
+                >
+                  {formErrors?.email}
+                </p>
+              ) : null}
             </Col>
           </Row>
         </Container>

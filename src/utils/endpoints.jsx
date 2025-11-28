@@ -34,3 +34,7 @@ export const ALL_COURSES = "/courses";
 export const ALL_LIVE_STREAM = "/live-streams";
 
 export const PAGES = "/page";
+
+export const CONTACT_US = "/contact-us";
+
+export const NEWSLETTER = "/subscribe/newsletter";

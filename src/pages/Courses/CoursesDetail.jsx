@@ -20,11 +20,11 @@ const CoursesDetail = () => {
 
   const navigate = useNavigate();
 
-  const handleModal = (section_id, isFree) => {
+  const handleModal = (section_id, isFree, lesson_id) => {
     console.log("Clicked section:", section_id, "Free:", isFree);
 
     if (Number(isFree) === 1) {
-      navigate(`/chapter/${section_id}`);
+      navigate(`/chapter/${section_id}?lesson=${lesson_id}`);
     } else {
       Alert({
         iconStyle: "warning",
@@ -152,7 +152,7 @@ const CoursesDetail = () => {
                     <div className="col-lg-4 setmarging">
                       <span className="reg-font level-8 text-white">Price</span>
                       <h4 className="text-uppercase text-white">
-                        {Number(singleData?.price).toFixed(2) +
+                        {Number(singleData?.price).toFixed(5) +
                           " " +
                           singleData?.currency_token?.currency_code}
                       </h4>
@@ -265,6 +265,20 @@ const CoursesDetail = () => {
                   })}
                 </div>
               </div> */}
+              <div className="learn-section py-5">
+                <h3 className="text-capitalized heading-txt">
+                  What You Will Learn
+                </h3>
+                <div className="row">
+                  <div className="col-lg-12 px-lg-0">
+                    <ul className="learn-list">
+                      {singleData?.what_you_learn?.map((single, i) => {
+                        return <li className="text-white">{single}</li>;
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
               <div className="video_listing_sec">
                 <h3 className="text-capitalized heading-txt mb-3">
                   Video Listing
@@ -290,7 +304,8 @@ const CoursesDetail = () => {
                                     e.preventDefault();
                                     handleModal(
                                       single?.section_id,
-                                      single?.is_free
+                                      single?.is_free,
+                                      single?.id
                                     );
                                   }}
                                 >
@@ -365,20 +380,6 @@ const CoursesDetail = () => {
                   </div>
                 </div>
               </div> */}
-              <div className="learn-section py-5">
-                <h3 className="text-capitalized heading-txt">
-                  What You Will Learn
-                </h3>
-                <div className="row">
-                  <div className="col-lg-12 px-lg-0">
-                    <ul className="learn-list">
-                      {singleData?.what_you_learn?.map((single, i) => {
-                        return <li className="text-white">{single}</li>;
-                      })}
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </Container>
           </section>
         )}

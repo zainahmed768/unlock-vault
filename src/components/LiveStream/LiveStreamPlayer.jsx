@@ -46,8 +46,8 @@ const LiveStreamPlayer = ({ roomId, user, onZegoReady }) => {
       },
       sharedLinks: [],
       showPreJoinView: false, // 🚀 disables the "Join Room" pre-screen
-      showLeaveRoomButton: true,
-      showTextChat: true,
+      showLeaveRoomButton: false,
+      showTextChat: false,
       // turnOnCameraWhenJoining: false,
       // turnOnMicrophoneWhenJoining: false,
       role: ZegoUIKitPrebuilt.Audience, // ✅ directly set role

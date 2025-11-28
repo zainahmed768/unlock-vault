@@ -69,6 +69,9 @@ const LiveStreamDetail = () => {
       console.warn("End stream error:", err);
     }
   };
+  useEffect(() => {
+    import("../../echo");
+  }, []);
 
   return (
     <>
@@ -102,12 +105,13 @@ const LiveStreamDetail = () => {
                     <h2 className="text-white">
                       {AllTokensData?.stream?.title}
                     </h2>
-                    <button
-                      className="btn follow mt-3"
+                    {/* <button
+                      className="btn follow end-stream mt-3"
                       onClick={handleEndStream}
+                      style={{width:"120px"}}
                     >
                       End Stream
-                    </button>
+                    </button> */}
                   </div>
 
                   <p className="description">

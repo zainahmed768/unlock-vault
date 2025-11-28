@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../utils/URL";
-import { PAGES } from "../../utils/endpoints";
+import { CONTACT_US, NEWSLETTER, PAGES } from "../../utils/endpoints";
 
 const HomeServices = createApi({
   reducerPath: "HomeServices",
@@ -13,7 +13,7 @@ const HomeServices = createApi({
       // if (endpoint !== REGISTER_URL && token) {
       //   headers.set("authorization", `Bearer ${token}`);
       // }
-    //   headers.set("authorization", `Bearer ${token}`);
+      //   headers.set("authorization", `Bearer ${token}`);
 
       return headers;
     },
@@ -26,9 +26,24 @@ const HomeServices = createApi({
         method: "GET",
       }),
     }),
+    Contact: build.mutation({
+      query: ({ data }) => ({
+        url: `${CONTACT_US}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    Newletter: build.mutation({
+      query: ({ data }) => ({
+        url: `${NEWSLETTER}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
 export default HomeServices;
 
-export const { useHomeQuery } = HomeServices;
+export const { useHomeQuery, useContactMutation, useNewletterMutation } =
+  HomeServices;

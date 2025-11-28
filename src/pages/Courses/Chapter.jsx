@@ -5,13 +5,18 @@ import PageHeading from "../../components/PageHeading";
 import Footer from "../../components/Footer";
 import { Container, Spinner } from "react-bootstrap";
 import "../../assets/css/chapter.css";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useGetCourseSectionsQuery } from "../../redux/services/CourseServices";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
+import { IoDocumentTextOutline } from "react-icons/io5";
 // ES2015 module syntax
 // import { PDFViewer } from "@progress/kendo-react-pdf-viewer";
 const Chapter = () => {
   const params = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const selectedLessonId = queryParams.get("lesson");
+
   const { data: singleChapter, isLoading } = useGetCourseSectionsQuery(
     params?.id
   );
@@ -22,11 +27,26 @@ const Chapter = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   // ✅ Load first lesson automatically
+  // useEffect(() => {
+  //   if (lessons.length > 0) {
+  //     setSelectedVideo(lessons[0]);
+  //   }
+  // }, [lessons]);
+
   useEffect(() => {
     if (lessons.length > 0) {
-      setSelectedVideo(lessons[0]);
+      if (selectedLessonId) {
+        const found = lessons.find(
+          (l) => String(l.id) === String(selectedLessonId)
+        );
+        if (found) {
+          setSelectedVideo(found); // 🔥 play the clicked lesson
+          return;
+        }
+      }
+      setSelectedVideo(lessons[0]); // fallback to first lesson
     }
-  }, [lessons]);
+  }, [lessons, selectedLessonId]);
 
   // ✅ Handle lesson click
   const handleLessonClick = (lesson) => {
@@ -70,18 +90,18 @@ const Chapter = () => {
                       controlsList="nodownload noremoteplayback nofullscreen"
                     />
                   ) : (
-                    <div
-                      className="video-placeholder bg-dark text-white d-flex justify-content-center align-items-center"
-                      style={{ height: "400px" }}
-                    >
-                      <p className="mb-0">No video available</p>
-                    </div>
-                    // <iframe
-                    //   src={selectedVideo?.pdf_full_url}
-                    //   width="100%"
-                    //   height="600vh"
-                    //   title="PDF Viewer"
-                    // />
+                    // <div
+                    //   className="video-placeholder bg-dark text-white d-flex justify-content-center align-items-center"
+                    //   style={{ height: "400px" }}
+                    // >
+                    //   <p className="mb-0">No video available</p>
+                    // </div>
+                    <iframe
+                      src={selectedVideo?.pdf_full_url}
+                      width="100%"
+                      height="600vh"
+                      title="PDF Viewer"
+                    />
                   )}
                 </div>
 
@@ -119,12 +139,22 @@ const Chapter = () => {
                             onClick={() => handleLessonClick(lesson)}
                             disabled={lesson?.is_free == 0}
                           >
+                            {console.log(lesson, "pdf detect")}
                             <div className="side-1 d-flex align-items-center">
-                              <MdOutlineSlowMotionVideo
-                                color="#fff"
-                                size={20}
-                                className="me-2"
-                              />
+                              {lesson?.lesson_type == "pdf" ? (
+                                <IoDocumentTextOutline
+                                  color="#fff"
+                                  size={20}
+                                  className="me-2"
+                                />
+                              ) : (
+                                <MdOutlineSlowMotionVideo
+                                  color="#fff"
+                                  size={20}
+                                  className="me-2"
+                                />
+                              )}
+
                               {lesson?.title}
                             </div>
                             <div className="side-2">

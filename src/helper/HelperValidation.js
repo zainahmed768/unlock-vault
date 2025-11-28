@@ -429,3 +429,67 @@ export const validateWalletAddress = (walletAddress, setFormErrors) => {
   setFormErrors(errors);
   return isValid;
 };
+
+export const contactValidation = (formState, setFormErrors) => {
+  let isValid = true;
+  let errors = {};
+
+  // Validate First Name
+  if (!formState?.first_name) {
+    errors.first_name = ["First name is required"];
+    isValid = false;
+  }
+
+  // Validate Last Name
+  if (!formState?.last_name) {
+    errors.last_name = ["Last name is required"];
+    isValid = false;
+  }
+
+  // Validate Phone (must be exactly 10 digits)
+  // Phone is optional → validate only if user enters something
+  if (formState?.phone) {
+    // If phone is not empty, apply validation rules
+    if (!/^\d{10}$|^\d{3}-\d{3}-\d{4}$/.test(formState.phone)) {
+      errors.phone = [
+        "Phone number must be exactly 10 digits or in XXX-XXX-XXXX format",
+      ];
+      isValid = false;
+    }
+  }
+
+  // Validate Email (must be in correct format)
+  if (!formState?.email) {
+    errors.email = ["Email is required"];
+    isValid = false;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) {
+    errors.email = ["Enter a valid email address"];
+    isValid = false;
+  }
+
+  // Validate Message
+  if (!formState?.message) {
+    errors.message = ["Message is required"];
+    isValid = false;
+  }
+
+  setFormErrors(errors);
+  return isValid;
+};
+
+export const newsletterValidation = (formState, setFormErrors) => {
+  let isValid = true;
+  let errors = {};
+
+  // Validate Email (must be in correct format)
+  if (!formState) {
+    errors.email = ["Email is required"];
+    isValid = false;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState)) {
+    errors.email = ["Enter a valid email address"];
+    isValid = false;
+  }
+
+  setFormErrors(errors);
+  return isValid;
+};

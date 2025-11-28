@@ -1,31 +1,60 @@
+// import Echo from "laravel-echo";
+// import Pusher from "pusher-js";
+
+// window.Pusher = Pusher;
+
+// window.Echo = new Echo({
+//   broadcaster: "pusher",
+//   key: import.meta.env.VITE_PUSHER_APP_KEY,
+//   cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+
+//   wsHost: import.meta.env.VITE_PUSHER_HOST,
+//   wsPort: import.meta.env.VITE_PUSHER_PORT || 6001,
+//   wssPort: import.meta.env.VITE_PUSHER_PORT || 6001,
+
+//   forceTLS: import.meta.env.VITE_PUSHER_SCHEME === "https",
+//   disableStats: true,
+//   enabledTransports: ["ws", "wss"],
+
+//   authEndpoint: "/admin/broadcasting/auth",
+//   auth: {
+//     headers: {
+//       "X-CSRF-TOKEN": document
+//         .querySelector('meta[name="csrf-token"]')
+//         ?.getAttribute("content"),
+//     },
+//     withCredentials: true,
+//   },
+// });
+
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
+// get host_type from localStorage
+const hostType = localStorage.getItem("host_type") || "admin";
 
-// Make Pusher available globally for Echo
-window.Pusher = Pusher;
+const userData = JSON.parse(localStorage.getItem("userData"));
+console.log(userData, "agvsdca");
+// Choose endpoint based on type
+let authEndpoint =
+  "https://admin-unlock-vault.developer-ourbase-camp.com/broadcasting/auth";
+
+if (hostType === "vendor") {
+  authEndpoint =
+    "https://admin-unlock-vault.developer-ourbase-camp.com/broadcasting/auth";
+}
 
 window.Echo = new Echo({
   broadcaster: "pusher",
-  key: import.meta.env.VITE_PUSHER_APP_KEY || "local",
-  cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER || "mt1",
+  key: import.meta.env.VITE_PUSHER_APP_KEY,
+  cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
 
-  // Use host and ports from .env
-  wsHost: import.meta.env.VITE_PUSHER_HOST || window.location.hostname,
-  wsPort: import.meta.env.VITE_PUSHER_PORT || 6001,
-  wssPort: import.meta.env.VITE_PUSHER_PORT || 6001,
+  // authEndpoint: authEndpoint, // ✅ absolute backend URL
+  authEndpoint:
+    "https://admin-unlock-vault.developer-ourbase-camp.com/broadcasting/auth",
 
-  // Force TLS only if scheme is https
-  forceTLS: import.meta.env.VITE_PUSHER_SCHEME === "https",
-  disableStats: true,
-  enabledTransports: ["ws", "wss"],
-
-  // Add auth endpoint for private & presence channels
-  authEndpoint: "/admin/broadcasting/auth",
   auth: {
     headers: {
-      "X-CSRF-TOKEN": document
-        .querySelector('meta[name="csrf-token"]')
-        ?.getAttribute("content"),
+      Authorization: `Bearer ${userData?.token}`,
     },
     withCredentials: true,
   },

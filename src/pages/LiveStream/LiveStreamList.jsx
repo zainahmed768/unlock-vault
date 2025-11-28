@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
@@ -14,8 +14,17 @@ import { BeatLoader } from "react-spinners";
 
 const LiveStreamList = () => {
   const location = useLocation();
-  const { data: liveStream, isLoading } = useGetAllLiveStreamsQuery();
+  const {
+    data: liveStream,
+    isLoading,
+    refetch,
+  } = useGetAllLiveStreamsQuery();
+  
   let allStream = liveStream?.data;
+
+  useEffect(() => {
+    refetch();
+  }, [location]);
 
   return (
     <>
@@ -50,8 +59,13 @@ const LiveStreamList = () => {
             ) : allStream?.length > 0 ? (
               allStream?.map((video, i) => {
                 return (
-                  <Col lg="4" className="p-0">
-                    <Link to={`/live-stream-detail/${video?.id}`}>
+                  <Col lg="4">
+                    <Link
+                      to={`/live-stream-detail/${video?.id}`}
+                      onClick={() => {
+                        localStorage.setItem("host_type", video?.host_type);
+                      }}
+                    >
                       <StreamCard video={video} />
                     </Link>
                   </Col>

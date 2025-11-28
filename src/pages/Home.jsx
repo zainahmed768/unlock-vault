@@ -448,6 +448,7 @@ const Home = () => {
             <section className="video-sec">
               <Container>
                 <Row>
+                  {console.log(section, "all well")}
                   <Col lg="12">
                     <div className="video-card-wrapper position-relative">
                       <div className="video-img-wrapper">
@@ -468,15 +469,18 @@ const Home = () => {
                         <div className="video-testimonials-wrapper d-flex align-items-center justify-content-lg-end gap-2">
                           <div className="testimonails-list-img-wrapper">
                             <ul className="d-flex list-unstyled">
-                              <li>
-                                <img src={test1} className="img-fluid" alt="" />
-                              </li>
-                              <li>
-                                <img src={test2} className="img-fluid" alt="" />
-                              </li>
-                              <li>
-                                <img src={test3} className="img-fluid" alt="" />
-                              </li>
+                              {section?.content?.items?.map((testiimg, i) => {
+                                return (
+                                  <li>
+                                    <img
+                                      src={testiimg?.image}
+                                      className="img-fluid"
+                                      alt=""
+                                    />
+                                  </li>
+                                );
+                              })}
+
                               <li className="test-icon">
                                 <img src={test4} className="img-fluid" alt="" />
                               </li>
@@ -492,15 +496,14 @@ const Home = () => {
                           </Button>
                         </div>
                         <div className="video-down-content-wrapper d-block d-lg-flex justify-content-between">
-                          <h3 className="heading-txt">Relic Access Guide</h3>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur. Elit orci
-                            enim aliquam neque nascetur amet vivamus dictum.
-                            Nulla cras scelerisque placerat et ultrices commodo
-                            in vitae. Tincidunt consequat risus sit suspendisse
-                            sed volutpat etiam. Tortor ullamcorper urna eget
-                            feugiat massa sed non.
-                          </p>
+                          <h3 className="heading-txt">
+                            {section?.content?.section_heading}
+                          </h3>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html: section?.content?.content,
+                            }}
+                          ></p>
                         </div>
                       </div>
                     </div>
@@ -511,164 +514,206 @@ const Home = () => {
           )
         );
       })}
-
       {/* video ends here */}
       {/* vault starts here */}
-      <section className="vault-sec">
-        <Container>
-          <Row>
-            <Col lg="12">
-              <div className="vault-heading-wrapper text-center">
-                <h3 className="heading-txt">Vaults & Access</h3>
-                <p>Enter portals of resonance. Unlock relics of remembrance.</p>
-              </div>
-            </Col>
-          </Row>
-          <Row className="mt-4 vault-row">
-            {vaults?.map((vault, i) => {
-              return (
-                <Col key={i} lg="4" className="p-0">
-                  <div className="vault-card-wrapper">
-                    <div className="vault-heading-wrapper d-flex justify-content-between">
-                      <h4 className="heading-txt">{vault?.name}</h4>
-                      <div className="count-wrapper">
-                        <h6 className="heading-txt">{vault?.id}</h6>
-                      </div>
+      {HomeData?.sections?.map((section, i) => {
+        return (
+          section?.section_type?.id == 7 && (
+            <section className="vault-sec">
+              <Container>
+                <Row>
+                  <Col lg="12">
+                    <div className="vault-heading-wrapper text-center">
+                      <h3 className="heading-txt">
+                        {section?.content?.section_heading}
+                      </h3>
+                      <p>{section?.content?.title}</p>
                     </div>
-                    <div className="vault-content-wrapper">
-                      <p className="mb-0">{vault?.des}</p>
+                  </Col>
+                </Row>
+                <Row className="mt-4 vault-row">
+                  {section?.content?.items?.map((vault, i) => {
+                    return (
+                      <Col key={i} lg="4" className="p-0">
+                        <div className="vault-card-wrapper">
+                          <div className="vault-heading-wrapper d-flex justify-content-between">
+                            <h4 className="heading-txt">{vault?.name}</h4>
+                            <div className="count-wrapper">
+                              <h6 className="heading-txt">{i + 1}</h6>
+                            </div>
+                          </div>
+                          <div className="vault-content-wrapper">
+                            <p className="mb-0">{vault?.content}</p>
+                          </div>
+                          <div className="vault-down-img-wrapper">
+                            <figure>
+                              <img
+                                src={vault?.image}
+                                className="img-fluid"
+                                alt=""
+                              />
+                            </figure>
+                          </div>
+                        </div>
+                      </Col>
+                    );
+                  })}
+                </Row>
+                <Row className="mt-4">
+                  <Col lg="1" />
+                  <Col lg="10">
+                    <div className="vault-last-para-wrapper text-center">
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur. Odio nisi et
+                        quis aliquam. Adipiscing viverra lorem ligula id id.
+                        Diam semper eu volutpat nascetur consectetur. Duis
+                        venenatis ornare nisl nisl ornare ultrices suscipit
+                        ullamcorper.ng viverra lorem ligula id ialiquam.
+                        Adipiscing viverra lorem ligula id id. Diam sem
+                      </p>
                     </div>
-                    <div className="vault-down-img-wrapper">
-                      <figure>
-                        <img src={vaultbg} className="img-fluid" alt="" />
-                      </figure>
-                    </div>
-                  </div>
-                </Col>
-              );
-            })}
-          </Row>
-          <Row className="mt-4">
-            <Col lg="1" />
-            <Col lg="10">
-              <div className="vault-last-para-wrapper text-center">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Odio nisi et quis
-                  aliquam. Adipiscing viverra lorem ligula id id. Diam semper eu
-                  volutpat nascetur consectetur. Duis venenatis ornare nisl nisl
-                  ornare ultrices suscipit ullamcorper.ng viverra lorem ligula
-                  id ialiquam. Adipiscing viverra lorem ligula id id. Diam sem
-                </p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+                  </Col>
+                </Row>
+              </Container>
+            </section>
+          )
+        );
+      })}
       {/* vault ends here */}
       {/* client succes starst here */}
-      <section className="client-sec position-relative">
-        <Container>
-          <Row>
-            <Col lg="2">
-              <div className="client-right-wrapper">
-                <div className="client-img-wrapper client-img-1">
-                  <figure>
-                    <img src={client1Img} className="img-fluid" alt="" />
-                  </figure>
-                </div>
-                <div className="client-img-wrapper client-img-3">
-                  <figure>
-                    <img src={client3Img} className="img-fluid" alt="" />
-                  </figure>
-                </div>
-              </div>
-            </Col>
-            <Col lg="8">
-              <div className="client-card-wrapper text-center">
-                <div className="client-heading-wrapper">
-                  <h3 className="heading-txt">Client Success Stories</h3>
-                </div>
-                <div className="client-content-wrapper">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur. Habitant nibh nisl
-                    duis tincidunt nisl vitae cursus nisl vitae. Rhoncus
-                    ullamcorper molestie volutpat gravida sit tortor nec. Quis
-                    elit enim neque dui fermentum duis. Massa ac id tempus diam
-                    in duis porttitor gravida nunc.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur. Non commodo sed a
-                    dictum. Egestas eleifend dignissim feugiat gravida. Egestas
-                    aenean sagittis ultrices quisque. Viverra turpis scelerisque
-                    blandit a diam feugiat tempus.
-                  </p>
-                  <h6 className="heading-txt">
-                    Emily Brown, CTO, [Client Company]
-                  </h6>
-                </div>
-                <div className="client-btn-wrapper">
-                  <button className="gradient-button">
-                    View All Testimonials
-                  </button>
-                </div>
-              </div>
-            </Col>
-            <Col lg="2">
-              <div className="client-left-wrapper">
-                <div className="client-img-wrapper client-img-2">
-                  <figure>
-                    <img src={client2Img} className="img-fluid" alt="" />
-                  </figure>
-                </div>
-                <div className="client-img-wrapper client-img-4">
-                  <figure>
-                    <img src={client4Img} className="img-fluid" alt="" />
-                  </figure>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      {HomeData?.sections?.map((section, i) => {
+        return (
+          section?.section_type?.id == 8 && (
+            <section className="client-sec position-relative">
+              <Container>
+                <Row>
+                  <Col lg="2">
+                    <div className="client-right-wrapper">
+                      {section?.content?.items[0] && (
+                        <div className="client-img-wrapper client-img-1">
+                          <figure>
+                            <img
+                              src={section?.content?.items[0]?.image}
+                              className="img-fluid"
+                              alt=""
+                            />
+                          </figure>
+                        </div>
+                      )}
+                      {section?.content?.items[1] && (
+                        <div className="client-img-wrapper client-img-3">
+                          <figure>
+                            <img
+                              src={section?.content?.items[1]?.image}
+                              className="img-fluid"
+                              alt=""
+                            />
+                          </figure>
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                  <Col lg="8">
+                    <div className="client-card-wrapper text-center">
+                      <div className="client-heading-wrapper">
+                        <h3 className="heading-txt">
+                          {section?.content?.section_heading}
+                        </h3>
+                      </div>
+                      <div className="client-content-wrapper">
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: section?.content?.content,
+                          }}
+                        ></p>
+                        <h6 className="heading-txt">
+                          {section?.content?.title}
+                        </h6>
+                      </div>
+                      <div className="client-btn-wrapper">
+                        <button className="gradient-button">
+                          {section?.content?.btn_txt}
+                        </button>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col lg="2">
+                    <div className="client-left-wrapper">
+                      {section?.content?.items[2] && (
+                        <div className="client-img-wrapper client-img-2">
+                          <figure>
+                            <img
+                              src={section?.content?.items[2]?.image}
+                              className="img-fluid"
+                              alt=""
+                            />
+                          </figure>
+                        </div>
+                      )}
+
+                      <div className="client-img-wrapper client-img-4">
+                        <figure>
+                          <img src={client4Img} className="img-fluid" alt="" />
+                        </figure>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            </section>
+          )
+        );
+      })}
       {/* client succes ends here */}
       {/* faq starts here */}
-      <section className="faq-sec">
-        <Container>
-          <Row>
-            <Col lg="12">
-              <div className="faq-heading-wrapper text-center">
-                <h3 className="heading-txt">Frequently Asked Questions</h3>
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-              </div>
-            </Col>
-          </Row>
-          <Row className="g-4 mt-4">
-            {[0, 1].map((colIndex) => (
-              <Col md={6} key={colIndex}>
-                {accordionItems
-                  .filter((_, idx) => idx % 2 === colIndex)
-                  .map((item) => (
-                    <Card
-                      key={item.id}
-                      className="bg-dark text-white border border-secondary my-2"
-                    >
-                      <Accordion activeKey={activeKey}>
-                        <Accordion.Item eventKey={item.id.toString()}>
-                          <Accordion.Header
-                            onClick={() => toggleAccordion(item.id.toString())}
+      {HomeData?.sections?.map((section, i) => {
+        return (
+          section?.section_type?.id == 9 && (
+            <section className="faq-sec">
+              <Container>
+                <Row>
+                  <Col lg="12">
+                    <div className="faq-heading-wrapper text-center">
+                      <h3 className="heading-txt">
+                        {section?.content?.section_heading}
+                      </h3>
+                      <p>{section?.content?.title}</p>
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="g-4 mt-4">
+                  {[0, 1]?.map((colIndex) => (
+                    <Col md={6} key={colIndex}>
+                      {section?.content?.items
+                        ?.filter((_, idx) => idx % 2 === colIndex)
+                        .map((item,i) => (
+                          <Card
+                            key={i}
+                            className="bg-dark text-white border border-secondary my-2"
                           >
-                            {item.title}
-                          </Accordion.Header>
-                          <Accordion.Body>{item.content}</Accordion.Body>
-                        </Accordion.Item>
-                      </Accordion>
-                    </Card>
+                            <Accordion activeKey={activeKey}>
+                              <Accordion.Item eventKey={i?.toString()}>
+                                <Accordion.Header
+                                  onClick={() =>
+                                    toggleAccordion(i?.toString())
+                                  }
+                                >
+                                  {item?.title}
+                                </Accordion.Header>
+                                <Accordion.Body>{item?.content}</Accordion.Body>
+                              </Accordion.Item>
+                            </Accordion>
+                          </Card>
+                        ))}
+                    </Col>
                   ))}
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      </section>
+                </Row>
+              </Container>
+            </section>
+          )
+        );
+      })}
+
       {/* faq ends here */}
       <CustomModal
         // show={showModal}
