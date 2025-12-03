@@ -7,6 +7,7 @@ import CourseServices from "./services/CourseServices";
 import LiveStreamServices from "./services/LiveStreamServices";
 import ChatService from "./services/ChatServices";
 import HomeServices from "./services/HomeServices";
+import SubscriptionServices from "./services/SubscriptionServices";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     [LiveStreamServices.reducerPath]: LiveStreamServices.reducer,
     [ChatService.reducerPath]: ChatService.reducer,
     [HomeServices.reducerPath]: HomeServices.reducer,
+    [SubscriptionServices.reducerPath]: SubscriptionServices.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -26,6 +28,7 @@ const store = configureStore({
       LiveStreamServices.middleware,
       ChatService.middleware,
       HomeServices.middleware,
+      SubscriptionServices.middleware,
     ]),
 });
 

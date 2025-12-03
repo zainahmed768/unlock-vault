@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
@@ -6,7 +6,10 @@ import { Container } from "react-bootstrap";
 import Footer from "../../components/Footer";
 import { client1Img, client2Img, vault1 } from "../../constant/Index";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetCourseDetailsQuery } from "../../redux/services/CourseServices";
+import {
+  useCoursePurchaseMutation,
+  useGetCourseDetailsQuery,
+} from "../../redux/services/CourseServices";
 import { BeatLoader } from "react-spinners";
 import Alert from "../../components/Alert/Alert";
 
@@ -15,6 +18,7 @@ const CoursesDetail = () => {
   const { data: singleCourse, isLoading } = useGetCourseDetailsQuery(
     params?.id
   );
+  const [coursePurchase, paymentResponse] = useCoursePurchaseMutation();
   let singleData = singleCourse?.data;
   console.log(params, singleCourse, singleData, "ahscbas");
 
@@ -34,6 +38,28 @@ const CoursesDetail = () => {
     }
   };
 
+  const handlePayment = (courseId) => {
+    coursePurchase({ id: courseId });
+  };
+
+  useEffect(() => {
+    if (paymentResponse?.isSuccess) {
+      console.log(paymentResponse?.data?.data, "asdcjnsacj");
+      Alert({
+        title: "Success",
+        text: paymentResponse?.data?.message,
+        // text: "Submitted Successfully",
+      });
+    }
+    if (paymentResponse?.isError) {
+      Alert({
+        title: "Error",
+        text: paymentResponse?.error?.data?.message,
+        iconStyle: "error",
+      });
+    }
+  }, [paymentResponse]);
+  
   return (
     <>
       <Header />
@@ -158,7 +184,12 @@ const CoursesDetail = () => {
                       </h4>
                     </div>
                     <div className="col-lg-12 my-3">
-                      <button className="btn btn-primary">Buy Now</button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handlePayment(singleData?.id)}
+                      >
+                        Buy Now
+                      </button>
                     </div>
                   </div>
                 </div>

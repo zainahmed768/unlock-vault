@@ -45,6 +45,13 @@ const CourseServices = createApi({
         method: "GET",
       }),
     }),
+    coursePurchase: build.mutation({
+      query: ({ id }) => ({
+        url: `/auth/courses/${id}/purchase`,
+        method: "POST",
+      }),
+      invalidatesTags: ["liveStream"],
+    }),
   }),
 });
 
@@ -55,4 +62,5 @@ export const {
   useGetAllCoursesQuery,
   useGetCourseDetailsQuery,
   useGetCourseSectionsQuery,
+  useCoursePurchaseMutation,
 } = CourseServices;

@@ -117,6 +117,7 @@ import Courses from "../pages/Courses/Courses";
 import CoursesDetail from "../pages/Courses/CoursesDetail";
 import Chapter from "../pages/Courses/Chapter";
 import LiveStreamDetail from "../pages/LiveStream/LiveStreamDetail";
+import Subcriptions from "../pages/Subcriptions/Subcriptions";
 
 const PublicRoutes = () => {
   return (
@@ -148,6 +149,7 @@ const PublicRoutes = () => {
           <Route path="/video" element={<Videos />} />
           <Route path="/photos" element={<Photos />} />
           <Route path="/live-stream" element={<LiveStreamList />} />
+          <Route path="/subscription" element={<Subcriptions />} />
           <Route
             path="/live-stream-detail/:id"
             element={<LiveStreamDetail />}

@@ -201,8 +201,8 @@ const Courses = () => {
   // Load API data
   useEffect(() => {
     if (allcourses?.data?.data) {
-      setAllCourses(allcourses.data.data);
-      setFilteredCourses(allcourses.data.data);
+      setAllCourses(allcourses?.data?.data);
+      setFilteredCourses(allcourses?.data?.data);
     }
   }, [allcourses]);
 
