@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
@@ -12,12 +12,18 @@ import {
 } from "../../redux/services/CourseServices";
 import { BeatLoader } from "react-spinners";
 import Alert from "../../components/Alert/Alert";
+import CustomModal from "../../components/CustomModal";
+import { useLazyCheckPaymentStatusQuery } from "../../redux/services/PaymentServices";
 
 const CoursesDetail = () => {
   const params = useParams();
+  const [showModal, setShowModal] = useState(false);
   const { data: singleCourse, isLoading } = useGetCourseDetailsQuery(
     params?.id
   );
+  const [checkPaymentStatus, checkPaymentResponse] =
+    useLazyCheckPaymentStatusQuery();
+  const [qrImg, setQrImg] = useState(null);
   const [coursePurchase, paymentResponse] = useCoursePurchaseMutation();
   let singleData = singleCourse?.data;
   console.log(params, singleCourse, singleData, "ahscbas");
@@ -41,15 +47,20 @@ const CoursesDetail = () => {
   const handlePayment = (courseId) => {
     coursePurchase({ id: courseId });
   };
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   useEffect(() => {
     if (paymentResponse?.isSuccess) {
-      console.log(paymentResponse?.data?.data, "asdcjnsacj");
+      console.log(paymentResponse?.data?.data?.qr_url, "paymentResponse");
       Alert({
         title: "Success",
         text: paymentResponse?.data?.message,
         // text: "Submitted Successfully",
       });
+      setQrImg(paymentResponse?.data?.data?.qr_url);
+      setShowModal(true);
     }
     if (paymentResponse?.isError) {
       Alert({
@@ -59,7 +70,50 @@ const CoursesDetail = () => {
       });
     }
   }, [paymentResponse]);
-  
+
+  useEffect(() => {
+    let intervalId = null;
+
+    if (paymentResponse?.isSuccess) {
+      // Start polling payment status API
+      intervalId = setInterval(() => {
+        checkPaymentStatus({ uuid: paymentResponse?.data?.data?.uuid });
+      }, 10000); // 10 seconds
+    }
+
+    return () => {
+      // Cleanup interval on unmount
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [paymentResponse?.isSuccess]);
+
+  useEffect(() => {
+    if (checkPaymentResponse?.isSuccess) {
+      const isComplete = checkPaymentResponse?.data?.data?.status;
+
+      if (isComplete == "completed") {
+        // Stop polling
+        console.log("Payment completed, stopping interval");
+
+        Alert({
+          title: "Success",
+          text: "Payment Completed",
+        });
+
+        setQrImg(checkPaymentResponse?.data?.data?.qr_url);
+        setShowModal(false);
+      }
+    }
+
+    if (checkPaymentResponse?.isError) {
+      // Alert({
+      //   title: "Error",
+      //   text: checkPaymentResponse?.error?.data?.message,
+      //   iconStyle: "error",
+      // });
+    }
+  }, [checkPaymentResponse]);
+
   return (
     <>
       <Header />
@@ -187,8 +241,13 @@ const CoursesDetail = () => {
                       <button
                         className="btn btn-primary"
                         onClick={() => handlePayment(singleData?.id)}
+                        disabled={paymentResponse?.isLoading}
                       >
-                        Buy Now
+                        {paymentResponse?.isLoading ? (
+                          <BeatLoader color="#fff" size={20} />
+                        ) : (
+                          " Buy Now"
+                        )}
                       </button>
                     </div>
                   </div>
@@ -206,7 +265,11 @@ const CoursesDetail = () => {
                   <h3 className="text-capitalized heading-txt">Requirements</h3>
                   <ul className="learn-list">
                     {singleData?.requirements?.map((single, i) => {
-                      return <li className="text-white">{single}</li>;
+                      return (
+                        <li key={i} className="text-white">
+                          {single}
+                        </li>
+                      );
                     })}
                   </ul>
                 </div>
@@ -304,7 +367,11 @@ const CoursesDetail = () => {
                   <div className="col-lg-12 px-lg-0">
                     <ul className="learn-list">
                       {singleData?.what_you_learn?.map((single, i) => {
-                        return <li className="text-white">{single}</li>;
+                        return (
+                          <li key={i} className="text-white">
+                            {single}
+                          </li>
+                        );
                       })}
                     </ul>
                   </div>
@@ -317,7 +384,7 @@ const CoursesDetail = () => {
                 {singleData?.sections?.map((chapter, i) => {
                   return (
                     <>
-                      <div className="row">
+                      <div key={i} className="row">
                         <div className="col-lg-12">
                           <div className="chapter-heading-wrapper">
                             <h4 className="text-capitalized heading-txt">
@@ -414,6 +481,54 @@ const CoursesDetail = () => {
             </Container>
           </section>
         )}
+
+        <CustomModal
+          // show={showModal}
+          // onHide={() => setShowModal(false)}
+          show={showModal}
+          onHide={handleClose}
+          // title="My Reusable Modal"
+        >
+          <Container>
+            <div className="upload-modal-wrapper">
+              <div className="upload-heading-wrapper text-center position-relative">
+                <h3 className="heading-txt">Scan QR To Complete The Payment</h3>
+                <p>Click Get Started To proceed with Qr</p>
+                <div className="close-btn-wrapper position-absolute end-0 top-0">
+                  <button className="close" onClick={handleClose}>
+                    X
+                  </button>
+                </div>
+              </div>
+              <div className="upload-img-wrapper text-center">
+                <figure className="qr-img mt-4">
+                  <div className="qr-heading-txt-wrapper"></div>
+                  {/* {response?.isLoading ? (
+                    <div className="qr-loader">
+                      <BeatLoader color="#fff" size={20} />
+                    </div>
+                  ) : ( */}
+                  <img src={qrImg} className="img-fluid" alt="" />
+                  {/* )} */}
+                </figure>
+              </div>
+
+              {/* <div className="upload-submit-btn-wrapper text-center">
+                <button onClick={handleNext} className="gradient-button">
+                  Get Started
+                </button>
+              </div> */}
+
+              <div className="upload-txt-wrapper text-center mt-3">
+                <p className="mb-0">
+                  By proceeding, you agree to our{" "}
+                  <Link to={"/terms-conditions"}>Terms & Conditions</Link> and{" "}
+                  <Link to={"/privacy-policy"}>Privacy Policy</Link>
+                </p>
+              </div>
+            </div>
+          </Container>
+        </CustomModal>
       </PageHeader>
       <Footer />
     </>
