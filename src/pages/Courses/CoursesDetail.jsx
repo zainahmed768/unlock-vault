@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 import PageHeader from "../../components/PageHeader";
 import PageHeading from "../../components/PageHeading";
@@ -21,6 +21,7 @@ const CoursesDetail = () => {
   const { data: singleCourse, isLoading } = useGetCourseDetailsQuery(
     params?.id
   );
+  const intervalRef = useRef(null);
   const [checkPaymentStatus, checkPaymentResponse] =
     useLazyCheckPaymentStatusQuery();
   const [qrImg, setQrImg] = useState(null);
@@ -72,47 +73,34 @@ const CoursesDetail = () => {
   }, [paymentResponse]);
 
   useEffect(() => {
-    let intervalId = null;
-
     if (paymentResponse?.isSuccess) {
-      // Start polling payment status API
-      intervalId = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         checkPaymentStatus({ uuid: paymentResponse?.data?.data?.uuid });
-      }, 10000); // 10 seconds
+      }, 10000);
     }
 
     return () => {
-      // Cleanup interval on unmount
-      if (intervalId) clearInterval(intervalId);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [paymentResponse?.isSuccess]);
 
   useEffect(() => {
     if (checkPaymentResponse?.isSuccess) {
-      const isComplete = checkPaymentResponse?.data?.data?.status;
-
-      if (isComplete == "completed") {
-        // Stop polling
-        console.log("Payment completed, stopping interval");
+      const isComplete = checkPaymentResponse?.data?.status;
+      console.log(isComplete, checkPaymentResponse?.data?.status, "isComplete");
+      if (isComplete === "completed") {
+        // Stop polling immediately
+        if (intervalRef.current) clearInterval(intervalRef.current);
 
         Alert({
           title: "Success",
           text: "Payment Completed",
         });
 
-        setQrImg(checkPaymentResponse?.data?.data?.qr_url);
-        setShowModal(false);
+        setShowModal(false); // ✅ closes modal
       }
     }
-
-    if (checkPaymentResponse?.isError) {
-      // Alert({
-      //   title: "Error",
-      //   text: checkPaymentResponse?.error?.data?.message,
-      //   iconStyle: "error",
-      // });
-    }
-  }, [checkPaymentResponse]);
+  }, [checkPaymentResponse?.isSuccess]);
 
   return (
     <>
