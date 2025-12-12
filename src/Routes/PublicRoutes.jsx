@@ -118,6 +118,7 @@ import CoursesDetail from "../pages/Courses/CoursesDetail";
 import Chapter from "../pages/Courses/Chapter";
 import LiveStreamDetail from "../pages/LiveStream/LiveStreamDetail";
 import Subcriptions from "../pages/Subcriptions/Subcriptions";
+import Payment from "../pages/MyProfile/Payment";
 
 const PublicRoutes = () => {
   return (
@@ -159,7 +160,7 @@ const PublicRoutes = () => {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/my-subscription" element={<MySubscriptions />} />
           <Route path="/my-tokens" element={<MyTokens />} />
-
+          <Route path="/payment-history" element={<Payment />} />
           {/* course starts here */}
           <Route path="/courses" element={<Courses />} />
           <Route path="/course-detail/:id" element={<CoursesDetail />} />

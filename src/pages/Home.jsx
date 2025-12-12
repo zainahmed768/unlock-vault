@@ -190,14 +190,6 @@ const Home = () => {
       }
     }
 
-    // if (statuResponse?.isError) {
-    //   xummLogin({ page_type: 0 });
-    //   Alert({
-    //     title: "Error",
-    //     text: statuResponse?.error?.data?.error,
-    //     iconStyle: "error",
-    //   });
-    // }
   }, [statuResponse, dispatch, handleClose]);
 
   useEffect(() => {
