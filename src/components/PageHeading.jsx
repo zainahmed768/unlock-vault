@@ -11,7 +11,7 @@ const PageHeading = ({ heading, text }) => {
             <Col lg="6">
               <div className="page-heading-wrapper text-center">
                 <h2 className="heading-txt">{heading}</h2>
-                <p>{text}</p>
+                <p dangerouslySetInnerHTML={{ __html: text }}></p>
               </div>
             </Col>
           </Row>

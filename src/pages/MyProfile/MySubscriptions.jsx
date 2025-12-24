@@ -10,7 +10,7 @@ const MySubscriptions = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="alert alert-danger" role="alert">
-                <p>
+                <p className="mb-0 text-dark">
                   Your membership has expired, and access to the application is
                   currently restricted. To continue using all features, please
                   upgrade your membership.

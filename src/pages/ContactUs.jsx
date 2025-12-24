@@ -13,6 +13,7 @@ import InputMask from "react-input-mask";
 import { contactValidation } from "../helper/HelperValidation";
 import { BeatLoader } from "react-spinners";
 import Alert from "../components/Alert/Alert";
+import { useHomeQuery } from "../redux/services/HomeServices";
 
 const ContactUs = () => {
   const [Contact, response] = useContactMutation();
@@ -24,6 +25,7 @@ const ContactUs = () => {
     message: "",
   });
   const [formErrors, setFormErrors] = useState(null);
+
   const handleSubmit = (e) => {
     if (contactValidation(contact, setFormErrors)) {
       let data = new FormData();

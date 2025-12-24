@@ -9,8 +9,13 @@ import { vault1, vault2 } from "../constant/Index";
 import { partners } from "../constant/Data";
 import Slider from "react-slick";
 import "../assets/css/vault.css";
+import { useHomeQuery } from "../redux/services/HomeServices";
+import { BeatLoader } from "react-spinners";
 
 const Vaults = () => {
+  const { data, isLoading } = useHomeQuery({ id: 3 });
+  let VaultData = data?.data;
+  console.log(VaultData, "VaultData");
   const settings = {
     dots: false,
     infinite: true, // Ensures looping with duplicates
@@ -51,35 +56,59 @@ const Vaults = () => {
       },
     ],
   };
+  
+  if (isLoading) {
+    return (
+      <>
+        <div
+          className="loading-wrapper d-flex align-items-center justify-content-center"
+          style={{ height: "100vh" }}
+        >
+          <BeatLoader color="#fff" size={20} />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
       {/* page Header starts here */}
       <PageHeader>
-        <PageHeading
-          heading={"Vaults"}
-          text={
-            "Lorem ipsum dolor sit amet consectetur. Augue commodo elementum augue placerat eleifend placer"
-          }
-        />
+        {VaultData?.sections?.map((section, i) => {
+          return (
+            section?.section_type?.id == 15 && (
+              <PageHeading
+                heading={section?.content?.section_heading}
+                text={section?.content?.content}
+              />
+            )
+          );
+        })}
         {/* vault starts here */}
         <section className="vault-sec">
           <Container>
             <Row>
-              <Col lg="6">
-                <div className="vault-img-wrapper">
-                  <figure>
-                    <img src={vault1} className="img-fluid w-100" alt="" />
-                  </figure>
-                </div>
-              </Col>
-              <Col lg="6">
-                <div className="vault-img-wrapper">
-                  <figure>
-                    <img src={vault2} className="img-fluid w-100" alt="" />
-                  </figure>
-                </div>
-              </Col>
+              {VaultData?.sections?.map((section, i) => {
+                return (
+                  section?.section_type?.id == 10 &&
+                  section?.content?.items?.map((item, i) => {
+                    return (
+                      <Col lg="6">
+                        <div className="vault-img-wrapper">
+                          <figure>
+                            <img
+                              src={item?.image}
+                              className="img-fluid w-100"
+                              alt=""
+                            />
+                          </figure>
+                        </div>
+                      </Col>
+                    );
+                  })
+                );
+              })}
             </Row>
           </Container>
         </section>
@@ -92,17 +121,27 @@ const Vaults = () => {
             <Col lg={12}>
               <div className="partner-heading-wrapper text-center">
                 <h4 className="mb-0 heading-txt">
-                  Trusted by Industry Leaders
+                  {VaultData?.sections?.map((section, i) => {
+                    return (
+                      section?.section_type?.id == 2 &&
+                      section?.content?.section_heading
+                    );
+                  })}
                 </h4>
               </div>
             </Col>
             <Col lg={12} className="mt-lg-5 mt-5">
               <Slider {...settings}>
-                {partners?.map((logo, i) => {
+                {VaultData?.sections?.map((section, i) => {
                   return (
-                    <div key={i} className="partner-logo-wrapper">
-                      <img src={logo} className="img-fluid" alt="" />
-                    </div>
+                    section?.section_type?.id == 2 &&
+                    section?.content?.items?.map((logo, i) => {
+                      return (
+                        <div key={i} className="partner-logo-wrapper">
+                          <img src={logo?.image} className="img-fluid" alt="" />
+                        </div>
+                      );
+                    })
                   );
                 })}
               </Slider>
@@ -117,30 +156,22 @@ const Vaults = () => {
           <Row>
             <Col lg="2" />
             <Col lg="8">
-              <div className="transform-text-wrapper">
-                <h3 className="text-center heading-txt">
-                  walkthrough of A17C holding + wallet connect + ObiSky relic
-                  use
-                </h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo
-                  blandit maecenas ultrices eget. Tortor tempor sapien purus
-                  varius. Penatibus egestas massa tincidunt mattis et elit
-                  tellus sociis.Lorem ipsum dolor sit amet consectetur. Vehicula
-                  tellus leo blandit maecenas ultrices eget. Tortor tempor
-                  sapien purus varius. Penatibus egestas massa tincidunt mattis
-                  et elit tellus sociis.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo
-                  blandit maecenas ultrices eget. Tortor tempor sapien purus
-                  varius. Penatibus egestas massa tincidunt mattis et elit
-                  tellus sociis.Lorem ipsum dolor sit amet consectetur. Vehicula
-                  tellus leo blandit maecenas ultrices eget. Tortor tempor
-                  sapien purus varius. Penatibus egestas massa tincidunt mattis
-                  et elit tellus sociis.
-                </p>
-              </div>
+              {VaultData?.sections?.map((section, i) => {
+                return (
+                  section?.section_type?.id == 11 && (
+                    <div className="transform-text-wrapper">
+                      <h3 className="text-center heading-txt">
+                        {section?.content?.section_heading}
+                      </h3>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: section?.content?.content,
+                        }}
+                      ></p>
+                    </div>
+                  )
+                );
+              })}
             </Col>
           </Row>
         </Container>
@@ -150,30 +181,23 @@ const Vaults = () => {
       <section className="counter-sec">
         <Container>
           <Row>
-            <Col lg="3" className="p-0">
-              <div className="counter-text-wrapper text-center">
-                <h2 className="heading-txt">412k</h2>
-                <p className="mb-0">ialize in providing </p>
-              </div>
-            </Col>
-            <Col lg="3" className="p-0">
-              <div className="counter-text-wrapper text-center">
-                <h2 className="heading-txt">314+</h2>
-                <p className="mb-0">ialize in providing </p>
-              </div>
-            </Col>
-            <Col lg="3" className="p-0">
-              <div className="counter-text-wrapper text-center">
-                <h2 className="heading-txt">220M</h2>
-                <p className="mb-0">ialize in providing </p>
-              </div>
-            </Col>
-            <Col lg="3" className="p-0">
-              <div className="counter-text-wrapper text-center">
-                <h2 className="heading-txt">550+</h2>
-                <p className="mb-0">ialize in providing </p>
-              </div>
-            </Col>
+            {VaultData?.sections?.map((section, i) => {
+              return (
+                section?.section_type?.id == 4 &&
+                section?.content?.items?.map((txt, i) => {
+                  return (
+                    <Col lg="3" className="p-0">
+                      <div className="counter-text-wrapper text-center">
+                        <h2 className="heading-txt">
+                          {txt?.count + txt?.symbol}
+                        </h2>
+                        <p className="mb-0">{txt?.content} </p>
+                      </div>
+                    </Col>
+                  );
+                })
+              );
+            })}
           </Row>
         </Container>
       </section>
@@ -184,15 +208,18 @@ const Vaults = () => {
           <Row className="mb-5">
             <Col lg="2" />
             <Col lg="8">
-              <div className="break-heading-wrapper text-center">
-                <h3 className="heading-txt">Breakdown of levels based</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo
-                  blandit maecenas ultrices eget. Tortor tempor sapien purus
-                  varius. Penatibus egestas massa tincidunt mattis et elit
-                  tellus sociis.Lore
-                </p>
-              </div>
+              {VaultData?.sections?.map((section, i) => {
+                return (
+                  section?.section_type?.id == 12 && (
+                    <div className="break-heading-wrapper text-center">
+                      <h3 className="heading-txt">
+                        {section?.content?.section_heading}
+                      </h3>
+                      <p>{section?.content?.content}</p>
+                    </div>
+                  )
+                );
+              })}
             </Col>
           </Row>
           <Row>
@@ -201,77 +228,44 @@ const Vaults = () => {
                 <Table responsive borderless className="vault-table text-white">
                   <thead>
                     <tr>
-                      <th>
-                        <h4 className="heading-txt">Proof Of</h4>
-                      </th>
-                      <th>
-                        <h4 className="heading-txt">Purpose</h4>
-                      </th>
-                      <th>
-                        <h4 className="heading-txt">Token/Logic</h4>
-                      </th>
-                      <th>
-                        <h4 className="heading-txt">Effect</h4>
-                      </th>
+                      {VaultData?.sections?.map((section, i) => {
+                        console.log(
+                          section?.section_type?.id == 12 &&
+                            section?.content?.table,
+                          "sdjndv"
+                        );
+                        return (
+                          section?.section_type?.id == 12 &&
+                          section?.content?.items[0]?.map((tableHead, i) => {
+                            return (
+                              <th>
+                                <h4 className="heading-txt">{tableHead}</h4>
+                              </th>
+                            );
+                          })
+                        );
+                      })}
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <h4 className="heading-txt">Holding</h4>
-                      </td>
-                      <td>
-                        <p>Access to Vaults</p>
-                      </td>
-                      <td>
-                        <p>
-                          A17C (min. 17)
-                          <br />
-                          Builders can set higher on top of 17
-                        </p>
-                      </td>
-                      <td>
-                        <p>Signals resonance + unlocks sacred spaces</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h4 className="heading-txt">Buoyancy</h4>
-                      </td>
-                      <td>
-                        <p>Stable relic pricing</p>
-                      </td>
-                      <td>
-                        <p>ObiSky + XRP ratio</p>
-                      </td>
-                      <td>
-                        <p>
-                          Prevents value loss or inflation
-                          <br />
-                          XRP price constantly shifting
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h4 className="heading-txt">Alignment</h4>
-                      </td>
-                      <td>
-                        <p>
-                          Auto-revokes access
-                          <br />
-                          at 16 or less
-                        </p>
-                      </td>
-                      <td>
-                        <p>A17C level + actions</p>
-                      </td>
-                      <td>
-                        <p>
-                          Encourages long-term connection + trustless identity
-                        </p>
-                      </td>
-                    </tr>
+                    {VaultData?.sections?.map((section) => {
+                      if (section?.section_type?.id !== 12) return null;
+                      return Object.entries(section?.content?.table || {}).map(
+                        ([rowKey, rowValues]) => (
+                          <tr key={rowKey}>
+                            {rowValues.map((cell, index) => (
+                              <td key={index}>
+                                {index == 0 ? (
+                                  <h4 className="heading-txt">{cell}</h4>
+                                ) : (
+                                  <p>{cell}</p>
+                                )}
+                              </td>
+                            ))}
+                          </tr>
+                        )
+                      );
+                    })}
                   </tbody>
                 </Table>
               </div>

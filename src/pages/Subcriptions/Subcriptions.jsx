@@ -10,6 +10,7 @@ import {
   useGetAllSubscriptionsQuery,
   useSubscriptionPaymentMutation,
 } from "../../redux/services/SubscriptionServices";
+import { BeatLoader } from "react-spinners";
 
 const Subcriptions = () => {
   const { data, isLoading } = useGetAllSubscriptionsQuery();
@@ -40,7 +41,18 @@ const Subcriptions = () => {
     }
   }, [paymentResponse]);
 
-  
+  if (isLoading) {
+    return (
+      <>
+        <div
+          className="loading-wrapper d-flex align-items-center justify-content-center"
+          style={{ height: "100vh" }}
+        >
+          <BeatLoader color="#fff" size={20} />
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <Header />

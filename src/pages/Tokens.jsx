@@ -8,24 +8,73 @@ import { Col, Container, Row, Table } from "react-bootstrap";
 import { functionImg, token1, vault1 } from "../constant/Index";
 import { token } from "../constant/Data";
 import "../assets/css/tokens.css";
+import { useHomeQuery } from "../redux/services/HomeServices";
+import { BeatLoader } from "react-spinners";
 
 const Tokens = () => {
+  const { data, isLoading } = useHomeQuery({ id: 4 });
+  let TokenData = data?.data;
+  console.log(TokenData, "TokenData");
+
+  if (isLoading) {
+    return (
+      <>
+        <div
+          className="loading-wrapper d-flex align-items-center justify-content-center"
+          style={{ height: "100vh" }}
+        >
+          <BeatLoader color="#fff" size={20} />
+        </div>
+      </>
+    );
+  }
+  
   return (
     <>
       <Header />
       {/* page Header starts here */}
       <PageHeader>
-        <PageHeading
-          heading={"Tokens"}
-          text={
-            "Lorem ipsum dolor sit amet consectetur. Augue commodo elementum augue placerat eleifend placer"
-          }
-        />
+        {TokenData?.sections?.map((section, i) => {
+          return (
+            section?.section_type?.id == 15 && (
+              <PageHeading
+                heading={section?.content?.section_heading}
+                text={section?.content?.content}
+              />
+            )
+          );
+        })}
         {/* service starts here */}
         <section className="serv-sec">
           <Container>
             <Row className="token-row">
-              {token?.map((v, _) => {
+              {TokenData?.sections?.map((section, i) => {
+                return (
+                  section?.section_type?.id == 13 &&
+                  section?.content?.items?.map((item, i) => {
+                    return (
+                      <Col key={i} lg="4" className="p-lg-0">
+                        <div className="token-card-wrapper p-4">
+                          <div className="token-img-wrapper">
+                            <figure>
+                              <img
+                                src={item?.image}
+                                alt={item?.image}
+                                className="img-fluid"
+                              />
+                            </figure>
+                          </div>
+                          <div className="token-content-wrapper">
+                            <h4 className="heading-txt">{item?.name}</h4>
+                            <p>{item?.content}</p>
+                          </div>
+                        </div>
+                      </Col>
+                    );
+                  })
+                );
+              })}
+              {/* {token?.map((v, _) => {
                 return (
                   <Col key={_} lg="4" className="p-lg-0">
                     <div className="token-card-wrapper p-4">
@@ -45,47 +94,48 @@ const Tokens = () => {
                     </div>
                   </Col>
                 );
-              })}
+              })} */}
             </Row>
           </Container>
         </section>
         {/* service ends here */}
       </PageHeader>
       {/* Function starts here */}
-      <section className="functions-sec">
-        <Container>
-          <Row className="align-items-center">
-            <Col lg="8">
-              <div className="function-content-wrapper me-lg-5">
-                <h3 className="heading-txt mb-5">
-                  function in micropayments, relic unlocks, and community energy
-                </h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo
-                  blandit maecenas ultrices eget. Tortor tempor sapien purus
-                  varius. Penatibus egestas massa tincidunt mattis et elit
-                  tellus sociis.Lorem ipsum dos ultrices eget. Tortor tempor
-                  sapien purus varius. Penatibus egestas massa tincidunt mattis
-                  et elit tellus sociis.Lorem ipsum do
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo
-                  blandit maecenas ultrices eget. Tortor tempor sapien purus
-                  varius. Penatibus egestas massa tincidunt mattis et elit
-                  tellus sociis.Lorem ipsum dolor si
-                </p>
-              </div>
-            </Col>
-            <Col lg="4">
-              <div className="function-img-wrapper">
-                <figure>
-                  <img src={functionImg} alt="" className="img-fluid w-100" />
-                </figure>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      {TokenData?.sections?.map((section, i) => {
+        return (
+          section?.section_type?.id == 14 && (
+            <section className="functions-sec">
+              <Container>
+                <Row className="align-items-center">
+                  <Col lg="8">
+                    <div className="function-content-wrapper me-lg-5">
+                      <h3 className="heading-txt mb-5">
+                        {section?.content?.section_heading}
+                      </h3>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: section?.content?.content,
+                        }}
+                      ></p>
+                    </div>
+                  </Col>
+                  <Col lg="4">
+                    <div className="function-img-wrapper">
+                      <figure>
+                        <img
+                          src={section?.content?.image}
+                          alt=""
+                          className="img-fluid w-100"
+                        />
+                      </figure>
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            </section>
+          )
+        );
+      })}
       {/* Function ends here */}
       {/* breakdown starts here */}
       <section className="break-sec">
@@ -93,17 +143,18 @@ const Tokens = () => {
           <Row className="mb-5">
             <Col lg="2" />
             <Col lg="8">
-              <div className="break-heading-wrapper text-center">
-                <h3 className="heading-txt">
-                  how pricing adapts with XRP fluctuation
-                </h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur. Vehicula tellus leo
-                  blandit maecenas ultrices eget. Tortor tempor sapien purus
-                  varius. Penatibus egestas massa tincidunt mattis et elit
-                  tellus sociis.Lore
-                </p>
-              </div>
+              {TokenData?.sections?.map((section, i) => {
+                return (
+                  section?.section_type?.id == 12 && (
+                    <div className="break-heading-wrapper text-center">
+                      <h3 className="heading-txt">
+                        {section?.content?.section_heading}
+                      </h3>
+                      <p>{section?.content?.content}</p>
+                    </div>
+                  )
+                );
+              })}
             </Col>
           </Row>
           <Row>
@@ -112,77 +163,44 @@ const Tokens = () => {
                 <Table responsive borderless className="vault-table text-white">
                   <thead>
                     <tr>
-                      <th>
-                        <h4 className="heading-txt">Proof Of</h4>
-                      </th>
-                      <th>
-                        <h4 className="heading-txt">Purpose</h4>
-                      </th>
-                      <th>
-                        <h4 className="heading-txt">Token/Logic</h4>
-                      </th>
-                      <th>
-                        <h4 className="heading-txt">Effect</h4>
-                      </th>
+                      {TokenData?.sections?.map((section, i) => {
+                        console.log(
+                          section?.section_type?.id == 12 &&
+                            section?.content?.table,
+                          "sdjndv"
+                        );
+                        return (
+                          section?.section_type?.id == 12 &&
+                          section?.content?.items[0]?.map((tableHead, i) => {
+                            return (
+                              <th>
+                                <h4 className="heading-txt">{tableHead}</h4>
+                              </th>
+                            );
+                          })
+                        );
+                      })}
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <h4 className="heading-txt">Holding</h4>
-                      </td>
-                      <td>
-                        <p>Access to Vaults</p>
-                      </td>
-                      <td>
-                        <p>
-                          A17C (min. 17)
-                          <br />
-                          Builders can set higher on top of 17
-                        </p>
-                      </td>
-                      <td>
-                        <p>Signals resonance + unlocks sacred spaces</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h4 className="heading-txt">Buoyancy</h4>
-                      </td>
-                      <td>
-                        <p>Stable relic pricing</p>
-                      </td>
-                      <td>
-                        <p>ObiSky + XRP ratio</p>
-                      </td>
-                      <td>
-                        <p>
-                          Prevents value loss or inflation
-                          <br />
-                          XRP price constantly shifting
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <h4 className="heading-txt">Alignment</h4>
-                      </td>
-                      <td>
-                        <p>
-                          Auto-revokes access
-                          <br />
-                          at 16 or less
-                        </p>
-                      </td>
-                      <td>
-                        <p>A17C level + actions</p>
-                      </td>
-                      <td>
-                        <p>
-                          Encourages long-term connection + trustless identity
-                        </p>
-                      </td>
-                    </tr>
+                    {TokenData?.sections?.map((section) => {
+                      if (section?.section_type?.id !== 12) return null;
+                      return Object.entries(section?.content?.table || {}).map(
+                        ([rowKey, rowValues]) => (
+                          <tr key={rowKey}>
+                            {rowValues.map((cell, index) => (
+                              <td key={index}>
+                                {index == 0 ? (
+                                  <h4 className="heading-txt">{cell}</h4>
+                                ) : (
+                                  <p>{cell}</p>
+                                )}
+                              </td>
+                            ))}
+                          </tr>
+                        )
+                      );
+                    })}
                   </tbody>
                 </Table>
               </div>

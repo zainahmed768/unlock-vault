@@ -16,10 +16,12 @@ import {
 import { partners, vaults } from "../constant/Data";
 import Slider from "react-slick";
 import { useHomeQuery } from "../redux/services/HomeServices";
+import { BeatLoader } from "react-spinners";
 
 const About = () => {
-  const { data, isLoading } = useHomeQuery({ id: 1 });
+  const { data, isLoading } = useHomeQuery({ id: 2 });
   let HomeData = data?.data;
+  console.log(HomeData, "HomeData");
   const settings = {
     dots: false,
     infinite: true, // Ensures looping with duplicates
@@ -60,17 +62,30 @@ const About = () => {
       },
     ],
   };
+  if (isLoading) {
+    return (
+      <>
+        <div className="loading-wrapper d-flex align-items-center justify-content-center" style={{height:"100vh"}}>
+          <BeatLoader color="#fff" size={20} />
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <Header />
       {/* page Header starts here */}
       <PageHeader>
-        <PageHeading
-          heading={"About Us"}
-          text={
-            "Lorem ipsum dolor sit amet consectetur. Augue commodo elementum augue placerat eleifend placer"
-          }
-        />
+        {HomeData?.sections?.map((section, i) => {
+          return (
+            section?.section_type?.id == 15 && (
+              <PageHeading
+                heading={section?.content?.section_heading}
+                text={section?.content?.content}
+              />
+            )
+          );
+        })}
         {/* video starts here */}
         <section className="video-sec">
           <Container>

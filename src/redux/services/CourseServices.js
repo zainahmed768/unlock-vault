@@ -52,6 +52,13 @@ const CourseServices = createApi({
       }),
       invalidatesTags: ["liveStream"],
     }),
+    myCourses: build.query({
+      query: () => ({
+        url: `/auth/my-courses`,
+        method: "Get",
+      }),
+      invalidatesTags: ["liveStream"],
+    }),
   }),
 });
 
@@ -63,4 +70,5 @@ export const {
   useGetCourseDetailsQuery,
   useGetCourseSectionsQuery,
   useCoursePurchaseMutation,
+  useMyCoursesQuery,
 } = CourseServices;

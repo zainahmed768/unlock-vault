@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useMyTokensQuery } from "../../redux/services/AuthServices";
 import { Alert as AlertBootstrap } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 const MyTokens = () => {
   const user = useSelector((state) => state?.AuthReducer?.user);
   const navigate = useNavigate();
@@ -79,7 +80,14 @@ const MyTokens = () => {
                   ))}
                 </ListGroup>
               </Card> */}
-              {AllTokensData?.tokens ? (
+              {isLoading ? (
+                <div
+                  className="loading-wrapper d-flex align-items-center justify-content-center"
+                  style={{ height: "40vh" }}
+                >
+                  <BeatLoader color="#fff" size={20} />
+                </div>
+              ) : AllTokensData?.tokens ? (
                 <Card className="p-4 shadow-sm">
                   <h4 className="mb-4 heading-txt">Tokens</h4>
 
@@ -157,7 +165,10 @@ const MyTokens = () => {
                   </ListGroup>
                 </Card>
               ) : (
-                <AlertBootstrap variant="success" className="mt-3 connect-to-xumm">
+                <AlertBootstrap
+                  variant="success"
+                  className="mt-3 connect-to-xumm"
+                >
                   <strong className="my-3 d-block">{error?.data?.error}</strong>
                   <button
                     onClick={handleLinks}
@@ -167,6 +178,7 @@ const MyTokens = () => {
                   </button>
                 </AlertBootstrap>
               )}
+              {}
             </Col>
           </Row>
         </section>

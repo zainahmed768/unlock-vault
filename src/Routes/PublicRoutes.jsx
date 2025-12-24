@@ -119,6 +119,7 @@ import Chapter from "../pages/Courses/Chapter";
 import LiveStreamDetail from "../pages/LiveStream/LiveStreamDetail";
 import Subcriptions from "../pages/Subcriptions/Subcriptions";
 import Payment from "../pages/MyProfile/Payment";
+import MyCourses from "../pages/MyProfile/MyCourses";
 
 const PublicRoutes = () => {
   return (
@@ -131,6 +132,13 @@ const PublicRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/relics" element={<Relics />} />
+        <Route path="/vaults" element={<Vaults />} />
+        <Route path="/token" element={<Tokens />} />
+        <Route path="/path" element={<Paths />} />
+        <Route path="/video" element={<Videos />} />
+        <Route path="/photos" element={<Photos />} />
+
+        <Route path="/subscription" element={<Subcriptions />} />
         {/* Auth-only (when NOT logged in) */}
         <Route element={<AuthRoute />}>
           <Route path="/sign-in" element={<Login />} />
@@ -144,13 +152,7 @@ const PublicRoutes = () => {
         {/* Private-only (when logged in) */}
         <Route element={<PrivateRoutes />}>
           <Route path="/connect-xumm" element={<ConnectXumm />} />
-          <Route path="/vaults" element={<Vaults />} />
-          <Route path="/token" element={<Tokens />} />
-          <Route path="/path" element={<Paths />} />
-          <Route path="/video" element={<Videos />} />
-          <Route path="/photos" element={<Photos />} />
           <Route path="/live-stream" element={<LiveStreamList />} />
-          <Route path="/subscription" element={<Subcriptions />} />
           <Route
             path="/live-stream-detail/:id"
             element={<LiveStreamDetail />}
@@ -161,6 +163,7 @@ const PublicRoutes = () => {
           <Route path="/my-subscription" element={<MySubscriptions />} />
           <Route path="/my-tokens" element={<MyTokens />} />
           <Route path="/payment-history" element={<Payment />} />
+          <Route path="/my-courses" element={<MyCourses />} />
           {/* course starts here */}
           <Route path="/courses" element={<Courses />} />
           <Route path="/course-detail/:id" element={<CoursesDetail />} />

@@ -40,6 +40,16 @@ const Sidebar = () => {
         <li className="py-md-3 py-2">My Subscriptions</li>
       </NavLink>
       <NavLink
+        to="/my-courses"
+        className={({ isActive }) =>
+          `level-5-sm d-flex align-items-center justify-content-center reg-font dark-color text-uppercase ${
+            isActive ? "active-profile" : ""
+          }`
+        }
+      >
+        <li className="py-md-3 py-2">My Courses</li>
+      </NavLink>
+      <NavLink
         to="/my-tokens"
         className={({ isActive }) =>
           `level-5-sm d-flex align-items-center justify-content-center reg-font dark-color text-uppercase ${
