@@ -8,8 +8,8 @@ const LiveStreamPlayer = ({ roomId, user, onZegoReady }) => {
   useEffect(() => {
     if (!roomId || !user) return;
 
-    const appID = 986388203;
-    const serverSecret = "bed35645cfd5adc22d9baca73741b635";
+    const appID = 1427147383;
+    const serverSecret = "5526ba7a909d1492f28b0891ee169a59";
 
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
